@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang=kr>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>NodeJS의 기초적 운용방법 | SeongRok</title>
+  <meta name="description" content="실행시 arg 데이터를 읽어오는 방법helloworld.js 12var args &#x3D; process.argv;console.log(args); 결과12345678# node helloworld.js 0 1 2 3 4 5[&amp;#x27;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;node&amp;#x27;,&amp;#x27;&#x2F;Users&#x2F;helloworld.js&amp;#x27;,&amp;#x27;0&amp;#x27;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS의 기초적 운용방법">
+<meta property="og:url" content="http://argon1025.github.io/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/">
+<meta property="og:site_name" content="SeongRok-Dev">
+<meta property="og:description" content="실행시 arg 데이터를 읽어오는 방법helloworld.js 12var args &#x3D; process.argv;console.log(args); 결과12345678# node helloworld.js 0 1 2 3 4 5[&amp;#x27;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;node&amp;#x27;,&amp;#x27;&#x2F;Users&#x2F;helloworld.js&amp;#x27;,&amp;#x27;0&amp;#x27;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-01-12T02:05:00.000Z">
+<meta property="article:modified_time" content="2021-01-13T13:59:54.465Z">
+<meta property="article:author" content="SeongRok_Lee">
+<meta property="article:tag" content="Node.js">
+<meta name="twitter:card" content="summary">
+    <!-- fontawesome JS -->
+    <script src="https://kit.fontawesome.com/c388c040f7.js" crossorigin="anonymous"></script>
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://argon1025.github.io/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="SeongRok-Dev" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/argon1025" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">성록</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Passionate developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Deagu, Korea</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="fas fa-home"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="fas fa-cannabis"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="fas fa-layer-group"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="fas fa-hashtag"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="fas fa-code-branch"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>사용자와 개발자의 시선차이를 극복할 수 있는</p>풀스택 개발자를 목표로 공부하고 있습니다
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Blog/" rel="tag">Hexo_Blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Command/" rel="tag">Hexo_Command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM-command/" rel="tag">NPM_command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/" rel="tag">express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/Hexo-Blog/" style="font-size: 13px;">Hexo_Blog</a> <a href="/tags/Hexo-Command/" style="font-size: 13px;">Hexo_Command</a> <a href="/tags/JS/" style="font-size: 13.5px;">JS</a> <a href="/tags/JavaScript/" style="font-size: 13.5px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 13px;">NPM</a> <a href="/tags/NPM-command/" style="font-size: 13px;">NPM_command</a> <a href="/tags/Node-js/" style="font-size: 14px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/express/" style="font-size: 13.5px;">express</a> <a href="/tags/tensorflow/" style="font-size: 13px;">tensorflow</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/" class="title">NodeJS의 기초적 운용방법</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-12T02:05:00.000Z" itemprop="datePublished">2021-01-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Hexo/">Hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/25/HEXO_Blog_Create/" class="title">HEXO Blog Create</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-24T15:05:00.000Z" itemprop="datePublished">2020-08-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/12/NodeJS/express%20staticfile/" class="title">NodeJS express staticfile</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-12T13:05:00.000Z" itemprop="datePublished">2020-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/12/NodeJS/express%20route/" class="title">NodeJS express Routing</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-12T11:38:00.000Z" itemprop="datePublished">2020-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/12/NodeJS/express%20middleware/" class="title">NodeJS express middleware</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-12T10:05:00.000Z" itemprop="datePublished">2020-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-NodeJS/NodeJS기초" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NodeJS의 기초적 운용방법
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/" class="article-date">
+	  <time datetime="2021-01-12T02:05:00.000Z" itemprop="datePublished">2021-01-12</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Node-js/" rel="tag">Node.js</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 503(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 3(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="실행시-arg-데이터를-읽어오는-방법"><a href="#실행시-arg-데이터를-읽어오는-방법" class="headerlink" title="실행시 arg 데이터를 읽어오는 방법"></a>실행시 arg 데이터를 읽어오는 방법</h2><p>helloworld.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> args = process.argv;</span><br><span class="line"><span class="built_in">console</span>.log(args);</span><br></pre></td></tr></table></figure>
+<h3 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node helloworld.js 0 1 2 3 4 5</span></span><br><span class="line">[<span class="string">&#x27;/usr/local/bin/node&#x27;</span>,<span class="string">&#x27;/Users/helloworld.js&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;1&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;2&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;3&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;5&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<hr>
+<p></br></br></br></p>
+<h2 id="URL-Query-string을-확인-하는-방법"><a href="#URL-Query-string을-확인-하는-방법" class="headerlink" title="URL, Query string을 확인 하는 방법"></a>URL, Query string을 확인 하는 방법</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _url = request.url;</span><br><span class="line">    <span class="keyword">var</span> queryData = url.parse(_url, <span class="literal">true</span>).query;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(_url);<span class="comment">//전체 URL</span></span><br><span class="line">    <span class="built_in">console</span>.log(queryData); <span class="comment">//Query string</span></span><br><span class="line">    <span class="built_in">console</span>.log(queryData.id); <span class="comment">//Query string id 접근</span></span><br><span class="line"> </span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/<span class="built_in">test</span>?id=<span class="built_in">test</span></span><br><span class="line">[Object: null prototype] &#123; id: <span class="string">&#x27;test&#x27;</span> &#125;</span><br><span class="line"><span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p></br></br></br></p>
+<h2 id="디렉토리를-읽어오는-방법"><a href="#디렉토리를-읽어오는-방법" class="headerlink" title="디렉토리를 읽어오는 방법"></a>디렉토리를 읽어오는 방법</h2><p>readDir.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"> </span><br><span class="line">fs.readdir(<span class="string">&#x27;./&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">error, filelist</span>)</span>&#123; <span class="comment">// ./ 현재 디렉토리 조회</span></span><br><span class="line">  <span class="built_in">console</span>.log(filelist);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node readDir.js </span></span><br><span class="line">[ <span class="string">&#x27;readDir.js&#x27;</span> ] //현재 경로에 있는 파일이 리스트형태로 반환됩니다.</span><br></pre></td></tr></table></figure>
+<hr>
+<p></br></br></br></p>
+<h2 id="Form에서-데이터를-받아오는-방법"><a href="#Form에서-데이터를-받아오는-방법" class="headerlink" title="Form에서 데이터를 받아오는 방법"></a>Form에서 데이터를 받아오는 방법</h2><p>form.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> qs = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _url = request.url;</span><br><span class="line">    <span class="keyword">var</span> queryData = url.parse(_url, <span class="literal">true</span>).query;</span><br><span class="line">    <span class="keyword">var</span> pathname = url.parse(_url, <span class="literal">true</span>).pathname;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pathname === <span class="string">&#x27;/data&#x27;</span>)&#123; <span class="comment">//form에서 받아온 데이터를 이곳에서 처리합니다</span></span><br><span class="line">        <span class="keyword">var</span> body = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        request.on(<span class="string">&#x27;data&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">            body = body + data; <span class="comment">//받은 데이터를 body에 지속적으로 추가합니다</span></span><br><span class="line">            <span class="keyword">if</span> (body.length &gt; <span class="number">1e6</span>)&#123;request.connection.destroy();&#125; <span class="comment">//데이터가 일정한 크기를 초과하게되면 connection을 destroy합니다</span></span><br><span class="line">        &#125;);</span><br><span class="line">        request.on(<span class="string">&#x27;end&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(qs.parse(body)); <span class="comment">// 데이터를 받아오는 작업이 모두 끝났다면 데이터내용을 출력합니다</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pathname === <span class="string">&#x27;/form&#x27;</span>)&#123; <span class="comment">//이곳에서 사용자에게 입력받은 데이터를 /data URL에 전송합니다</span></span><br><span class="line">        <span class="keyword">var</span> form = <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;!doctype html&gt;</span></span><br><span class="line"><span class="string">        &lt;html&gt;</span></span><br><span class="line"><span class="string">        &lt;head&gt;</span></span><br><span class="line"><span class="string">          &lt;title&gt;test&lt;/title&gt;</span></span><br><span class="line"><span class="string">          &lt;meta charset=&quot;utf-8&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;/head&gt;</span></span><br><span class="line"><span class="string">        &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;form action=&quot;/data&quot; method=&quot;post&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;title&quot; value=&quot;타이틀&quot;&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;textarea name=&quot;description&quot;&gt;설명&lt;/textarea&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;input type=&quot;submit&quot;&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">        &lt;/body&gt;</span></span><br><span class="line"><span class="string">        &lt;/html&gt;</span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line">        response.writeHead(<span class="number">202</span>);</span><br><span class="line">        response.end(form);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        response.writeHead(<span class="number">404</span>);</span><br><span class="line">        response.end(<span class="string">&#x27;Not found&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node form.js</span></span><br><span class="line">[Object: null prototype] &#123; title: <span class="string">&#x27;타이틀&#x27;</span>, description: <span class="string">&#x27;설명&#x27;</span> &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p></br></br></br></p>
+<h2 id="모듈-작성-방법"><a href="#모듈-작성-방법" class="headerlink" title="모듈 작성 방법"></a>모듈 작성 방법</h2><p>A.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    Ver:<span class="number">1</span>,</span><br><span class="line">    get_ver:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.Ver;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>B.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> A = <span class="built_in">require</span>(<span class="string">&#x27;./A.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(A.get_ver());</span><br></pre></td></tr></table></figure>
+<h3 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node B.js </span></span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<hr>
+<p></br></br></br></p>
+
+      
+    </div>
+    <!-- 카피라이트 위젯
+    <div class="article-footer">
+      
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/argon1025" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/argon1025" target="_blank"><span class="text-dark">성록</span><small class="ml-1x">Passionate developer</small></a></h3>
+        <div>사용자와 개발자의 시선차이를 극복할 수 있는 풀스택 개발자를 목표로 공부하고 있습니다</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+    -->
+  </article>
+  <!-- 댓글 위젯
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+  -->
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2020/08/25/HEXO_Blog_Create/" title="HEXO Blog Create"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        <div class="publishby">
+            Theme by base on <a href="https://github.com/cofess" target="_blank"> cofess </a>_<a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a></br>
+            Modifier 2021&copy;SeongRok_Lee
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":2,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"position":"right","width":150,"height":300,"hOffset":0,"vOffset":-60},"mobile":{"show":true,"scale":0.4},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>

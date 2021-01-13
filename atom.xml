@@ -6,7 +6,7 @@
   <link href="http://argon1025.github.io/atom.xml" rel="self"/>
   
   <link href="http://argon1025.github.io/"/>
-  <updated>2021-01-13T12:55:57.173Z</updated>
+  <updated>2021-01-13T13:59:54.465Z</updated>
   <id>http://argon1025.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NodeJS의 기초적 운용방법</title>
+    <link href="http://argon1025.github.io/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/"/>
+    <id>http://argon1025.github.io/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/</id>
+    <published>2021-01-12T02:05:00.000Z</published>
+    <updated>2021-01-13T13:59:54.465Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="실행시-arg-데이터를-읽어오는-방법"><a href="#실행시-arg-데이터를-읽어오는-방법" class="headerlink" title="실행시 arg 데이터를 읽어오는 방법"></a>실행시 arg 데이터를 읽어오는 방법</h2><p>helloworld.js</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> args = process.argv;</span><br><span class="line"><span class="built_in">console</span>.log(args);</span><br></pre></td></tr></table></figure><h3 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node helloworld.js 0 1 2 3 4 5</span></span><br><span class="line">[<span class="string">&#x27;/usr/local/bin/node&#x27;</span>,<span class="string">&#x27;/Users/helloworld.js&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;1&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;2&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;3&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;5&#x27;</span>]</span><br></pre></td></tr></table></figure><hr><p></br></br></br></p><h2 id="URL-Query-string을-확인-하는-방법"><a href="#URL-Query-string을-확인-하는-방법" class="headerlink" title="URL, Query string을 확인 하는 방법"></a>URL, Query string을 확인 하는 방법</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _url = request.url;</span><br><span class="line">    <span class="keyword">var</span> queryData = url.parse(_url, <span class="literal">true</span>).query;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(_url);<span class="comment">//전체 URL</span></span><br><span class="line">    <span class="built_in">console</span>.log(queryData); <span class="comment">//Query string</span></span><br><span class="line">    <span class="built_in">console</span>.log(queryData.id); <span class="comment">//Query string id 접근</span></span><br><span class="line"> </span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure><h3 id="결과-1"><a href="#결과-1" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/<span class="built_in">test</span>?id=<span class="built_in">test</span></span><br><span class="line">[Object: null prototype] &#123; id: <span class="string">&#x27;test&#x27;</span> &#125;</span><br><span class="line"><span class="built_in">test</span></span><br></pre></td></tr></table></figure><hr><p></br></br></br></p><h2 id="디렉토리를-읽어오는-방법"><a href="#디렉토리를-읽어오는-방법" class="headerlink" title="디렉토리를 읽어오는 방법"></a>디렉토리를 읽어오는 방법</h2><p>readDir.js </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"> </span><br><span class="line">fs.readdir(<span class="string">&#x27;./&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">error, filelist</span>)</span>&#123; <span class="comment">// ./ 현재 디렉토리 조회</span></span><br><span class="line">  <span class="built_in">console</span>.log(filelist);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><h3 id="결과-2"><a href="#결과-2" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node readDir.js </span></span><br><span class="line">[ <span class="string">&#x27;readDir.js&#x27;</span> ] //현재 경로에 있는 파일이 리스트형태로 반환됩니다.</span><br></pre></td></tr></table></figure><hr><p></br></br></br></p><h2 id="Form에서-데이터를-받아오는-방법"><a href="#Form에서-데이터를-받아오는-방법" class="headerlink" title="Form에서 데이터를 받아오는 방법"></a>Form에서 데이터를 받아오는 방법</h2><p>form.js </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> qs = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _url = request.url;</span><br><span class="line">    <span class="keyword">var</span> queryData = url.parse(_url, <span class="literal">true</span>).query;</span><br><span class="line">    <span class="keyword">var</span> pathname = url.parse(_url, <span class="literal">true</span>).pathname;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pathname === <span class="string">&#x27;/data&#x27;</span>)&#123; <span class="comment">//form에서 받아온 데이터를 이곳에서 처리합니다</span></span><br><span class="line">        <span class="keyword">var</span> body = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        request.on(<span class="string">&#x27;data&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">            body = body + data; <span class="comment">//받은 데이터를 body에 지속적으로 추가합니다</span></span><br><span class="line">            <span class="keyword">if</span> (body.length &gt; <span class="number">1e6</span>)&#123;request.connection.destroy();&#125; <span class="comment">//데이터가 일정한 크기를 초과하게되면 connection을 destroy합니다</span></span><br><span class="line">        &#125;);</span><br><span class="line">        request.on(<span class="string">&#x27;end&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(qs.parse(body)); <span class="comment">// 데이터를 받아오는 작업이 모두 끝났다면 데이터내용을 출력합니다</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pathname === <span class="string">&#x27;/form&#x27;</span>)&#123; <span class="comment">//이곳에서 사용자에게 입력받은 데이터를 /data URL에 전송합니다</span></span><br><span class="line">        <span class="keyword">var</span> form = <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;!doctype html&gt;</span></span><br><span class="line"><span class="string">        &lt;html&gt;</span></span><br><span class="line"><span class="string">        &lt;head&gt;</span></span><br><span class="line"><span class="string">          &lt;title&gt;test&lt;/title&gt;</span></span><br><span class="line"><span class="string">          &lt;meta charset=&quot;utf-8&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;/head&gt;</span></span><br><span class="line"><span class="string">        &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;form action=&quot;/data&quot; method=&quot;post&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;title&quot; value=&quot;타이틀&quot;&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;textarea name=&quot;description&quot;&gt;설명&lt;/textarea&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">            &lt;p&gt;&lt;input type=&quot;submit&quot;&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">        &lt;/body&gt;</span></span><br><span class="line"><span class="string">        &lt;/html&gt;</span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line">        response.writeHead(<span class="number">202</span>);</span><br><span class="line">        response.end(form);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        response.writeHead(<span class="number">404</span>);</span><br><span class="line">        response.end(<span class="string">&#x27;Not found&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure><h3 id="결과-3"><a href="#결과-3" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node form.js</span></span><br><span class="line">[Object: null prototype] &#123; title: <span class="string">&#x27;타이틀&#x27;</span>, description: <span class="string">&#x27;설명&#x27;</span> &#125;</span><br></pre></td></tr></table></figure><hr><p></br></br></br></p><h2 id="모듈-작성-방법"><a href="#모듈-작성-방법" class="headerlink" title="모듈 작성 방법"></a>모듈 작성 방법</h2><p>A.js </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    Ver:<span class="number">1</span>,</span><br><span class="line">    get_ver:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.Ver;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>B.js </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> A = <span class="built_in">require</span>(<span class="string">&#x27;./A.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(A.get_ver());</span><br></pre></td></tr></table></figure><h3 id="결과-4"><a href="#결과-4" class="headerlink" title="결과"></a>결과</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node B.js </span></span><br><span class="line">1</span><br></pre></td></tr></table></figure><hr><p></br></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;실행시-arg-데이터를-읽어오는-방법&quot;&gt;&lt;a href=&quot;#실행시-arg-데이터를-읽어오는-방법&quot; class=&quot;headerlink&quot; title=&quot;실행시 arg 데이터를 읽어오는 방법&quot;&gt;&lt;/a&gt;실행시 arg 데이터를 읽어오는 방법&lt;/h2&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+  </entry>
   
   <entry>
     <title>HEXO Blog Create</title>
@@ -42,6 +66,110 @@
     <category term="Hexo_Blog" scheme="http://argon1025.github.io/tags/Hexo-Blog/"/>
     
     <category term="Hexo_Command" scheme="http://argon1025.github.io/tags/Hexo-Command/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJS express staticfile</title>
+    <link href="http://argon1025.github.io/2020/06/12/NodeJS/express%20staticfile/"/>
+    <id>http://argon1025.github.io/2020/06/12/NodeJS/express%20staticfile/</id>
+    <published>2020-06-12T13:05:00.000Z</published>
+    <updated>2021-01-13T14:41:49.119Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="staticfile"><a href="#staticfile" class="headerlink" title="staticfile?"></a>staticfile?</h2><p>이미지, CSS, Javascript와같이 웹을 서비스하는데 필요한 파일을 정적 파일이라고 합니다<br>express프레임워크에서는 라우팅을 통해 클라이언트와 서버간 통신을 정의 하지만 라우팅을 통해서 정적인 파일을 모두 정의하기란 어렵기때문에<br>아래와같은 방법으로 특정 디렉토리에 포함된 정적 파일을 제공할 수 있습니다</p><p></br></br></p><h2 id="Express에서-staticfile-제공하는-방법"><a href="#Express에서-staticfile-제공하는-방법" class="headerlink" title="Express에서 staticfile 제공하는 방법"></a>Express에서 staticfile 제공하는 방법</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware</span></span><br><span class="line"><span class="comment">// res폴더에 포함된 파일을 로드할 수 있게됩니다</span></span><br><span class="line">app.use(express.static(<span class="string">&#x27;res&#x27;</span>));</span><br></pre></td></tr></table></figure><p>여러개의 정적파일 디렉토리를 추가하려면 위 코드를여러번 호출하면 됩니다</p><p></br></br></p><h2 id="파일에-대한-가상-접두부-추가"><a href="#파일에-대한-가상-접두부-추가" class="headerlink" title="파일에 대한 가상 접두부 추가"></a>파일에 대한 가상 접두부 추가</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// middleware</span></span><br><span class="line"><span class="comment">// res폴더에 포함된 파일을 로드할 수 있게됩니다</span></span><br><span class="line">app.use(<span class="string">&#x27;/static&#x27;</span>, express.static(<span class="string">&#x27;public&#x27;</span>));</span><br></pre></td></tr></table></figure><p>위와같이 작성하면 public폴더내에 있는 파일들에 /static 가상경로를 통해 접근할 수 있게 됩니다</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;staticfile&quot;&gt;&lt;a href=&quot;#staticfile&quot; class=&quot;headerlink&quot; title=&quot;staticfile?&quot;&gt;&lt;/a&gt;staticfile?&lt;/h2&gt;&lt;p&gt;이미지, CSS, Javascript와같이 웹을 서비스하는데 필요</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+    <category term="express" scheme="http://argon1025.github.io/tags/express/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJS express Routing</title>
+    <link href="http://argon1025.github.io/2020/06/12/NodeJS/express%20route/"/>
+    <id>http://argon1025.github.io/2020/06/12/NodeJS/express%20route/</id>
+    <published>2020-06-12T11:38:00.000Z</published>
+    <updated>2021-01-13T14:42:12.691Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing?"></a>Routing?</h2><p>Express에서 제공하는 기능으로 순수 nodeJS만 사용했을 경우보다 더 쉽게 애플리케이션 엔드 포인트(URL)를 정의할 수 있습니다</p><p></br></br></p><h2 id="코드작성"><a href="#코드작성" class="headerlink" title="코드작성"></a>코드작성</h2><p>myapp.js</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Routing</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.send(<span class="string">&#x27;Hello World!&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Example app listening at http://localhost:<span class="subst">$&#123;port&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>app.get이라는 메서드가 기존 nodeJS에 if문을 대체하면서<br>위코드를 실행할경우 80번 포트에서 / 으로 요청하는 모든 URL에 대해 Hello World!로 응답합니다</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Routing&quot;&gt;&lt;a href=&quot;#Routing&quot; class=&quot;headerlink&quot; title=&quot;Routing?&quot;&gt;&lt;/a&gt;Routing?&lt;/h2&gt;&lt;p&gt;Express에서 제공하는 기능으로 순수 nodeJS만 사용했을 경우보다 더 쉽게 애플</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+    <category term="express" scheme="http://argon1025.github.io/tags/express/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJS express middleware</title>
+    <link href="http://argon1025.github.io/2020/06/12/NodeJS/express%20middleware/"/>
+    <id>http://argon1025.github.io/2020/06/12/NodeJS/express%20middleware/</id>
+    <published>2020-06-12T10:05:00.000Z</published>
+    <updated>2021-01-13T14:42:00.313Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware?"></a>Middleware?</h2><p>Express에서 제공하는 기능으로 요청을 처리하는 중간에 실행되는 루틴을 말합니다<br>미들웨어는 애플리케이션 레벨 미들웨어, 라우터 레벨 미들웨어, 오류 처리 미들웨어, 기본 제공 미들웨어, 써드파티 미들웨어로 구성되어 있으며<br>여러계층이 다른 우선순위로 실행됩니다</p><p></br></br></p><h2 id="써드파티-레벨-Middleware"><a href="#써드파티-레벨-Middleware" class="headerlink" title="써드파티 레벨 Middleware"></a>써드파티 레벨 Middleware</h2><p>써드파티 이들웨어를 사용하면 프로젝트마다 반복적으로 사용되는 주요 기능들을 편리하게 호출하여 이용할 수 있습니다<br><a href="https://expressjs.com/ko/resources/middleware.html">이곳</a>을 클릭해 써드파티 미들웨어의 종류에 대해 알아볼 수 있습니다</p><p></br></br></p><h2 id="사용자정의-Middleware"><a href="#사용자정의-Middleware" class="headerlink" title="사용자정의 Middleware"></a>사용자정의 Middleware</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 인자는 req, res callback 함수로 정해져 있습니다</span></span><br><span class="line"><span class="keyword">var</span> Loger = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, call</span>) </span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Log&#x27;</span>);</span><br><span class="line">    call();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.use(Loger); <span class="comment">// 미들웨어 사용 선언</span></span><br></pre></td></tr></table></figure><p>미들웨어 사용을 app에 알려주게 되면 애플리케이션에 요청이 들어올때마다 해당 미들웨어가 한번씩 무조건 실행됩니다<br>또한 작업순서는 미들웨어 사용선언 순서에따라 정해집니다</p><p></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Middleware&quot;&gt;&lt;a href=&quot;#Middleware&quot; class=&quot;headerlink&quot; title=&quot;Middleware?&quot;&gt;&lt;/a&gt;Middleware?&lt;/h2&gt;&lt;p&gt;Express에서 제공하는 기능으로 요청을 처리하는 중간에 실행되</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+    <category term="express" scheme="http://argon1025.github.io/tags/express/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJS express 설치</title>
+    <link href="http://argon1025.github.io/2020/06/12/NodeJS/express%20%EC%84%A4%EC%B9%98/"/>
+    <id>http://argon1025.github.io/2020/06/12/NodeJS/express%20%EC%84%A4%EC%B9%98/</id>
+    <published>2020-06-12T09:35:00.000Z</published>
+    <updated>2021-01-13T14:41:55.908Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="express란"><a href="#express란" class="headerlink" title="express란?"></a>express란?</h2><p>Express는 웹 및 모바일 애플리케이션을 위한 일련의 강력한 기능을 제공하는 간결하고 유연한 Node.js 웹 애플리케이션 프레임워크입니다.<br>nodeJS에서 부족했던 기능을 보안해 백엔드를 좀더 쉽게 구성할 수 있도록 도움을 줍니다.</p><h2 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h2><p>nodeJS가 설치되었다는 가정한 상태에서 진행됩니다 아직 설치하지 않은경우 <a href="https://nodejs.org/en/">NodeJS 홈페이지</a>를 참고하세요</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//디렉토리 생성</span><br><span class="line">$ mkdir myapp</span><br><span class="line"></span><br><span class="line">//디렉토리로 이동</span><br><span class="line">$ <span class="built_in">cd</span> myapp</span><br><span class="line"></span><br><span class="line">// npm 초기화</span><br><span class="line">$ npm init</span><br><span class="line"></span><br><span class="line">//해당 디렉토리에 종속적인 형태로 express를 install 합니다</span><br><span class="line">$ npm install express --save</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;express란&quot;&gt;&lt;a href=&quot;#express란&quot; class=&quot;headerlink&quot; title=&quot;express란?&quot;&gt;&lt;/a&gt;express란?&lt;/h2&gt;&lt;p&gt;Express는 웹 및 모바일 애플리케이션을 위한 일련의 강력한 기능을 제공하는</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+    <category term="express" scheme="http://argon1025.github.io/tags/express/"/>
     
   </entry>
   
@@ -75,15 +203,15 @@
     <link href="http://argon1025.github.io/2020/05/26/Python/Python_Konlpy_2.7error/"/>
     <id>http://argon1025.github.io/2020/05/26/Python/Python_Konlpy_2.7error/</id>
     <published>2020-05-26T06:23:11.000Z</published>
-    <updated>2021-01-13T13:24:30.956Z</updated>
+    <updated>2021-01-13T13:36:38.375Z</updated>
     
-    <content type="html"><![CDATA[<p>Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있다</p><p><a href="https://github.com/konlpy/konlpy">python konlpy</a>  설치도중 문제가 발생하여 이슈보고를 하였고 아래와같은 해결책을 찾을 수 있었다.<br></br></br></p><hr><p><a href="https://jpype.readthedocs.io/en/latest/install.html#binary-install">Jpype Doc</a>에 있는 내용</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JPype can be installed as pre-compiled binary if you are using the Anaconda Python stack. Binaries are available for Linux, OSX, and windows on conda-forge.</span><br><span class="line"></span><br><span class="line">Ensure you have installed Anaconda&#x2F;Miniconda. Instructions can be found here.</span><br><span class="line"></span><br><span class="line">Install from the conda-forge software channel:</span><br><span class="line"></span><br><span class="line">conda install -c conda-forge jpype1</span><br></pre></td></tr></table></figure><p>한마디로 jpype를 conda-forge로 설치하고, 패키지를 설치하면 된다.</p><p></br></br></p><hr><p>이후 jpype를 conda-forge로 설치하고, 패키지를 설치하였다</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># conda install -c conda-forge jpype1</span><br><span class="line"># pip install konlpy</span><br></pre></td></tr></table></figure><p></br></br></p>]]></content>
+    <content type="html"><![CDATA[<p>Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있습니다.</p><p><a href="https://github.com/konlpy/konlpy">python konlpy</a>  설치도중 문제가 발생하여 이슈보고를 하였고 아래와같은 해결책을 찾을 수 있었습니다.<br></br></br></p><hr><p><a href="https://jpype.readthedocs.io/en/latest/install.html#binary-install">Jpype Doc</a>에 있는 내용입니다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JPype can be installed as pre-compiled binary if you are using the Anaconda Python stack. Binaries are available for Linux, OSX, and windows on conda-forge.</span><br><span class="line"></span><br><span class="line">Ensure you have installed Anaconda&#x2F;Miniconda. Instructions can be found here.</span><br><span class="line"></span><br><span class="line">Install from the conda-forge software channel:</span><br><span class="line"></span><br><span class="line">conda install -c conda-forge jpype1</span><br></pre></td></tr></table></figure><p>한마디로 jpype를 conda-forge로 설치하고, 패키지를 설치하면 됩니다.</p><p></br></br></p><hr><p>이후 jpype를 conda-forge로 설치하고, 패키지를 설치하였다</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># conda install -c conda-forge jpype1</span><br><span class="line"># pip install konlpy</span><br></pre></td></tr></table></figure><p></br></br></p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있다&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/konlpy/konl</summary>
+    <summary type="html">&lt;p&gt;Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/konlpy/k</summary>
       
     
     
