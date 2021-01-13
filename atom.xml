@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SeongRok-Dev</title>
+  
+  
+  <link href="http://argon1025.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://argon1025.github.io/"/>
+  <updated>2021-01-13T12:55:57.173Z</updated>
+  <id>http://argon1025.github.io/</id>
+  
+  <author>
+    <name>SeongRok_Lee</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HEXO Blog Create</title>
+    <link href="http://argon1025.github.io/2020/08/25/HEXO_Blog_Create/"/>
+    <id>http://argon1025.github.io/2020/08/25/HEXO_Blog_Create/</id>
+    <published>2020-08-24T15:05:00.000Z</published>
+    <updated>2021-01-13T12:55:57.173Z</updated>
+    
+    <content type="html"><![CDATA[<p>HEXO 셋업에서 가장 중요한 포인트만 정리하였습니다.</p><h2 id="1-Git-Setup"><a href="#1-Git-Setup" class="headerlink" title="1.Git Setup"></a>1.Git Setup</h2><p><a href="https://git-scm.com/">클릭</a> 하여 다운로드 페이지로<br></br></br></p><h2 id="2-Node-Setup"><a href="#2-Node-Setup" class="headerlink" title="2.Node Setup"></a>2.Node Setup</h2><p><a href="https://nodejs.org/en/">클릭</a> 하여 다운로드 페이지로 이동 합니다.<br>이후 가장 최신의 LTS 버전을 다운로드 합니다.<br></br></br></p><h2 id="3-Create-empty-Repository"><a href="#3-Create-empty-Repository" class="headerlink" title="3.Create empty Repository"></a>3.Create empty Repository</h2><p>Repository 는 관리용과 게시용 두개로 나누어 사용합니다.<br>관리용 Repository에는 Hexo의 모든 구성요소가 저장되고<br>게시용 저장소에서는 Hexo에서 빌드된 뷰파일만 업로드 됩니다.<br></br></p><p>관리용 저장소의 생성<br>Repository 이름 <code>github유저이름.Blog</code></p><p>게시용 저장소의 생성<br>Repository 이름 <code>github유저이름.github.io</code></p><p></br></br></p><h2 id="4-init-Hexo"><a href="#4-init-Hexo" class="headerlink" title="4.init Hexo"></a>4.init Hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir 폴더이름</span><br><span class="line">Hexo를 운영할 폴더를 생성하기전엔 반드시 아무것도 존재하지 않는 공백 파일이여야 합니다.</span><br><span class="line">폴더안에 파일이 있을경우 초기화가 되지 않습니다.</span><br><span class="line"></span><br><span class="line">$ hexo init</span><br><span class="line">디렉토리에 hexo starter를 cloning 합니다</span><br><span class="line"></span><br><span class="line">$ hexo clean</span><br><span class="line">업데이트, 수정반영을위한 커맨드</span><br><span class="line"></span><br><span class="line">$ hexo s</span><br><span class="line">로컬서버로 실행하기위한 커맨드</span><br></pre></td></tr></table></figure><p>Hexo의 파일구조와 Config문서 <a href="https://hexo.io/docs/setup">여기</a>를 참고해 주세요</p><p></br></br></p><h2 id="5-One-Command-Deployment"><a href="#5-One-Command-Deployment" class="headerlink" title="5.One-Command Deployment"></a>5.One-Command Deployment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><p>hexo-deployer 플러그인을 이용하여 설정된 다양한 저장소에 hexo를 deploy하여 배포할 수 있습니다<br></br></br></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: &lt;repository url&gt; <span class="comment"># https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  branch: master</span><br><span class="line">  <span class="comment">#message: [message] #Option</span></span><br></pre></td></tr></table></figure><p>Hexo의 루트 디렉토리에 존재하는 config 하단부의 deploy 설정을 아래의 양식에 맞추어 변경합니다.<br>repositoryURL은 <a href="#3-Create-empty-Repository">이곳</a>에서 생성한 게시용Repository로 설정해 주세요.<br></br></br></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean <span class="comment">#deploy전 clean작업을 꼭 해주세요</span></span><br><span class="line">$ hexo deploy <span class="comment">#설정한 repository에 자동으로 업로드 됩니다</span></span><br></pre></td></tr></table></figure><p>위 명령어를 통해 hexo를 deploy하여 배포할 수 있습니다<br></br></br></p><h2 id="6-Save-All-Hexo-source"><a href="#6-Save-All-Hexo-source" class="headerlink" title="6.Save All Hexo source"></a>6.Save All Hexo source</h2><figure class="highlight bash"><figcaption><span>Git Repository 파일 Push 절차</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">$ git commit -m <span class="string">&quot;Create Blog Repository&quot;</span></span><br><span class="line">$ git remote add origin 저장소URL</span><br><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure><p>관리용 Repository에 Hexo를 운영하는 폴더 전체를 커밋하시면<br>이후에 다른곳에서도 게시글을 작성하고 Deploy가 가능합니다.<br></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;HEXO 셋업에서 가장 중요한 포인트만 정리하였습니다.&lt;/p&gt;
+&lt;h2 id=&quot;1-Git-Setup&quot;&gt;&lt;a href=&quot;#1-Git-Setup&quot; class=&quot;headerlink&quot; title=&quot;1.Git Setup&quot;&gt;&lt;/a&gt;1.Git Setup&lt;/h2</summary>
+      
+    
+    
+    
+    <category term="Hexo" scheme="http://argon1025.github.io/categories/Hexo/"/>
+    
+    
+    <category term="Hexo" scheme="http://argon1025.github.io/tags/Hexo/"/>
+    
+    <category term="Hexo_Blog" scheme="http://argon1025.github.io/tags/Hexo-Blog/"/>
+    
+    <category term="Hexo_Command" scheme="http://argon1025.github.io/tags/Hexo-Command/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NodeJS의 Pm2 module의 사용</title>
+    <link href="http://argon1025.github.io/2020/06/12/NodeJS/NodeJSPm2%EB%AA%A8%EB%93%88/"/>
+    <id>http://argon1025.github.io/2020/06/12/NodeJS/NodeJSPm2%EB%AA%A8%EB%93%88/</id>
+    <published>2020-06-12T02:05:00.000Z</published>
+    <updated>2021-01-13T13:24:18.726Z</updated>
+    
+    <content type="html"><![CDATA[<p>실행중인 Node.js 애플리케이션을 관리하는 프로세스 매니저 PM2의 사용법<br></br><br><code>$npm install pm2 -g</code><br>pm2 모듈을 설치합니다</p><p><code>$ pm2 start [name] --watch</code><br>pm2 모듈로 애플리케이션을 시작합니다.<br>–watch 옵션을 주면 애플리케이션에 변동사항이 있을시에 자동으로 재시작합니다.</p><p><code>$ pm2 monit</code><br>모니터링 시작</p><p><code>$ pm2 stop [name]</code><br>관리하는 애플리케이션을 종료합니다</p><p><code>$ pm2 log</code><br>애플리케이션에 에러로그, 재부팅기록을 조회할 수 있습니다.<br></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;실행중인 Node.js 애플리케이션을 관리하는 프로세스 매니저 PM2의 사용법&lt;br&gt;&lt;/br&gt;&lt;br&gt;&lt;code&gt;$npm install pm2 -g&lt;/code&gt;&lt;br&gt;pm2 모듈을 설치합니다&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ pm2 start [name]</summary>
+      
+    
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/categories/Node-js/"/>
+    
+    
+    <category term="Node.js" scheme="http://argon1025.github.io/tags/Node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Anaconda python2.7ver SyntaxError: invalid syntax</title>
+    <link href="http://argon1025.github.io/2020/05/26/Python/Python_Konlpy_2.7error/"/>
+    <id>http://argon1025.github.io/2020/05/26/Python/Python_Konlpy_2.7error/</id>
+    <published>2020-05-26T06:23:11.000Z</published>
+    <updated>2021-01-13T13:24:30.956Z</updated>
+    
+    <content type="html"><![CDATA[<p>Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있다</p><p><a href="https://github.com/konlpy/konlpy">python konlpy</a>  설치도중 문제가 발생하여 이슈보고를 하였고 아래와같은 해결책을 찾을 수 있었다.<br></br></br></p><hr><p><a href="https://jpype.readthedocs.io/en/latest/install.html#binary-install">Jpype Doc</a>에 있는 내용</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JPype can be installed as pre-compiled binary if you are using the Anaconda Python stack. Binaries are available for Linux, OSX, and windows on conda-forge.</span><br><span class="line"></span><br><span class="line">Ensure you have installed Anaconda&#x2F;Miniconda. Instructions can be found here.</span><br><span class="line"></span><br><span class="line">Install from the conda-forge software channel:</span><br><span class="line"></span><br><span class="line">conda install -c conda-forge jpype1</span><br></pre></td></tr></table></figure><p>한마디로 jpype를 conda-forge로 설치하고, 패키지를 설치하면 된다.</p><p></br></br></p><hr><p>이후 jpype를 conda-forge로 설치하고, 패키지를 설치하였다</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># conda install -c conda-forge jpype1</span><br><span class="line"># pip install konlpy</span><br></pre></td></tr></table></figure><p></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Anaconda2 python2.7환경에서 특정패키지를 인스톨할때 SyntaxError: invalid syntax오류가 뜨면서 제대로 설치되지 않는 경우가 있다&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/konlpy/konl</summary>
+      
+    
+    
+    
+    <category term="Python" scheme="http://argon1025.github.io/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="http://argon1025.github.io/tags/Python/"/>
+    
+    <category term="tensorflow" scheme="http://argon1025.github.io/tags/tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NPM 기본 사용</title>
+    <link href="http://argon1025.github.io/2020/03/26/NPM_Use/"/>
+    <id>http://argon1025.github.io/2020/03/26/NPM_Use/</id>
+    <published>2020-03-26T10:23:52.000Z</published>
+    <updated>2021-01-13T12:55:57.173Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="NPM-사용법"><a href="#NPM-사용법" class="headerlink" title="NPM 사용법"></a>NPM 사용법</h2><p>NPM 버전 확인<br><code>$ npm --version</code></p><p>NPM 업데이트<br><code>sudo npm install npm -g</code></p><p>NPM 모듈 다운로드 - 로컬<br><code>$npm install &lt;모듈 이름&gt;</code></p><p>모듈 제거<br><code>$ npm uninstall express</code></p><p>글로벌 모듈 제거<br><code>$ npm uninstall -g express</code></p><p>모듈 업데이트<br><code>$ npm update express</code></p><p>설치된 글로벌 모듈 조회<br><code>$npm ls -g --depth=0</code><br></br></br></p><h2 id="NPM-모듈-글로벌-설치방법"><a href="#NPM-모듈-글로벌-설치방법" class="headerlink" title="NPM 모듈 글로벌 설치방법"></a>NPM 모듈 글로벌 설치방법</h2><p>NPM 모듈 다운로드 - 글로벌<br><code>$ npm install -g express</code></p><p>프로젝트 폴더로 이동<br><code>$ cd [local path]</code></p><p>NPM Link 후 프로젝트에서 require<br><code>$ npm link express</code><br></br></br></p><hr><p>참고링크</p><p><a href="https://npmsearch.com/">NPM 모듈 목록</a></p><p><a href="https://www.npmjs.com/">NPM 홈페이지</a><br></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;NPM-사용법&quot;&gt;&lt;a href=&quot;#NPM-사용법&quot; class=&quot;headerlink&quot; title=&quot;NPM 사용법&quot;&gt;&lt;/a&gt;NPM 사용법&lt;/h2&gt;&lt;p&gt;NPM 버전 확인&lt;br&gt;&lt;code&gt;$ npm --version&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;N</summary>
+      
+    
+    
+    
+    <category term="NPM" scheme="http://argon1025.github.io/categories/NPM/"/>
+    
+    
+    <category term="NPM" scheme="http://argon1025.github.io/tags/NPM/"/>
+    
+    <category term="NPM_command" scheme="http://argon1025.github.io/tags/NPM-command/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>setInterval이벤트함수로 Prototype메소드를 호출</title>
+    <link href="http://argon1025.github.io/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/"/>
+    <id>http://argon1025.github.io/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/</id>
+    <published>2020-02-13T07:33:12.000Z</published>
+    <updated>2021-01-13T13:24:35.715Z</updated>
+    
+    <content type="html"><![CDATA[<p>Prototype메소드를 호출할때<br><code>setInterval (this.Argon(), 100)</code><br>이런식으로 Interval 이벤트를 지정하면 처음엔 제대로 실행되나 setInterval로 this 값이 처음과 달라지기 때문에 다음 이벤트가 실행이 안됩니다.</p><p><code>setInterval(this.Argon.bind(this), 1000);</code><br>.bind로 오브젝트를 고정해주면해결됩니다.</p><p></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Prototype메소드를 호출할때&lt;br&gt;&lt;code&gt;setInterval (this.Argon(), 100)&lt;/code&gt;&lt;br&gt;이런식으로 Interval 이벤트를 지정하면 처음엔 제대로 실행되나 setInterval로 this 값이 처음과 달라지기</summary>
+      
+    
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/categories/JavaScript/"/>
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/tags/JavaScript/"/>
+    
+    <category term="JS" scheme="http://argon1025.github.io/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BOM을 활용한 브라우저 호완성 확보</title>
+    <link href="http://argon1025.github.io/2020/01/28/JS/DOM_BOM_JSC%20copy/"/>
+    <id>http://argon1025.github.io/2020/01/28/JS/DOM_BOM_JSC%20copy/</id>
+    <published>2020-01-28T07:12:26.000Z</published>
+    <updated>2021-01-13T13:23:59.312Z</updated>
+    
+    <content type="html"><![CDATA[<p>구버전 브라우저에 대응하기위해서 사용하고자하는 메소드가 존재하지 않을경우<br></br></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!Object.keys) #사용하고자 하는 객체의 존재유무를 파악</span><br><span class="line">Object.keys &#x3D; (function ()&#123;&#125;); #기능구현</span><br></pre></td></tr></table></figure><p>구버전 브라우저에도 호환성을 보장할 수 있습니다.<br>사용자가 최신버전의 브라우저를 사용하는것이 베스트입니다.<br></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;구버전 브라우저에 대응하기위해서 사용하고자하는 메소드가 존재하지 않을경우&lt;br&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;lin</summary>
+      
+    
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/categories/JavaScript/"/>
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/tags/JavaScript/"/>
+    
+    <category term="JS" scheme="http://argon1025.github.io/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DOM/BOM/JSC</title>
+    <link href="http://argon1025.github.io/2020/01/26/JS/DOM_BOM_JSC/"/>
+    <id>http://argon1025.github.io/2020/01/26/JS/DOM_BOM_JSC/</id>
+    <published>2020-01-26T06:43:37.000Z</published>
+    <updated>2021-01-13T13:24:01.343Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="DOM-BOM-JSC"><a href="#DOM-BOM-JSC" class="headerlink" title="DOM/BOM/JSC"></a>DOM/BOM/JSC</h1><p>웹브라우저들의 구성요소들은 모두 객체화 되어 있고 자바스크립트로 이 객체들을 제어할 수 있습니다.<br>이객체들은 큰 분류로 보았을때 DOM BOM JSC로 분류할 수 있습니다.</p><h2 id="DOM-Document-Object-Model"><a href="#DOM-Document-Object-Model" class="headerlink" title="DOM(Document Object Model)"></a>DOM(Document Object Model)</h2><p>웹페이지의 문서를 제어하는 역할</p><h4 id="document-getElementsByTagName"><a href="#document-getElementsByTagName" class="headerlink" title="document.getElementsByTagName"></a>document.getElementsByTagName</h4><p>태그의 이름을 이용해 여러개의 태그를 유사배열에 담아 반환합니다.<br><code>var test = document.getElementsByTagName(&#39;test&#39;);</code><br>문서안에있는 모든 테스트 태그를 배열에 담아 반환합니다.</p><h4 id="tag-name-int-getElementsByTagName"><a href="#tag-name-int-getElementsByTagName" class="headerlink" title="(tag name[int]).getElementsByTagName"></a>(tag name[int]).getElementsByTagName</h4><p><code>var test = document.getElementsByTagName(&#39;test&#39;);</code><br><code>var test_test1 =test[0].getElementsByTagName(&#39;test1&#39;);</code><br>첫번째 테스트 태그에 test1태그가 있을경우 배열에 담아 반환합니다.</p><h4 id="document-getElementsByClassName"><a href="#document-getElementsByClassName" class="headerlink" title="document.getElementsByClassName"></a>document.getElementsByClassName</h4><p><code>var lis = document.getElementsByClassName(&#39;active&#39;);</code><br>클래스의 값으로 객체를 조회하여 반환한다</p><h4 id="document-getElementById"><a href="#document-getElementById" class="headerlink" title="document.getElementById"></a>document.getElementById</h4><p><code>var li = document.getElementById(&#39;active&#39;);</code><br>id값을 기준으로 객체를 조회하여 반환한다 성능면에서 가장 우수하다</p><h4 id="document-querySelector"><a href="#document-querySelector" class="headerlink" title="document.querySelector"></a>document.querySelector</h4><p><code>var li = document.querySelector(&#39;.active&#39;);</code><br><code>var li = document.querySelector(&#39;li&#39;);</code><br>CSS선택자 문법으로 해당되는 객체를 하나만 조회하여 리턴한다</p><h4 id="document-querySelectorAll"><a href="#document-querySelectorAll" class="headerlink" title="document.querySelectorAll"></a>document.querySelectorAll</h4><p><code>document.querySelectorAll(&#39;li&#39;);</code><br>CSS선택자 문법으로 해당되는 객체를 모두 조회하여 유사배열로 리턴한다</p><h2 id="BOM-Browser-Object-Model"><a href="#BOM-Browser-Object-Model" class="headerlink" title="BOM(Browser Object Model)"></a>BOM(Browser Object Model)</h2><p>웹브라우저의 창이나 프래임을 객체화해서 프로그래밍적으로 제어</p><p>웹브라우저에는 Window라는 최상위 객체가 존재합니다.<br>alert(‘Hello world’);<br>window.alert(‘Hello world’);<br>추후에 작성하는 모든 객체들도 결과적으로는 window에 속하는 메서드가 됩니다.</p><h3 id="메소드-예시"><a href="#메소드-예시" class="headerlink" title="메소드 예시"></a>메소드 예시</h3><h4 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h4><p>alert(‘hello world’);<br>사용자에게 알림을 출력하는 메소드</p><h4 id="confirm"><a href="#confirm" class="headerlink" title="confirm"></a>confirm</h4><p>confirm(‘confirm?’)<br>사용자의 피드백을 입력받는 메소드</p><h4 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h4><p>prompt(‘input’)<br>사용자로부터 입력을 받는 메소드</p><h4 id="location"><a href="#location" class="headerlink" title="location"></a>location</h4><p>console.log(location.protocol, location.host, location.port, location.pathname, location.search, location.hash)<br>문서의 위치와 관련한 정보를 얻는 메소드<br>location.href = ‘<a href="http://google.co.kr&/#39;">http://google.co.kr&#39;</a>;<br>로케이션 객체를 직접 제어하여 문서의 위치를 변경할 수 있다</p><h4 id="navigator"><a href="#navigator" class="headerlink" title="navigator"></a>navigator</h4><p>웹브라우저의 정보를 제공하는 객체입니다.</p><h4 id="window-open"><a href="#window-open" class="headerlink" title="window.open"></a>window.open</h4><p>새 창을 생성하는 메소드이고 인자값으로 다양하게 새창을 제어할 수 있다<br>var test = window.open();<br>test.close();<br>같은 도메인일 경우 다른 창에서도 새로운창을 제어할 수 있다</p><h2 id="JSC-Javascript-Core"><a href="#JSC-Javascript-Core" class="headerlink" title="JSC(Javascript Core)"></a>JSC(Javascript Core)</h2><p>우리가 자바스크립트를통해 자체적으로 구성한 객체들</p><p></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;DOM-BOM-JSC&quot;&gt;&lt;a href=&quot;#DOM-BOM-JSC&quot; class=&quot;headerlink&quot; title=&quot;DOM/BOM/JSC&quot;&gt;&lt;/a&gt;DOM/BOM/JSC&lt;/h1&gt;&lt;p&gt;웹브라우저들의 구성요소들은 모두 객체화 되어 있고 자바스크립트</summary>
+      
+    
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/categories/JavaScript/"/>
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/tags/JavaScript/"/>
+    
+    <category term="JS" scheme="http://argon1025.github.io/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>스크립트 태그의 올바른 위치에 대해</title>
+    <link href="http://argon1025.github.io/2020/01/26/JS/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%ED%83%9C%EA%B7%B8%EC%9C%84%EC%B9%98%EC%97%90%EB%8C%80%ED%95%B4/"/>
+    <id>http://argon1025.github.io/2020/01/26/JS/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%ED%83%9C%EA%B7%B8%EC%9C%84%EC%B9%98%EC%97%90%EB%8C%80%ED%95%B4/</id>
+    <published>2020-01-26T06:43:37.000Z</published>
+    <updated>2021-01-13T13:23:16.545Z</updated>
+    
+    <content type="html"><![CDATA[<p>자바스크립트문서를 Head에 항상 놓고 onload 이벤트를 기다리기 보다<br>작성한 자바스크립트의 용도를 파악하고 올바른 위치에 놓는것이 매우 중요한것같다<br></br></br></p><blockquote><ol><li>Place library script such as the jQuery library in the head section.<br>라이브러리 스크립트는 헤더에</li></ol></blockquote><blockquote><ol start="2"><li>Place normal script in the head unless it becomes a performance/page load issue.<br>성능/페이지 로딩문제가 없는 스크립트는 헤더에</li></ol></blockquote><blockquote><ol start="3"><li>Place script that impacts the render of the page at the end of the body<br>페이지 렌더링에 직결되는 스크립트는 바디 마지막에</li></ol></blockquote><p></br></br></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;자바스크립트문서를 Head에 항상 놓고 onload 이벤트를 기다리기 보다&lt;br&gt;작성한 자바스크립트의 용도를 파악하고 올바른 위치에 놓는것이 매우 중요한것같다&lt;br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Place li</summary>
+      
+    
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/categories/JavaScript/"/>
+    
+    
+    <category term="JavaScript" scheme="http://argon1025.github.io/tags/JavaScript/"/>
+    
+    <category term="JS" scheme="http://argon1025.github.io/tags/JS/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang=kr>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>DOM/BOM/JSC | SeongRok</title>
+  <meta name="description" content="DOM&#x2F;BOM&#x2F;JSC웹브라우저들의 구성요소들은 모두 객체화 되어 있고 자바스크립트로 이 객체들을 제어할 수 있습니다.이객체들은 큰 분류로 보았을때 DOM BOM JSC로 분류할 수 있습니다. DOM(Document Object Model)웹페이지의 문서를 제어하는 역할 document.getElementsByTagName태그의 이름을 이용해 여러개의 태그를">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM&#x2F;BOM&#x2F;JSC">
+<meta property="og:url" content="http://argon1025.github.io/2020/01/26/JS/DOM_BOM_JSC/">
+<meta property="og:site_name" content="SeongRok-Dev">
+<meta property="og:description" content="DOM&#x2F;BOM&#x2F;JSC웹브라우저들의 구성요소들은 모두 객체화 되어 있고 자바스크립트로 이 객체들을 제어할 수 있습니다.이객체들은 큰 분류로 보았을때 DOM BOM JSC로 분류할 수 있습니다. DOM(Document Object Model)웹페이지의 문서를 제어하는 역할 document.getElementsByTagName태그의 이름을 이용해 여러개의 태그를">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-01-26T06:43:37.000Z">
+<meta property="article:modified_time" content="2021-01-13T13:24:01.343Z">
+<meta property="article:author" content="SeongRok_Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+    <!-- fontawesome JS -->
+    <script src="https://kit.fontawesome.com/c388c040f7.js" crossorigin="anonymous"></script>
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://argon1025.github.io/2020/01/26/JS/DOM_BOM_JSC/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="SeongRok-Dev" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/argon1025" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">성록</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Passionate developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Deagu, Korea</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="fas fa-home"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="fas fa-cannabis"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="fas fa-layer-group"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="fas fa-hashtag"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="fas fa-code-branch"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>사용자와 개발자의 시선차이를 극복할 수 있는</p>풀스택 개발자를 목표로 공부하고 있습니다
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Blog/" rel="tag">Hexo_Blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Command/" rel="tag">Hexo_Command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM-command/" rel="tag">NPM_command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/Hexo-Blog/" style="font-size: 13px;">Hexo_Blog</a> <a href="/tags/Hexo-Command/" style="font-size: 13px;">Hexo_Command</a> <a href="/tags/JS/" style="font-size: 14px;">JS</a> <a href="/tags/JavaScript/" style="font-size: 14px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 13px;">NPM</a> <a href="/tags/NPM-command/" style="font-size: 13px;">NPM_command</a> <a href="/tags/Node-js/" style="font-size: 13px;">Node.js</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/tensorflow/" style="font-size: 13px;">tensorflow</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Hexo/">Hexo</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/25/HEXO_Blog_Create/" class="title">HEXO Blog Create</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-24T15:05:00.000Z" itemprop="datePublished">2020-08-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/12/NodeJS/NodeJSPm2%EB%AA%A8%EB%93%88/" class="title">NodeJS의 Pm2 module의 사용</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-12T02:05:00.000Z" itemprop="datePublished">2020-06-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Python/">Python</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/26/Python/Python_Konlpy_2.7error/" class="title">Anaconda python2.7ver SyntaxError: invalid syntax</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-26T06:23:11.000Z" itemprop="datePublished">2020-05-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/NPM/">NPM</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/03/26/NPM_Use/" class="title">NPM 기본 사용</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-03-26T10:23:52.000Z" itemprop="datePublished">2020-03-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/" class="title">setInterval이벤트함수로 Prototype메소드를 호출</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-02-13T07:33:12.000Z" itemprop="datePublished">2020-02-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-JS/DOM_BOM_JSC" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DOM/BOM/JSC
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/01/26/JS/DOM_BOM_JSC/" class="article-date">
+	  <time datetime="2020-01-26T06:43:37.000Z" itemprop="datePublished">2020-01-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/JS/" rel="tag">JS</a>, <a class="article-tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/01/26/JS/DOM_BOM_JSC/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 283(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 1(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="DOM-BOM-JSC"><a href="#DOM-BOM-JSC" class="headerlink" title="DOM/BOM/JSC"></a>DOM/BOM/JSC</h1><p>웹브라우저들의 구성요소들은 모두 객체화 되어 있고 자바스크립트로 이 객체들을 제어할 수 있습니다.<br>이객체들은 큰 분류로 보았을때 DOM BOM JSC로 분류할 수 있습니다.</p>
+<h2 id="DOM-Document-Object-Model"><a href="#DOM-Document-Object-Model" class="headerlink" title="DOM(Document Object Model)"></a>DOM(Document Object Model)</h2><p>웹페이지의 문서를 제어하는 역할</p>
+<h4 id="document-getElementsByTagName"><a href="#document-getElementsByTagName" class="headerlink" title="document.getElementsByTagName"></a>document.getElementsByTagName</h4><p>태그의 이름을 이용해 여러개의 태그를 유사배열에 담아 반환합니다.<br><code>var test = document.getElementsByTagName(&#39;test&#39;);</code><br>문서안에있는 모든 테스트 태그를 배열에 담아 반환합니다.</p>
+<h4 id="tag-name-int-getElementsByTagName"><a href="#tag-name-int-getElementsByTagName" class="headerlink" title="(tag name[int]).getElementsByTagName"></a>(tag name[int]).getElementsByTagName</h4><p><code>var test = document.getElementsByTagName(&#39;test&#39;);</code><br><code>var test_test1 =test[0].getElementsByTagName(&#39;test1&#39;);</code><br>첫번째 테스트 태그에 test1태그가 있을경우 배열에 담아 반환합니다.</p>
+<h4 id="document-getElementsByClassName"><a href="#document-getElementsByClassName" class="headerlink" title="document.getElementsByClassName"></a>document.getElementsByClassName</h4><p><code>var lis = document.getElementsByClassName(&#39;active&#39;);</code><br>클래스의 값으로 객체를 조회하여 반환한다</p>
+<h4 id="document-getElementById"><a href="#document-getElementById" class="headerlink" title="document.getElementById"></a>document.getElementById</h4><p><code>var li = document.getElementById(&#39;active&#39;);</code><br>id값을 기준으로 객체를 조회하여 반환한다 성능면에서 가장 우수하다</p>
+<h4 id="document-querySelector"><a href="#document-querySelector" class="headerlink" title="document.querySelector"></a>document.querySelector</h4><p><code>var li = document.querySelector(&#39;.active&#39;);</code><br><code>var li = document.querySelector(&#39;li&#39;);</code><br>CSS선택자 문법으로 해당되는 객체를 하나만 조회하여 리턴한다</p>
+<h4 id="document-querySelectorAll"><a href="#document-querySelectorAll" class="headerlink" title="document.querySelectorAll"></a>document.querySelectorAll</h4><p><code>document.querySelectorAll(&#39;li&#39;);</code><br>CSS선택자 문법으로 해당되는 객체를 모두 조회하여 유사배열로 리턴한다</p>
+<h2 id="BOM-Browser-Object-Model"><a href="#BOM-Browser-Object-Model" class="headerlink" title="BOM(Browser Object Model)"></a>BOM(Browser Object Model)</h2><p>웹브라우저의 창이나 프래임을 객체화해서 프로그래밍적으로 제어</p>
+<p>웹브라우저에는 Window라는 최상위 객체가 존재합니다.<br>alert(‘Hello world’);<br>window.alert(‘Hello world’);<br>추후에 작성하는 모든 객체들도 결과적으로는 window에 속하는 메서드가 됩니다.</p>
+<h3 id="메소드-예시"><a href="#메소드-예시" class="headerlink" title="메소드 예시"></a>메소드 예시</h3><h4 id="alert"><a href="#alert" class="headerlink" title="alert"></a>alert</h4><p>alert(‘hello world’);<br>사용자에게 알림을 출력하는 메소드</p>
+<h4 id="confirm"><a href="#confirm" class="headerlink" title="confirm"></a>confirm</h4><p>confirm(‘confirm?’)<br>사용자의 피드백을 입력받는 메소드</p>
+<h4 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h4><p>prompt(‘input’)<br>사용자로부터 입력을 받는 메소드</p>
+<h4 id="location"><a href="#location" class="headerlink" title="location"></a>location</h4><p>console.log(location.protocol, location.host, location.port, location.pathname, location.search, location.hash)<br>문서의 위치와 관련한 정보를 얻는 메소드<br>location.href = ‘<a target="_blank" rel="noopener" href="http://google.co.kr&/#39;">http://google.co.kr&#39;</a>;<br>로케이션 객체를 직접 제어하여 문서의 위치를 변경할 수 있다</p>
+<h4 id="navigator"><a href="#navigator" class="headerlink" title="navigator"></a>navigator</h4><p>웹브라우저의 정보를 제공하는 객체입니다.</p>
+<h4 id="window-open"><a href="#window-open" class="headerlink" title="window.open"></a>window.open</h4><p>새 창을 생성하는 메소드이고 인자값으로 다양하게 새창을 제어할 수 있다<br>var test = window.open();<br>test.close();<br>같은 도메인일 경우 다른 창에서도 새로운창을 제어할 수 있다</p>
+<h2 id="JSC-Javascript-Core"><a href="#JSC-Javascript-Core" class="headerlink" title="JSC(Javascript Core)"></a>JSC(Javascript Core)</h2><p>우리가 자바스크립트를통해 자체적으로 구성한 객체들</p>
+<p></br></br></p>
+
+      
+    </div>
+    <!-- 카피라이트 위젯
+    <div class="article-footer">
+      
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/argon1025" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/argon1025" target="_blank"><span class="text-dark">성록</span><small class="ml-1x">Passionate developer</small></a></h3>
+        <div>사용자와 개발자의 시선차이를 극복할 수 있는 풀스택 개발자를 목표로 공부하고 있습니다</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+    -->
+  </article>
+  <!-- 댓글 위젯
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+  -->
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/01/28/JS/DOM_BOM_JSC%20copy/" title="BOM을 활용한 브라우저 호완성 확보"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/01/26/JS/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%ED%83%9C%EA%B7%B8%EC%9C%84%EC%B9%98%EC%97%90%EB%8C%80%ED%95%B4/" title="스크립트 태그의 올바른 위치에 대해"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        <div class="publishby">
+            Theme by base on <a href="https://github.com/cofess" target="_blank"> cofess </a>_<a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a></br>
+            Modifier 2021&copy;SeongRok_Lee
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":2,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"position":"right","width":150,"height":300,"hOffset":0,"vOffset":-60},"mobile":{"show":true,"scale":0.4},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
