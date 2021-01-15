@@ -17,24 +17,27 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>BOM을 활용한 브라우저 호완성 확보 | SeongRok</title>
-  <meta name="description" content="구버전 브라우저에 대응하기위해서 사용하고자하는 메소드가 존재하지 않을경우 12if (!Object.keys) #사용하고자 하는 객체의 존재유무를 파악Object.keys &#x3D; (function ()&amp;#123;&amp;#125;); #기능구현 구버전 브라우저에도 호환성을 보장할 수 있습니다.사용자가 최신버전의 브라우저를 사용하는것이 베스트입니다.">
+  <title>2_babelFish 프로젝트 시작기 - 개발 방법론의 부재는 프로젝트에 위협이 된다 | SeongRok</title>
+  <meta name="description" content="불편한 진실을 마주할때 Babel 프로젝트를 시작하기 전 먼저 이전 프로젝트들을 되돌아보기로 했습니다.하지만 제 github엔 도중에 중단된 프로젝트가 가득한 것을 보며 무언가 잘못되었다라는 것을 알 수 있었습니다그리고 이 프로젝트는 절대로 같은 실수를 반복 하지 않기로 다짐하였습니다  군대에서의 경험에 배움을 얻다사실 이때까지의 개인 프로젝트를 성공적">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BOM을 활용한 브라우저 호완성 확보">
-<meta property="og:url" content="http://argon1025.github.io/2020/01/28/JS/DOM_BOM_JSC%20copy/">
+<meta property="og:title" content="2_babelFish 프로젝트 시작기 - 개발 방법론의 부재는 프로젝트에 위협이 된다">
+<meta property="og:url" content="http://argon1025.github.io/2021/01/15/2_BabelFish/">
 <meta property="og:site_name" content="SeongRok-Dev">
-<meta property="og:description" content="구버전 브라우저에 대응하기위해서 사용하고자하는 메소드가 존재하지 않을경우 12if (!Object.keys) #사용하고자 하는 객체의 존재유무를 파악Object.keys &#x3D; (function ()&amp;#123;&amp;#125;); #기능구현 구버전 브라우저에도 호환성을 보장할 수 있습니다.사용자가 최신버전의 브라우저를 사용하는것이 베스트입니다.">
+<meta property="og:description" content="불편한 진실을 마주할때 Babel 프로젝트를 시작하기 전 먼저 이전 프로젝트들을 되돌아보기로 했습니다.하지만 제 github엔 도중에 중단된 프로젝트가 가득한 것을 보며 무언가 잘못되었다라는 것을 알 수 있었습니다그리고 이 프로젝트는 절대로 같은 실수를 반복 하지 않기로 다짐하였습니다  군대에서의 경험에 배움을 얻다사실 이때까지의 개인 프로젝트를 성공적">
 <meta property="og:locale">
-<meta property="article:published_time" content="2020-01-28T07:12:26.000Z">
-<meta property="article:modified_time" content="2021-01-13T13:23:59.312Z">
+<meta property="og:image" content="https://media1.giphy.com/media/35EsMpEfGHkVoHbNTU/giphy.gif">
+<meta property="og:image" content="https://user-images.githubusercontent.com/55491354/104738621-1d618b00-5789-11eb-9fb6-c0076c7d2f31.gif">
+<meta property="article:published_time" content="2021-01-15T14:13:11.000Z">
+<meta property="article:modified_time" content="2021-01-15T16:22:50.754Z">
 <meta property="article:author" content="SeongRok_Lee">
-<meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="JS">
+<meta property="article:tag" content="Project">
+<meta property="article:tag" content="BabelFish">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media1.giphy.com/media/35EsMpEfGHkVoHbNTU/giphy.gif">
     <!-- fontawesome JS -->
     <script src="https://kit.fontawesome.com/c388c040f7.js" crossorigin="anonymous"></script>
   <!-- Canonical links -->
-  <link rel="canonical" href="http://argon1025.github.io/2020/01/28/JS/DOM_BOM_JSC%20copy/index.html">
+  <link rel="canonical" href="http://argon1025.github.io/2021/01/15/2_BabelFish/index.html">
   
     <link rel="alternate" href="/atom.xml" title="SeongRok-Dev" type="application/atom+xml">
   
@@ -313,14 +316,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-JS/DOM_BOM_JSC copy" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-2_BabelFish" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      BOM을 활용한 브라우저 호완성 확보
+      2_babelFish 프로젝트 시작기 - 개발 방법론의 부재는 프로젝트에 위협이 된다
     </h1>
   
 
@@ -328,41 +331,53 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/01/28/JS/DOM_BOM_JSC%20copy/" class="article-date">
-	  <time datetime="2020-01-28T07:12:26.000Z" itemprop="datePublished">2020-01-28</time>
+	<a href="/2021/01/15/2_BabelFish/" class="article-date">
+	  <time datetime="2021-01-15T14:13:11.000Z" itemprop="datePublished">2021-01-15</time>
 	</a>
 </span>
         
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-  </span>
-
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/JS/" rel="tag">JS</a>, <a class="article-tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+	<a class="article-tag-link-link" href="/tags/BabelFish/" rel="tag">BabelFish</a>, <a class="article-tag-link-link" href="/tags/Project/" rel="tag">Project</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/01/28/JS/DOM_BOM_JSC%20copy/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/15/2_BabelFish/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 33(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 334(words)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 1(minutes)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 2(minutes)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>구버전 브라우저에 대응하기위해서 사용하고자하는 메소드가 존재하지 않을경우<br></br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (!Object.keys) #사용하고자 하는 객체의 존재유무를 파악</span><br><span class="line">Object.keys &#x3D; (function ()&#123;&#125;); #기능구현</span><br></pre></td></tr></table></figure>
-<p>구버전 브라우저에도 호환성을 보장할 수 있습니다.<br>사용자가 최신버전의 브라우저를 사용하는것이 베스트입니다.<br></br></br></p>
+        </br>
+
+<h1 id="불편한-진실을-마주할때"><a href="#불편한-진실을-마주할때" class="headerlink" title="불편한 진실을 마주할때"></a>불편한 진실을 마주할때</h1><p><img src="https://media1.giphy.com/media/35EsMpEfGHkVoHbNTU/giphy.gif" ></img></br></p>
+<p>Babel 프로젝트를 시작하기 전 먼저 이전 프로젝트들을 되돌아보기로 했습니다.<br>하지만 제 github엔 도중에 중단된 프로젝트가 가득한 것을 보며 <strong>무언가 잘못되었다</strong>라는 것을 알 수 있었습니다<br>그리고 이 프로젝트는 절대로 같은 실수를 반복 하지 않기로 다짐하였습니다</p>
+<p></br></br></p>
+<h1 id="군대에서의-경험에-배움을-얻다"><a href="#군대에서의-경험에-배움을-얻다" class="headerlink" title="군대에서의 경험에 배움을 얻다"></a>군대에서의 경험에 배움을 얻다</h1><p>사실 이때까지의 개인 프로젝트를 성공적으로 마무리 했던 적이 몇 번 없었어요. 항상 마지막에 지쳐 포기해버렸죠<br>하지만 2년 동안 정보보호병으로 육군사관학교에서 복무했었던 기간 동안은 달랐어요<br>자신이 맡은 직무를 성실히 수행했고 업무 프로세스를 개선하기 위해 서버 자가 진단 툴을 개발했었고 이후 인정을 받아 분대장이라는 소중한 경험도 할 수 있었고요<br>또 개인적인 목표를 세워 일본어를 공부하기 시작해 JLPT 자격증 취득도 할 수 있었어요<br>군 생활은 항상 제가 끊임없이 목표를 설정하고 성취했었던 기간이었습니다.</p>
+<p>왜 똑같이 목표를 성취하기 위해 행동했지만, 결과가 다를까?<br>군대의 생활과 현재의 생활에서 차이점을 생각해보기 시작했어요</p>
+<p></br></br></p>
+<h1 id="큰-목표를-향한-작은-목표를-세우자"><a href="#큰-목표를-향한-작은-목표를-세우자" class="headerlink" title="큰 목표를 향한 작은 목표를 세우자"></a>큰 목표를 향한 작은 목표를 세우자</h1><p>개인 프로젝트를 진행할 때는 프로젝트의 완성이란 큰 목표에 초점을 두었습니다<br>당연히 “이걸 언제 다 하지?”라는 생각에 잠길 수밖에 없었죠<br>군대에서는 달랐습니다. 간부들은 큰 목표 하나를 달성하기 위해 큰 목표로 가기 위한 작은 목표를 세우고 명령을 하달하죠<br>작은 목표를 따라가다 보니 불가능해 보였던 큰 목표가 어느 순간 실현 가능한 목표로 바뀌는 순간이 항상 있었습니다</p>
+<p></br></br></p>
+<h1 id="개발-방법론의-부재는-프로젝트에-위협이-된다"><a href="#개발-방법론의-부재는-프로젝트에-위협이-된다" class="headerlink" title="개발 방법론의 부재는 프로젝트에 위협이 된다"></a>개발 방법론의 부재는 프로젝트에 위협이 된다</h1><p>결과론적으로 제가 느낀 것은 어떠한 목표를 달성하기 위해서는 그 목표로 가기 위한 세부목표의 설정이 필요하다는 것입니다<br>소프트웨어 개발에서는 이걸 소프트웨어 개발방법론이라고 하죠</p>
+<p>지금까지 체계화된 프로세스와 문서화를 기반으로 하는 개발방법론은<br>개발 속도를 늦추고 도움이 되지 않는 방법이라고 생각했었어요<br>문서화, 체계화를 할 시간에 코드를 한 줄 더 적는 게 좋을 거라고, 개발방법론은 큰 회사에서 적용하는 거라 생각했습니다</p>
+<p>프로젝트 시작 전에 잘못된 생각을 바로잡을 수 있어서 다행이라고 생각합니다</p>
+<p></br></br></p>
+<h1 id="애자일-개발방법론"><a href="#애자일-개발방법론" class="headerlink" title="애자일 개발방법론"></a>애자일 개발방법론</h1><p><img src="https://user-images.githubusercontent.com/55491354/104738621-1d618b00-5789-11eb-9fb6-c0076c7d2f31.gif" alt="1314930B49AF3A5D48"></p>
+<blockquote>
+<p>이런식으로 끝나버리지 않도록 …</p>
+</blockquote>
+<p>하지만 과도한 목표설정도 저는 독이 된다는 사실을 알고 있습니다. 계획만 세우다 끝난 적도 많거든요<br>프로젝트는 목표까지 걸어가는 여행과 같다고 생각합니다. 어느정도 이정표는 필요하겠지만 너무 과하면 여행이 아니게 돼버리듯이요<br>그래서 저는 추구하는 애자일 방법론을 참고하여 이번 프로젝트 목표관리를 하려고 합니다<br>아무런 계획이 없는 개발 방법과 계획이 지나치게 많은 개발 방법들 사이에서 타협점을 찾고자 하는 애자일 개발론이<br>저에게 필요하다고 느꼈습니다 큰 목표는 세울 수 있지만 노련하지 못하기에 세부적인 계획을 짜는 데는 무리가 있기 때문입니다</p>
+<p>이번 프로젝트는 단단한 뼈대에 살을 붙여 나가듯이 차근차근 진행해 보려고 합니다<br>다음엔 DB 설계로 찾아뵙겠습니다<br>긴 글 읽어주셔서 감사합니다</p>
 
       
     </div>
@@ -409,13 +424,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/" title="setInterval이벤트함수로 Prototype메소드를 호출"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/01/26/JS/DOM_BOM_JSC/" title="DOM/BOM/JSC"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/01/14/1_BabelFish/" title="1_babelFish 프로젝트 구상기"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
