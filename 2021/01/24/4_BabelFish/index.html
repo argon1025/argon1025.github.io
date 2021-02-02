@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang=kr>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>4_babelFish 프로젝트 - 백엔드 REST API서버 구성 | SeongRok</title>
+  <meta name="description" content="1-1. Nodejs + express저번 포스트에서 데이터베이스를 구축했고이번엔 구축한 DB를 기반으로 NodeJS 백엔드 서버를 구성해보려고 합니다 NodeJS를 선택한 이유는프론트와 백엔드를 모두 한개의 언어로 작업할 수 있다는점NPM을 통한 다양한 모듈을 자유롭게 사용할 수 있다는점무엇보다 처음부터 차근차근 자신이 원하는기능을 만들 수 있다는점이">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4_babelFish 프로젝트 - 백엔드 REST API서버 구성">
+<meta property="og:url" content="http://argon1025.github.io/2021/01/24/4_BabelFish/">
+<meta property="og:site_name" content="SeongRok-Dev">
+<meta property="og:description" content="1-1. Nodejs + express저번 포스트에서 데이터베이스를 구축했고이번엔 구축한 DB를 기반으로 NodeJS 백엔드 서버를 구성해보려고 합니다 NodeJS를 선택한 이유는프론트와 백엔드를 모두 한개의 언어로 작업할 수 있다는점NPM을 통한 다양한 모듈을 자유롭게 사용할 수 있다는점무엇보다 처음부터 차근차근 자신이 원하는기능을 만들 수 있다는점이">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-01-24T10:14:00.000Z">
+<meta property="article:modified_time" content="2021-02-02T16:15:49.323Z">
+<meta property="article:author" content="SeongRok_Lee">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Project">
+<meta property="article:tag" content="BabelFish">
+<meta property="article:tag" content="REST API">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+    <!-- fontawesome JS -->
+    <script src="https://kit.fontawesome.com/c388c040f7.js" crossorigin="anonymous"></script>
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://argon1025.github.io/2021/01/24/4_BabelFish/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="SeongRok-Dev" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/argon1025" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">성록</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Passionate developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Deagu, Korea</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="fas fa-home"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="fas fa-cannabis"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="fas fa-layer-group"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="fas fa-hashtag"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="fas fa-code-branch"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>사용자와 개발자의 시선차이를 극복할 수 있는</p>풀스택 개발자를 목표로 공부하고 있습니다
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BabelFish/" rel="tag">BabelFish</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Blog/" rel="tag">Hexo_Blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Command/" rel="tag">Hexo_Command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM-command/" rel="tag">NPM_command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project/" rel="tag">Project</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/REST-API/" rel="tag">REST API</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/" rel="tag">express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/BabelFish/" style="font-size: 13.75px;">BabelFish</a> <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/Hexo-Blog/" style="font-size: 13px;">Hexo_Blog</a> <a href="/tags/Hexo-Command/" style="font-size: 13px;">Hexo_Command</a> <a href="/tags/JS/" style="font-size: 13.5px;">JS</a> <a href="/tags/JavaScript/" style="font-size: 13.5px;">JavaScript</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/NPM/" style="font-size: 13px;">NPM</a> <a href="/tags/NPM-command/" style="font-size: 13px;">NPM_command</a> <a href="/tags/Node-js/" style="font-size: 14px;">Node.js</a> <a href="/tags/Project/" style="font-size: 13.75px;">Project</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/REST-API/" style="font-size: 13.25px;">REST API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/express/" style="font-size: 13.5px;">express</a> <a href="/tags/tensorflow/" style="font-size: 13px;">tensorflow</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/React/">React</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/02/03/5_BabelFish/" class="title">5_babelFish 프로젝트 - React를 이용한 프론트엔드 구성기</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-02-03T03:10:00.000Z" itemprop="datePublished">2021-02-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Node-js/">Node.js</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/24/4_BabelFish/" class="title">4_babelFish 프로젝트 - 백엔드 REST API서버 구성</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-24T10:14:00.000Z" itemprop="datePublished">2021-01-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/MySQL/">MySQL</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/17/Mysql/MysqlinstallOnmac/" class="title">MAC Homebrew 패키지 관리자를 통한 Mysql 설치와 세팅</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-17T14:39:10.000Z" itemprop="datePublished">2021-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/MySQL/">MySQL</a>
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/17/3_BabelFish/" class="title">3_babelFish 프로젝트 - DB 구성</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-17T11:45:13.000Z" itemprop="datePublished">2021-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/15/2_BabelFish/" class="title">2_babelFish 프로젝트 구상기 - 개발 방법론의 부재는 프로젝트에 위협이 된다</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-15T14:13:11.000Z" itemprop="datePublished">2021-01-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-4_BabelFish" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      4_babelFish 프로젝트 - 백엔드 REST API서버 구성
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/01/24/4_BabelFish/" class="article-date">
+	  <time datetime="2021-01-24T10:14:00.000Z" itemprop="datePublished">2021-01-24</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/BabelFish/" rel="tag">BabelFish</a>, <a class="article-tag-link-link" href="/tags/MySQL/" rel="tag">MySQL</a>, <a class="article-tag-link-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="article-tag-link-link" href="/tags/Project/" rel="tag">Project</a>, <a class="article-tag-link-link" href="/tags/REST-API/" rel="tag">REST API</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/24/4_BabelFish/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.2k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 13(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        </br>
+
+<h1 id="1-1-Nodejs-express"><a href="#1-1-Nodejs-express" class="headerlink" title="1-1. Nodejs + express"></a>1-1. Nodejs + express</h1><p>저번 포스트에서 데이터베이스를 구축했고<br>이번엔 구축한 DB를 기반으로 NodeJS 백엔드 서버를 구성해보려고 합니다</p>
+<p>NodeJS를 선택한 이유는<br>프론트와 백엔드를 모두 한개의 언어로 작업할 수 있다는점<br>NPM을 통한 다양한 모듈을 자유롭게 사용할 수 있다는점<br>무엇보다 처음부터 차근차근 자신이 원하는기능을 만들 수 있다는점이<br>아직 부족한 제게 많은것을 공부할 수 있는 기회가 될꺼라고 생각했습니다!</p>
+<h1 id="1-2-왜-REST-API인가"><a href="#1-2-왜-REST-API인가" class="headerlink" title="1-2. 왜 REST API인가"></a>1-2. 왜 REST API인가</h1><p><code>REpresentational</code><br><code>State</code><br><code>Transfer</code><br>REST란 자원을 이름으로 구분하여 자원의 상태를 제어하는모든것을 의미합니다<br>즉 REST API란 REST 제약 조건을 지키는 프로그래밍 인터페이스를 말합니다</p>
+<p>HTTP 프로토콜을 따르는 모든 플랫폼에서 사용이 가능한 장점이 있고<br>멀티 플랫폼 지원을 위해 각기 다른 서비스 자원 관리 아키텍처를 운용할 필요가 없어지며<br>프론트엔드와 백엔드의 구분을 명확하게 함으로써 서로 분리된 개발을 할 수 있는 장점이 있기때문에<br>이번 프로젝트에 적용해보고자 합니다</p>
+<h1 id="2-프로젝트-엔드포인트-구성"><a href="#2-프로젝트-엔드포인트-구성" class="headerlink" title="2. 프로젝트 엔드포인트 구성"></a>2. 프로젝트 엔드포인트 구성</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;token&#x2F;join</span><br><span class="line">POST &#x2F;token</span><br><span class="line">PUT &#x2F;api&#x2F;users&#x2F;:&#123;useremail&#125;</span><br><span class="line">DELETE &#x2F;api&#x2F;users&#x2F;:&#123;useremail&#125;</span><br><span class="line">GET&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes</span><br><span class="line">POST&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes</span><br><span class="line">PUT&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;</span><br><span class="line">DELETE&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;</span><br><span class="line">PUT&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;updated-date</span><br><span class="line">GET&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;words</span><br><span class="line">POST&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;words</span><br><span class="line">PUT&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;words&#x2F;&#123;wordid&#125;</span><br><span class="line">DELETE&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;words&#x2F;&#123;wordid&#125;</span><br><span class="line">PUT&#x2F;api&#x2F;users&#x2F;&#123;useremail&#125;&#x2F;notes&#x2F;&#123;noteid&#125;&#x2F;words&#x2F;&#123;wordid&#125;&#x2F;wrong-count</span><br></pre></td></tr></table></figure>
+<p>먼저 데이터 베이스를 설계할때 구상했던 요구사항 분석과 제가 만들고 싶은 기능에 대해 생각한뒤<br>엔드포인트를 구성했습니다!</p>
+<p>엔드포인트를 구성할때 아래 사이트를 많이 참고했습니다<br><a target="_blank" rel="noopener" href="https://meetup.toast.com/posts/92">REST API 제대로 알고 사용하기</a><br><a target="_blank" rel="noopener" href="https://devuna.tistory.com/79">URL 규칙, RESTful한 URL이란?</a><br><a target="_blank" rel="noopener" href="https://sanghaklee.tistory.com/57">RESTful API 설계 가이드</a></p>
+<h2 id="2-1-Token"><a href="#2-1-Token" class="headerlink" title="2-1 Token"></a>2-1 Token</h2><p>토큰에 관련된 Endpoint 입니다</p>
+<h3 id="POST-token-join"><a href="#POST-token-join" class="headerlink" title="POST /token/join"></a>POST /token/join</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;userid&quot;</span>: <span class="string">&quot;test1@naver.com&quot;</span>,</span><br><span class="line"><span class="attr">&quot;name&quot;</span>: <span class="string">&quot;name&quot;</span>,</span><br><span class="line"><span class="attr">&quot;password&quot;</span> : <span class="string">&quot;test&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>유저를 등록합니다</strong> Body 데이터에는 위와 같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Join Successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;3&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h3 id="POST-token"><a href="#POST-token" class="headerlink" title="POST /token"></a>POST /token</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;userid&quot;</span>: <span class="string">&quot;test1@naver.com&quot;</span>,</span><br><span class="line"><span class="attr">&quot;password&quot;</span> : <span class="string">&quot;test&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>유저 인증</strong>을 진행합니다 Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;token&quot;</span>: <span class="string">&quot;ThisIsToKeN&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Login Successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;3&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 토큰, 메시지, 메시지 코드를 반환합니다</p>
+<h2 id="2-2-Users"><a href="#2-2-Users" class="headerlink" title="2-2 Users"></a>2-2 Users</h2><p>이 엔드포인트는 기본적으로 헤더에 <code>token</code> 데이터가 필요합니다</p>
+<h3 id="PUT-api-users-useremail"><a href="#PUT-api-users-useremail" class="headerlink" title="PUT /api/users/:{useremail}"></a>PUT /api/users/:{useremail}</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;name&quot;</span> : <span class="string">&quot;name&quot;</span>,</span><br><span class="line"><span class="attr">&quot;password&quot;</span> : <span class="string">&quot;testpassword&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>등록된 유저정보를 변경</strong>합니다 Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;user Information change successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;10&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h3 id="DELETE-api-users-useremail"><a href="#DELETE-api-users-useremail" class="headerlink" title="DELETE /api/users/:{useremail}"></a>DELETE /api/users/:{useremail}</h3><p><strong>등록된 유저정보를 삭제</strong>합니다 Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;user Information delete successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;13&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h2 id="2-3-Notes"><a href="#2-3-Notes" class="headerlink" title="2-3 Notes"></a>2-3 Notes</h2><p>이 엔드포인트는 기본적으로 헤더에 <code>token</code> 데이터가 필요합니다</p>
+<h3 id="GET-api-users-useremail-notes"><a href="#GET-api-users-useremail-notes" class="headerlink" title="GET/api/users/{useremail}/notes"></a>GET/api/users/{useremail}/notes</h3><p><strong>유저가 생성한 단어장 리스트</strong>를 요청합니다 Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Note&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;User Note Information Load Successfully&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;13&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;data&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;id&quot;</span>: <span class="number">6</span>,</span><br><span class="line">            <span class="attr">&quot;member_email&quot;</span>: <span class="string">&quot;test12234@naver.com&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;단어장1&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Learning_Day&quot;</span>: <span class="string">&quot;1997-10-24T15:00:00.000Z&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Learning_Count&quot;</span>: <span class="number">0</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;id&quot;</span>: <span class="number">7</span>,</span><br><span class="line">            <span class="attr">&quot;member_email&quot;</span>: <span class="string">&quot;test12234@naver.com&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;단어장2&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Learning_Day&quot;</span>: <span class="string">&quot;1997-10-24T15:00:00.000Z&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Learning_Count&quot;</span>: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지, 메시지 코드, 데이터를 반환합니다<br>데이터에는 다음과같은 정보를 포함합니다</p>
+<ul>
+<li><code>id</code> : 단어장 id</li>
+<li><code>member_email</code> : 회원 아이디</li>
+<li><code>name</code> : 단어장 이름</li>
+<li><code>Learning_Day</code> : 마지막 학습일</li>
+<li><code>Learning_Count</code> : 학습완료 횟수</li>
+</ul>
+<h3 id="POST-api-users-useremail-notes"><a href="#POST-api-users-useremail-notes" class="headerlink" title="POST/api/users/{useremail}/notes"></a>POST/api/users/{useremail}/notes</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;notename&quot;</span>: <span class="string">&quot;단어장1&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>단어장을 생성</strong>합니다 Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;notes&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Create user note successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;20&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h3 id="PUT-api-users-useremail-notes-noteid"><a href="#PUT-api-users-useremail-notes-noteid" class="headerlink" title="PUT/api/users/{useremail}/notes/{noteid}"></a>PUT/api/users/{useremail}/notes/{noteid}</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;notename&quot;</span>: <span class="string">&quot;단어장1&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>단어장을 수정</strong>합니다 Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;notes&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Create user note successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;20&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h3 id="DELETE-api-users-useremail-notes-noteid"><a href="#DELETE-api-users-useremail-notes-noteid" class="headerlink" title="DELETE/api/users/{useremail}/notes/{noteid}"></a>DELETE/api/users/{useremail}/notes/{noteid}</h3><p><strong>단어장을 삭제</strong>합니다 Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;notes&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Delete note successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;28&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다</p>
+<h3 id="PUT-api-users-useremail-notes-noteid-updated-date"><a href="#PUT-api-users-useremail-notes-noteid-updated-date" class="headerlink" title="PUT/api/users/{useremail}/notes/{noteid}/updated-date"></a>PUT/api/users/{useremail}/notes/{noteid}/updated-date</h3><p><strong>단어장 학습상태</strong>를 갱신합니다 Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;notes&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;note updated successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;24&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다<br>이 작업을 수행하면 다음 단어장 데이터가 수정됩니다</p>
+<ul>
+<li><code>Learning_Day</code> = <code>Today()</code></li>
+<li><code>Learning_Count</code> = <code>Learning_Count+1</code></li>
+</ul>
+<h2 id="Words"><a href="#Words" class="headerlink" title="Words"></a>Words</h2><p>이 엔드포인트는 기본적으로 헤더에 <code>token</code> 데이터가 필요합니다</p>
+<h3 id="GET-api-users-useremail-notes-noteid-words"><a href="#GET-api-users-useremail-notes-noteid-words" class="headerlink" title="GET/api/users/{useremail}/notes/{noteid}/words"></a>GET/api/users/{useremail}/notes/{noteid}/words</h3><p><strong>유저의 단어장 리스트</strong>를 요청합니다<br>Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Words&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Load Successfully&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;36&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;data&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;id&quot;</span>: <span class="number">6</span>,</span><br><span class="line">            <span class="attr">&quot;note_id&quot;</span>: <span class="number">3</span>,</span><br><span class="line">            <span class="attr">&quot;Word_Title&quot;</span>: <span class="string">&quot;谷&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Mean1&quot;</span>: <span class="string">&quot;계곡곡&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Mean2&quot;</span>: <span class="string">&quot;こく&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Wrong_Count&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지, 메시지 코드, 데이터를 반환합니다<br>데이터에는 다음과같은 정보를 포함합니다</p>
+<ul>
+<li><code>id</code> : 단어 id</li>
+<li><code>note_id</code> : 속한 단어장id</li>
+<li><code>Word_Title</code> : 단어</li>
+<li><code>Mean1</code> : 단어 뜻 1</li>
+<li><code>Mean2</code> : 단어 뜻 2</li>
+<li><code>Wrong_Count</code> : 오답 횟수</li>
+</ul>
+<h3 id="POST-api-users-useremail-notes-noteid-words"><a href="#POST-api-users-useremail-notes-noteid-words" class="headerlink" title="POST/api/users/{useremail}/notes/{noteid}/words"></a>POST/api/users/{useremail}/notes/{noteid}/words</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;mean1&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;mean2&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>단어를 추가</strong>합니다<br>Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Words&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Word Created successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;40&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지, 메시지 코드, 데이터를 반환합니다</p>
+<h3 id="PUT-api-users-useremail-notes-noteid-words-wordid"><a href="#PUT-api-users-useremail-notes-noteid-words-wordid" class="headerlink" title="PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}"></a>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;mean1&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;mean2&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>등록된 단어를 수정</strong>합니다<br>Body 데이터에는 위와같은 <code>Json</code> 정보가 필요합니다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Words&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Word Information Change successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;44&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DELETE-api-users-useremail-notes-noteid-words-wordid"><a href="#DELETE-api-users-useremail-notes-noteid-words-wordid" class="headerlink" title="DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}"></a>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</h3><p><strong>등록된 단어를 삭제</strong>합니다<br>Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Words&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Word Delete successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;48&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="PUT-api-users-useremail-notes-noteid-words-wordid-wrong-count"><a href="#PUT-api-users-useremail-notes-noteid-words-wordid-wrong-count" class="headerlink" title="PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count"></a>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</h3><p><strong>단어 오답 횟수를 수정</strong>합니다<br>Body 데이터는 포함하지 않습니다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;error&quot;</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;location&quot;</span>: <span class="string">&quot;Words&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg&quot;</span>: <span class="string">&quot;Word Delete successful&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;msg_code&quot;</span>: <span class="string">&quot;52&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>작업을 성공적으로 수행하면 메시지와 메시지 코드를 반환합니다<br>이 작업을 수행하면 다음 단어 데이터가 수정됩니다</p>
+<ul>
+<li><code>Wrong_Count</code> = <code>Wrong_Count+1</code></li>
+</ul>
+<h1 id="3-데이터-검증"><a href="#3-데이터-검증" class="headerlink" title="3. 데이터 검증"></a>3. 데이터 검증</h1><p>API 서버가 받는 모든 데이터들은 정규화를 이용해서 검증하도록 구성했습니다</p>
+<ul>
+<li>userid<ul>
+<li><code>Length.min</code> =&gt; <code>1</code></li>
+<li><code>Length.max</code> =&gt; <code>49</code></li>
+<li><code>Type</code> =&gt; <code>Email</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>useremail<ul>
+<li><code>Length.min</code> =&gt; <code>1</code></li>
+<li><code>Length.max</code> =&gt; <code>49</code></li>
+<li><code>Type</code> =&gt; <code>Email</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>password<ul>
+<li><code>Length.min</code> =&gt; <code>5</code></li>
+<li><code>Length.max</code> =&gt; <code>31</code></li>
+<li><code>Type</code> =&gt; <code>alphabet</code>, <code>number</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>name<ul>
+<li><code>Length.min</code> =&gt; <code>1</code></li>
+<li><code>Length.max</code> =&gt; <code>10</code></li>
+<li><code>Type</code> =&gt; <code>alphabet</code>, <code>number</code>, <code>한글</code>, <code>Spacebar</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>notename<ul>
+<li><code>Length.min</code> =&gt; <code>1</code></li>
+<li><code>Length.max</code> =&gt; <code>11</code></li>
+<li><code>Type</code> =&gt; <code>alphabet</code>, <code>number</code>, <code>한글</code>, <code>Spacebar</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>noteid, wordid<ul>
+<li><code>Type</code> =&gt; <code>number</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<ul>
+<li>title, mean1, mean2<ul>
+<li><code>Length.min</code> =&gt; <code>1</code></li>
+<li><code>Length.max</code> =&gt; <code>30</code></li>
+<li><code>Type</code> =&gt; <code>alphabet</code>, <code>number</code>, <code>漢字</code>, <code>ひらがな</code>, <code>カタカナ</code>, <code>한글</code>, <code>Spacebar</code></li>
+</ul>
+</li>
+</ul>
+</br>
+
+<h1 id="4-응답코드"><a href="#4-응답코드" class="headerlink" title="4. 응답코드"></a>4. 응답코드</h1><p>기본적으로 http-status-code로 상태를 반환 하지만<br>앱 제작시 다국어 지원을 보조하기위해 메시지 코드를 반환하도록 했습니다</p>
+<table>
+<thead>
+<tr>
+<th align="center">msg_code</th>
+<th>description</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">t1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>POST/token</td>
+</tr>
+<tr>
+<td align="center">t2</td>
+<td>등록된 회원이 아닙니다</td>
+<td>POST/token</td>
+</tr>
+<tr>
+<td align="center">t3</td>
+<td>회원 인증에 성공했습니다</td>
+<td>POST/token</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>토큰데이터가 올바르지 않습니다</td>
+<td>everywhere</td>
+</tr>
+<tr>
+<td align="center">t5</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>POST/token/join</td>
+</tr>
+<tr>
+<td align="center">t6</td>
+<td>이미 가입된 계정입니다</td>
+<td>POST/token/join</td>
+</tr>
+<tr>
+<td align="center">t7</td>
+<td>회원등록 되었습니다</td>
+<td>POST/token/join</td>
+</tr>
+<tr>
+<td align="center">u1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>PUT /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u2</td>
+<td>다른 사용자의 정보를 수정할 수 없습니다</td>
+<td>PUT /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u3</td>
+<td>유저 정보를 변경했습니다</td>
+<td>PUT /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u4</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>DELETE /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u5</td>
+<td>다른 사용자의 정보를 삭제할 수 없습니다</td>
+<td>DELETE /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u6</td>
+<td>존재하지 않거나 이미 삭제된 유저 입니다</td>
+<td>DELETE /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">u7</td>
+<td>유저 정보를 삭제했습니다</td>
+<td>DELETE /api/users/:{useremail}</td>
+</tr>
+<tr>
+<td align="center">n1-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>GET/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n1-2</td>
+<td>다른 사용자의 단어장 정보를 열람할 수 없습니다</td>
+<td>GET/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n1-3</td>
+<td>사용자에 등록된 단어장이 없어 응답할 데이터가 없습니다</td>
+<td>GET/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n1-4</td>
+<td>유저 단어장 리스트를 정상적으로 반환 했습니다</td>
+<td>GET/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n2-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>POST/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n2-2</td>
+<td>다른 사용자의 단어장을 추가할 수 없습니다</td>
+<td>POST/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n2-3</td>
+<td>데이터베이스 에러로 단어장 등록에 실패했습니다</td>
+<td>POST/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n2-4</td>
+<td>단어장을 등록했습니다</td>
+<td>POST/api/users/{useremail}/notes</td>
+</tr>
+<tr>
+<td align="center">n3-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n3-2</td>
+<td>다른 사용자의 단어장을 수정할 수 없습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n3-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 수정에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n3-4</td>
+<td>단어장 정보를 수정했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n4-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n4-2</td>
+<td>다른 사용자의 단어장을 수정할 수 없습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n4-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 삭제에 실패했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n4-4</td>
+<td>단어장을 삭제했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}</td>
+</tr>
+<tr>
+<td align="center">n5-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/updated-date</td>
+</tr>
+<tr>
+<td align="center">n5-2</td>
+<td>다른 사용자의 단어장을 수정할 수 없습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/updated-date</td>
+</tr>
+<tr>
+<td align="center">n5-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 수정에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/updated-date</td>
+</tr>
+<tr>
+<td align="center">n5-4</td>
+<td>단어장 학습일자를 갱신했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/updated-date</td>
+</tr>
+<tr>
+<td align="center">w1-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>GET/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w1-2</td>
+<td>다른사용자의 단어리스트를 열람할 수 없습니다</td>
+<td>GET/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w1-3</td>
+<td>정상적으로 작업을 수행했지만 등록된 단어가 업습니다</td>
+<td>GET/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w1-4</td>
+<td>정상적으로 작업을 수행 했습니다</td>
+<td>GET/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w2-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>POST/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w2-2</td>
+<td>파라메터와 토큰의 정보가 일치하지 않습니다</td>
+<td>POST/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w2-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 추가에 실패했습니다</td>
+<td>POST/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w2-4</td>
+<td>다른 사용자의 단어장또는 존재하지 않는 단어장입니다</td>
+<td>POST/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w2-5</td>
+<td>단어를 등록 했습니다</td>
+<td>POST/api/users/{useremail}/notes/{noteid}/words</td>
+</tr>
+<tr>
+<td align="center">w3-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w3-2</td>
+<td>파라메터와 토큰의 정보가 일치하지 않습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w3-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 추가에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w3-4</td>
+<td>다른 사용자의 단어장또는 존재하지 않는 단어장입니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w3-5</td>
+<td>단어를 수정했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w4-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w4-2</td>
+<td>파라메터와 토큰의 정보가 일치하지 않습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w4-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 삭제에 실패했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w4-4</td>
+<td>다른 사용자의 단어장또는 존재하지 않는 단어장입니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w4-5</td>
+<td>단어를 삭제했습니다</td>
+<td>DELETE/api/users/{useremail}/notes/{noteid}/words/{wordid}</td>
+</tr>
+<tr>
+<td align="center">w5-1</td>
+<td>데이터 검증에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</td>
+</tr>
+<tr>
+<td align="center">w5-2</td>
+<td>파라메터와 토큰의 정보가 일치하지 않습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</td>
+</tr>
+<tr>
+<td align="center">w5-3</td>
+<td>변경할 사항이 없거나 데이터베이스 에러로 수정에 실패했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</td>
+</tr>
+<tr>
+<td align="center">w5-4</td>
+<td>다른 사용자의 단어장또는 존재하지 않는 단어장입니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</td>
+</tr>
+<tr>
+<td align="center">w5-5</td>
+<td>정상적으로 작업을 수행 했습니다</td>
+<td>PUT/api/users/{useremail}/notes/{noteid}/words/{wordid}/wrong-count</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="구성을-마치며"><a href="#구성을-마치며" class="headerlink" title="구성을 마치며"></a>구성을 마치며</h1><p>처음 해보는 것이였지만 느낌으로만 알고있던 개념들을 직접 구현하는것과는 상당한 차이가 있구나 다시한번 느낄 수 있는 계기가 된 작업이었습니다!<br>작업한 Nodejs 서버는 제<a target="_blank" rel="noopener" href="https://github.com/argon1025/Babelfish_API">저장소</a>에서 코드를 보실 수 있습니다<br>다음은 프로젝트 프론트엔드 구성편에서 뵙겠습니다!<br>긴글 읽어주셔서 감사합니다<br></br></p>
+
+      
+    </div>
+    <!-- 카피라이트 위젯
+    <div class="article-footer">
+      
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/argon1025" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/argon1025" target="_blank"><span class="text-dark">성록</span><small class="ml-1x">Passionate developer</small></a></h3>
+        <div>사용자와 개발자의 시선차이를 극복할 수 있는 풀스택 개발자를 목표로 공부하고 있습니다</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+    -->
+  </article>
+  <!-- 댓글 위젯
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+  -->
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/02/03/5_BabelFish/" title="5_babelFish 프로젝트 - React를 이용한 프론트엔드 구성기"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/01/17/Mysql/MysqlinstallOnmac/" title="MAC Homebrew 패키지 관리자를 통한 Mysql 설치와 세팅"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+        <div class="publishby">
+            Theme by base on <a href="https://github.com/cofess" target="_blank"> cofess </a>_<a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a></br>
+            Modifier 2021&copy;SeongRok_Lee
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":2,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"position":"right","width":150,"height":300,"hOffset":0,"vOffset":-60},"mobile":{"show":true,"scale":0.4},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
