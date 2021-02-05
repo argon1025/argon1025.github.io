@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>SeongRok-Dev</title>
+  <title>Leeseongrok 기술블로그</title>
   
   
   <link href="http://argon1025.github.io/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://argon1025.github.io/</id>
   
   <author>
-    <name>SeongRok_Lee</name>
+    <name>Seongrok Lee</name>
     
   </author>
   

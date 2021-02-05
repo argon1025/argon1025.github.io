@@ -1,366 +1,213 @@
 <!DOCTYPE html>
-<html lang=kr>
+<html>
 <head>
-  <meta charset="utf-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no,email=no,adress=no">
-  <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
-  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
-  
-  
-  <title>NPM 기본 사용 | SeongRok</title>
-  <meta name="description" content="NPM 사용법NPM 버전 확인$ npm --version NPM 업데이트sudo npm install npm -g NPM 모듈 다운로드 - 로컬$npm install &lt;모듈 이름&gt; 모듈 제거$ npm uninstall express 글로벌 모듈 제거$ npm uninstall -g express 모듈 업데이트$ npm update express">
-<meta property="og:type" content="article">
-<meta property="og:title" content="NPM 기본 사용">
-<meta property="og:url" content="http://argon1025.github.io/2020/03/26/NPM_Use/">
-<meta property="og:site_name" content="SeongRok-Dev">
-<meta property="og:description" content="NPM 사용법NPM 버전 확인$ npm --version NPM 업데이트sudo npm install npm -g NPM 모듈 다운로드 - 로컬$npm install &lt;모듈 이름&gt; 모듈 제거$ npm uninstall express 글로벌 모듈 제거$ npm uninstall -g express 모듈 업데이트$ npm update express">
-<meta property="og:locale">
-<meta property="article:published_time" content="2020-03-26T10:23:52.000Z">
-<meta property="article:modified_time" content="2021-01-20T12:22:25.873Z">
-<meta property="article:author" content="SeongRok_Lee">
-<meta property="article:tag" content="NPM">
-<meta property="article:tag" content="NPM_command">
-<meta name="twitter:card" content="summary">
-    <!-- fontawesome JS -->
-    <script src="https://kit.fontawesome.com/c388c040f7.js" crossorigin="anonymous"></script>
-  <!-- Canonical links -->
-  <link rel="canonical" href="http://argon1025.github.io/2020/03/26/NPM_Use/index.html">
-  
-    <link rel="alternate" href="/atom.xml" title="SeongRok-Dev" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png" type="image/x-icon">
-  
-  
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+        <title>NPM 기본 사용 | Leeseongrok 기술블로그</title>
+    
+    <title>Leeseongrok 기술블로그</title>
+    
 <link rel="stylesheet" href="/css/style.css">
 
-  
-  
-  
-  
-<meta name="generator" content="Hexo 5.3.0"></head>
-
-
-<body class="main-center no-sidebar" itemscope itemtype="http://schema.org/WebPage">
-  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-  <div class="slimContent">
-    <div class="navbar-header">
-      
-      
-      <div class="profile-block text-center">
-        <a id="avatar" href="https://github.com/argon1025" target="_blank">
-          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
-        </a>
-        <h2 id="name" class="hidden-xs hidden-sm">성록</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Passionate developer</h3>
-        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Deagu, Korea</small>
-      </div>
-      
-      <div class="search" id="search-form-wrap">
-
-    <form class="search-form sidebar-form">
-        <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
-            <span class="input-group-btn">
-                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
-            </span>
-        </div>
-    </form>
-    <div class="ins-search">
-  <div class="ins-search-mask"></div>
-  <div class="ins-search-container">
-    <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
-      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-    </div>
-    <div class="ins-section-wrapper">
-      <div class="ins-section-container"></div>
-    </div>
-  </div>
-</div>
-
-
-</div>
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
-        
-        
-        <li class="menu-item menu-item-home">
-          <a href="/.">
-            
-            <i class="fas fa-home"></i>
-            
-            <span class="menu-title">Home</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            
-            <i class="fas fa-cannabis"></i>
-            
-            <span class="menu-title">Archives</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories">
-            
-            <i class="fas fa-layer-group"></i>
-            
-            <span class="menu-title">Categories</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            
-            <i class="fas fa-hashtag"></i>
-            
-            <span class="menu-title">Tags</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-repository">
-          <a href="/repository">
-            
-            <i class="fas fa-code-branch"></i>
-            
-            <span class="menu-title">Repository</span>
-          </a>
-        </li>
-        
-      </ul>
-      
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-    </ul>
-
-    </nav>
-  </div>
-</header>
-
-  
-    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
     
-      <div class="widget">
-    <h3 class="widget-title">Board</h3>
-    <div class="widget-body">
-        <div id="board">
-            <div class="content">
-                <p>사용자와 개발자의 시선차이를 극복할 수 있는</p>풀스택 개발자를 목표로 공부하고 있습니다
-            </div>
-        </div>
-    </div>
-</div>
+<link rel="stylesheet" href="/css/gitment.css">
 
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NPM/">NPM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BabelFish/" rel="tag">BabelFish</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Blog/" rel="tag">Hexo_Blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo-Command/" rel="tag">Hexo_Command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS/" rel="tag">JS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM-command/" rel="tag">NPM_command</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project/" rel="tag">Project</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/REST-API/" rel="tag">REST API</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/" rel="tag">express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget-body tagcloud">
-      <a href="/tags/BabelFish/" style="font-size: 13.75px;">BabelFish</a> <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/Hexo-Blog/" style="font-size: 13px;">Hexo_Blog</a> <a href="/tags/Hexo-Command/" style="font-size: 13px;">Hexo_Command</a> <a href="/tags/JS/" style="font-size: 13.5px;">JS</a> <a href="/tags/JavaScript/" style="font-size: 13.5px;">JavaScript</a> <a href="/tags/MySQL/" style="font-size: 13px;">MySQL</a> <a href="/tags/NPM/" style="font-size: 13px;">NPM</a> <a href="/tags/NPM-command/" style="font-size: 13px;">NPM_command</a> <a href="/tags/Node-js/" style="font-size: 14px;">Node.js</a> <a href="/tags/Project/" style="font-size: 13.75px;">Project</a> <a href="/tags/Python/" style="font-size: 13px;">Python</a> <a href="/tags/REST-API/" style="font-size: 13.25px;">REST API</a> <a href="/tags/React/" style="font-size: 13px;">React</a> <a href="/tags/express/" style="font-size: 13.5px;">express</a> <a href="/tags/tensorflow/" style="font-size: 13px;">tensorflow</a>
-    </div>
-  </div>
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Archive</h3>
-    <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget-body">
-      <ul class="recent-post-list list-unstyled no-thumbnail">
-        
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/React/">React</a>
-              </p>
-              <p class="item-title">
-                <a href="/2021/02/03/5_BabelFish/" class="title">5_babelFish 프로젝트 - React를 이용한 프론트엔드 구성기</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-02-03T03:10:00.000Z" itemprop="datePublished">2021-02-03</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Node-js/">Node.js</a>
-              </p>
-              <p class="item-title">
-                <a href="/2021/01/24/4_BabelFish/" class="title">4_babelFish 프로젝트 - 백엔드 REST API서버 구성</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-01-24T10:14:00.000Z" itemprop="datePublished">2021-01-24</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/MySQL/">MySQL</a>
-              </p>
-              <p class="item-title">
-                <a href="/2021/01/17/Mysql/MysqlinstallOnmac/" class="title">MAC Homebrew 패키지 관리자를 통한 Mysql 설치와 세팅</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-01-17T14:39:10.000Z" itemprop="datePublished">2021-01-17</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/MySQL/">MySQL</a>
-              </p>
-              <p class="item-title">
-                <a href="/2021/01/17/3_BabelFish/" class="title">3_babelFish 프로젝트 - DB 구성</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-01-17T11:45:13.000Z" itemprop="datePublished">2021-01-17</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Leeseongrok 기술블로그" type="application/atom+xml">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+        <nav class="header-nav">
+            <div class="header-nav-logo">
                 
-              </p>
-              <p class="item-title">
-                <a href="/2021/01/15/2_BabelFish/" class="title">2_babelFish 프로젝트 구상기 - 개발 방법론의 부재는 프로젝트에 위협이 된다</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2021-01-15T14:13:11.000Z" itemprop="datePublished">2021-01-15</time>
-              </p>
+                    <a href="/" class="header-nav-link">
+                        <svg href="/" class="logo" version="1.1" id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                            y="0px" viewBox="0 0 512.006 512.006" style="enable-background:new 0 0 512.006 512.006;"
+                            xml:space="preserve">
+                            <g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M268.017,359.862c-3.034,3.481-7.414,5.478-12.017,5.478c-4.603,0-8.982-1.997-12.017-5.478
+                            c-2.722-3.123-7.46-3.448-10.582-0.726c-3.123,2.721-3.447,7.459-0.727,10.582c5.884,6.751,14.386,10.622,23.325,10.622
+                            c8.94,0,17.441-3.872,23.325-10.622c2.721-3.123,2.397-7.86-0.727-10.582C275.476,356.413,270.739,356.74,268.017,359.862z" />
+                                        <path d="M187.368,303.466v-12.093c0-4.142-3.357-7.5-7.5-7.5s-7.5,3.358-7.5,7.5v12.093c0,4.142,3.357,7.5,7.5,7.5
+                            C184.011,310.966,187.368,307.608,187.368,303.466z" />
+                                        <path d="M339.632,303.466v-12.093c0-4.142-3.357-7.5-7.5-7.5s-7.5,3.358-7.5,7.5v12.093c0,4.142,3.357,7.5,7.5,7.5
+                            C336.274,310.966,339.632,307.608,339.632,303.466z" />
+                                        <path
+                                            d="M505.148,164.918c-4.419-4.419-10.289-6.852-16.533-6.852h-0.037c-21.551,0.034-63.099,5.486-99.23,41.618
+                            c-2.746,2.746-5.328,5.57-7.764,8.433c-0.114-0.085-0.223-0.174-0.338-0.259c-11.093-8.26-23.682-15.135-37.549-20.583
+                            l1.465-16.745l9.876-0.816c21.14-1.746,40.902-9.875,57.152-23.51l4.987-4.185c3.173-2.663,3.587-7.393,0.924-10.566
+                            c-2.662-3.172-7.393-3.587-10.566-0.924l-4.986,4.185c-13.86,11.629-30.716,18.563-48.745,20.052l-16.179,1.337
+                            c-3.642,0.301-6.536,3.182-6.854,6.821l-1.687,19.283c-10.173-3.085-20.921-5.478-32.184-7.153l9.682-110.665
+                            c0.784-8.976,8.728-15.644,17.705-14.856c4.349,0.38,8.289,2.432,11.095,5.776c2.807,3.344,4.143,7.581,3.762,11.929
+                            l-4.155,47.488c-0.192,2.202,0.596,4.377,2.155,5.944c1.559,1.567,3.739,2.366,5.934,2.184l8.037-0.664
+                            c11.254-0.93,21.773-5.257,30.424-12.515l30.566-25.648c6.902-5.794,17.232-4.888,23.024,2.014
+                            c5.792,6.903,4.889,17.232-2.015,23.025c-3.173,2.663-3.587,7.393-0.924,10.566c2.662,3.172,7.392,3.587,10.566,0.924
+                            c13.238-11.109,14.972-30.918,3.862-44.158c-11.11-13.239-30.92-14.971-44.157-3.863l-30.566,25.648
+                            c-6.047,5.074-13.356,8.169-21.188,8.98l3.38-38.619c0.729-8.34-1.833-16.465-7.214-22.879
+                            c-5.382-6.413-12.939-10.347-21.28-11.077c-17.229-1.501-32.45,11.279-33.954,28.493l-9.642,110.209
+                            c-8.426-0.758-17.096-1.149-25.996-1.149c-8.9,0-17.57,0.391-25.996,1.149l-9.642-110.209c-1.504-17.215-16.732-30-33.955-28.494
+                            c-8.341,0.729-15.897,4.664-21.279,11.077c-5.381,6.414-7.942,14.539-7.213,22.879l3.379,38.619
+                            c-7.832-0.811-15.142-3.906-21.188-8.979L109.54,72.536c-13.238-11.109-33.047-9.377-44.158,3.863
+                            c-11.109,13.239-9.376,33.048,3.862,44.157l30.566,25.649c16.249,13.635,36.012,21.764,57.151,23.51l9.876,0.816l1.465,16.745
+                            c-13.866,5.448-26.456,12.324-37.549,20.583c-0.114,0.085-0.224,0.174-0.338,0.259c-2.436-2.863-5.018-5.687-7.764-8.433
+                            c-36.132-36.132-77.68-41.584-99.23-41.618h-0.037c-6.244,0-12.114,2.433-16.533,6.852C2.424,169.346-0.01,175.231,0,181.489
+                            c0.011,7.047,0.611,16.242,2.665,26.678c0.03,0.189,0.066,0.376,0.111,0.561c4.296,21.38,14.737,47.887,38.842,71.992
+                            c11.489,11.489,23.76,20.075,36.55,25.586c-0.302,4.112-0.458,8.294-0.458,12.548c0,41.339,14.211,77.947,41.098,105.867
+                            c2.873,2.984,7.621,3.073,10.604,0.2c2.983-2.873,3.073-7.621,0.2-10.605c-24.142-25.07-36.902-58.081-36.902-95.463
+                            c0-5.6,0.283-11.035,0.833-16.315c0.026-0.164,0.04-0.328,0.055-0.492c1.67-15.532,5.72-29.663,12.13-42.335
+                            c0.42-0.585,0.75-1.222,0.986-1.893c6.71-12.646,15.81-23.81,27.295-33.424c0.026-0.022,0.052-0.044,0.078-0.066
+                            c1.817-1.518,3.692-2.998,5.627-4.439c11.167-8.315,24.064-15.101,38.423-20.302c0.468-0.12,0.916-0.282,1.342-0.484
+                            c13.506-4.768,28.289-8.14,44.14-10.063c0.079-0.004,0.157-0.002,0.236-0.008c0.273-0.024,0.541-0.064,0.805-0.116
+                            c10.042-1.175,20.504-1.776,31.343-1.776s21.301,0.602,31.343,1.776c0.263,0.052,0.531,0.092,0.805,0.116
+                            c0.087,0.007,0.173,0.007,0.259,0.011c15.842,1.923,30.617,5.294,44.117,10.06c0.426,0.202,0.874,0.364,1.342,0.484
+                            c14.358,5.201,27.255,11.987,38.423,20.302c1.935,1.441,3.81,2.921,5.627,4.439c0.026,0.022,0.052,0.044,0.078,0.066
+                            c11.485,9.614,20.585,20.778,27.295,33.424c0.236,0.672,0.566,1.309,0.986,1.893c6.41,12.672,10.46,26.803,12.13,42.335
+                            c0.014,0.164,0.029,0.328,0.055,0.492c0.549,5.279,0.833,10.715,0.833,16.315c0,42.774-16.374,79.161-47.352,105.227
+                            c-29.476,24.802-70.649,38.46-115.939,38.46c-37.913,0-72.689-9.4-100.567-27.185c-3.49-2.228-8.128-1.204-10.356,2.289
+                            c-2.228,3.492-1.202,8.129,2.29,10.356c30.292,19.325,67.857,29.54,108.634,29.54c48.816,0,93.421-14.91,125.596-41.983
+                            c34.474-29.007,52.695-69.362,52.695-116.704c0-4.254-0.156-8.436-0.458-12.548c12.79-5.511,25.061-14.097,36.55-25.586
+                            c24.105-24.105,34.546-50.611,38.842-71.991c0.044-0.185,0.081-0.372,0.111-0.562c2.053-10.436,2.653-19.63,2.664-26.677
+                            C512.01,175.231,509.576,169.346,505.148,164.918z M80.106,290.669c-9.625-4.767-18.972-11.648-27.881-20.557
+                            c-18.267-18.267-27.764-38.057-32.577-55.288c32.529,2.269,56.54,15.966,71.509,40.814
+                            C85.996,266.468,82.303,278.182,80.106,290.669z M99.437,240.915c-18.459-25.948-46.317-39.808-83.039-41.291
+                            c-1.051-6.987-1.39-13.175-1.398-18.158c-0.004-2.242,0.869-4.352,2.458-5.94c1.586-1.586,3.69-2.458,5.927-2.458h0.014
+                            c19.235,0.03,56.33,4.906,88.646,37.224c2.436,2.436,4.723,4.933,6.877,7.46C111.428,224.775,104.928,232.518,99.437,240.915z
+                             M182.917,182.205l-1.687-19.283c-0.318-3.639-3.213-6.52-6.854-6.821l-16.179-1.337c-18.029-1.489-34.885-8.422-48.744-20.051
+                            l-30.565-25.648c-6.903-5.793-7.807-16.122-2.015-23.025c5.794-6.904,16.123-7.807,23.025-2.015l30.565,25.648
+                            c8.65,7.258,19.17,11.586,30.424,12.515l8.037,0.664c2.194,0.182,4.374-0.617,5.934-2.184c1.56-1.567,2.348-3.742,2.155-5.944
+                            l-4.154-47.489c-0.381-4.348,0.955-8.585,3.761-11.929c2.806-3.344,6.746-5.395,11.094-5.775
+                            c8.974-0.788,16.922,5.88,17.706,14.857l9.682,110.664C203.838,176.726,193.089,179.12,182.917,182.205z M459.775,270.112
+                            c-8.909,8.909-18.256,15.789-27.881,20.557c-2.197-12.487-5.89-24.201-11.051-35.031c14.969-24.848,38.98-38.545,71.509-40.814
+                            C487.539,232.055,478.043,251.845,459.775,270.112z M495.602,199.623c-36.722,1.483-64.58,15.343-83.039,41.291
+                            c-5.49-8.396-11.991-16.14-19.485-23.164c2.154-2.527,4.441-5.024,6.877-7.46c32.316-32.318,69.411-37.194,88.646-37.224h0.014
+                            c2.236,0,4.341,0.872,5.927,2.458c1.589,1.589,2.462,3.698,2.458,5.94C496.992,186.448,496.653,192.637,495.602,199.623z" />
+                                        <path d="M294.938,322.763c0.831-6.721-1.092-12.946-5.56-18.002c-6.784-7.675-18.949-12.076-33.377-12.076
+                            c-14.428,0-26.593,4.401-33.377,12.076c-4.469,5.056-6.392,11.281-5.561,18.001c2.314,18.715,21.615,29.898,38.938,29.898
+                            S292.623,341.477,294.938,322.763z M280.051,320.921c-0.999,8.084-10.902,16.739-24.051,16.739s-23.052-8.655-24.051-16.74
+                            c-0.301-2.431,0.307-4.409,1.913-6.226c3.764-4.258,12.454-7.01,22.138-7.01s18.374,2.752,22.138,7.01
+                            C279.744,316.512,280.352,318.49,280.051,320.921z" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                        </svg>
+                    </a>
+                    
             </div>
-          </li>
-          
-      </ul>
+            <div class="nav-space"></div>
+            <div class="header-nav-items">
+                
+                    <a href="/archives" class="header-nav-link">
+                        Archives
+                    </a>
+                    
+
+                        
+                            <a href="/tags" class="header-nav-link">
+                                Tags
+                            </a>
+                            
+
+                                
+            </div>
+        </nav>
     </div>
-  </div>
-  
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/" class="mobile-nav-title-link">Seongrok Lee's Blog</a>
+        </div>
 
-    
-  </div>
-</aside>
-
-  
-  
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-NPM_Use" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      NPM 기본 사용
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2020/03/26/NPM_Use/" class="article-date">
-	  <time datetime="2020-03-26T10:23:52.000Z" itemprop="datePublished">2020-03-26</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/NPM/">NPM</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/NPM/" rel="tag">NPM</a>, <a class="article-tag-link-link" href="/tags/NPM-command/" rel="tag">NPM_command</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/03/26/NPM_Use/#comments" class="article-comment-link">Comments</a></span>
-        
-	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 82(words)</span>
-	
-	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 1(minutes)</span>
-	
-
-      </div>
     </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <h2 id="NPM-사용법"><a href="#NPM-사용법" class="headerlink" title="NPM 사용법"></a>NPM 사용법</h2><p>NPM 버전 확인<br><code>$ npm --version</code></p>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/archives" class="mobile-nav-link">Archives</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/tags" class="mobile-nav-link">Tags</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/about/" class="mobile-nav-link">About</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">NPM 기본 사용</h2>
+            <div class="post-meta">
+                <span class="post-time">2020-03-26</span>
+                
+                <span class="post-category">
+                    
+                    <a class="category" href="/categories/NPM/">NPM</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">목차</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NPM-%EC%82%AC%EC%9A%A9%EB%B2%95"><span class="toc-text">NPM 사용법</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NPM-%EB%AA%A8%EB%93%88-%EA%B8%80%EB%A1%9C%EB%B2%8C-%EC%84%A4%EC%B9%98%EB%B0%A9%EB%B2%95"><span class="toc-text">NPM 모듈 글로벌 설치방법</span></a></li></ol>
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">최상단으로</a>
+    </div>
+</div>
+        <div class="post-content">
+            <h2 id="NPM-사용법"><a href="#NPM-사용법" class="headerlink" title="NPM 사용법"></a>NPM 사용법</h2><p>NPM 버전 확인<br><code>$ npm --version</code></p>
 <p>NPM 업데이트<br><code>sudo npm install npm -g</code></p>
 <p>NPM 모듈 다운로드 - 로컬<br><code>$npm install &lt;모듈 이름&gt;</code></p>
 <p>모듈 제거<br><code>$ npm uninstall express</code></p>
@@ -375,162 +222,58 @@
 <p><a target="_blank" rel="noopener" href="https://npmsearch.com/">NPM 모듈 목록</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.npmjs.com/">NPM 홈페이지</a><br></br></br></p>
 
-      
-    </div>
-    <!-- 카피라이트 위젯
-    <div class="article-footer">
-      
-
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/argon1025" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/argon1025" target="_blank"><span class="text-dark">성록</span><small class="ml-1x">Passionate developer</small></a></h3>
-        <div>사용자와 개발자의 시선차이를 극복할 수 있는 풀스택 개발자를 목표로 공부하고 있습니다</div>
-      </div>
-    </figure>
-  </div>
-</div>
-
-    </div>
-    -->
-  </article>
-  <!-- 댓글 위젯
-  
-    
-  <section id="comments">
-  	
-      <div id="vcomments"></div>
-    
-  </section>
-
-
-  
-  -->
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2020/05/26/Python/Python_Konlpy_2.7error/" title="Anaconda python2.7ver SyntaxError: invalid syntax"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/" title="setInterval이벤트함수로 Prototype메소드를 호출"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  
-  <div class="bar-right">
-    
-  </div>
-  </div>
-</nav>
-  
-
-
-</main>
-
-  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
-	
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/argon1025" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-    </ul>
-
-    <div class="copyright">
-        <div class="publishby">
-            Theme by base on <a href="https://github.com/cofess" target="_blank"> cofess </a>_<a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a></br>
-            Modifier 2021&copy;SeongRok_Lee
         </div>
+        
+        <div class="post-tag">
+            
+            <a class="tag" href="/tags/NPM/" title="NPM">NPM</a>
+            
+            <a class="tag" href="/tags/NPM-command/" title="NPM_command">NPM_command</a>
+            
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/2020/05/26/Python/Python_Konlpy_2.7error/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Anaconda python2.7ver SyntaxError: invalid syntax</span>
+                <span class="nav-mobile">Prev</span>
+            </a>
+        
+        
+            <a class="next" href="/2020/02/13/JS/setInterval%EC%97%90%EC%84%9CPrototype%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC%20%ED%98%B8%EC%B6%9C/">
+                <span class="nav-default">setInterval이벤트함수로 Prototype메소드를 호출</span>
+                <span class="nav-mobile">Next</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            <a target="_blank" href="https://github.com/argon1025">Modifier Seongrok Lee</a>
+            &copy;
+            
+            
+            2021
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>, Theme by base on
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>, Icons made by Freepik from Flaticon
+        </p>
     </div>
 </footer>
-  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<script>
-window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
-</script>
-
-<script src="/js/plugin.min.js"></script>
-
-
-<script src="/js/application.js"></script>
-
-
-    <script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-
-<script src="/js/insight.js"></script>
-
-
-
-
-
-
-   
-
-
-
-
-   
-    
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: '',
-    appKey: '',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
-
-     
-
-
-
-
-
-
-
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":2,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"position":"right","width":150,"height":300,"hOffset":0,"vOffset":-60},"mobile":{"show":true,"scale":0.4},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
 </html>
