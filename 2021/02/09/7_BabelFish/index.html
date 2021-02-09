@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+        <title>NodeJS 평문 데이터 해시화 하기 - 실전편 | Leeseongrok 기술블로그</title>
+    
+    <title>Leeseongrok 기술블로그</title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Leeseongrok 기술블로그" type="application/atom+xml">
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+        <nav class="header-nav">
+            <div class="header-nav-logo">
+                
+                    <a href="/" class="header-nav-link">
+                        <svg href="/" class="logo" version="1.1" id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                            y="0px" viewBox="0 0 512.006 512.006" style="enable-background:new 0 0 512.006 512.006;"
+                            xml:space="preserve">
+                            <g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M268.017,359.862c-3.034,3.481-7.414,5.478-12.017,5.478c-4.603,0-8.982-1.997-12.017-5.478
+                            c-2.722-3.123-7.46-3.448-10.582-0.726c-3.123,2.721-3.447,7.459-0.727,10.582c5.884,6.751,14.386,10.622,23.325,10.622
+                            c8.94,0,17.441-3.872,23.325-10.622c2.721-3.123,2.397-7.86-0.727-10.582C275.476,356.413,270.739,356.74,268.017,359.862z" />
+                                        <path d="M187.368,303.466v-12.093c0-4.142-3.357-7.5-7.5-7.5s-7.5,3.358-7.5,7.5v12.093c0,4.142,3.357,7.5,7.5,7.5
+                            C184.011,310.966,187.368,307.608,187.368,303.466z" />
+                                        <path d="M339.632,303.466v-12.093c0-4.142-3.357-7.5-7.5-7.5s-7.5,3.358-7.5,7.5v12.093c0,4.142,3.357,7.5,7.5,7.5
+                            C336.274,310.966,339.632,307.608,339.632,303.466z" />
+                                        <path
+                                            d="M505.148,164.918c-4.419-4.419-10.289-6.852-16.533-6.852h-0.037c-21.551,0.034-63.099,5.486-99.23,41.618
+                            c-2.746,2.746-5.328,5.57-7.764,8.433c-0.114-0.085-0.223-0.174-0.338-0.259c-11.093-8.26-23.682-15.135-37.549-20.583
+                            l1.465-16.745l9.876-0.816c21.14-1.746,40.902-9.875,57.152-23.51l4.987-4.185c3.173-2.663,3.587-7.393,0.924-10.566
+                            c-2.662-3.172-7.393-3.587-10.566-0.924l-4.986,4.185c-13.86,11.629-30.716,18.563-48.745,20.052l-16.179,1.337
+                            c-3.642,0.301-6.536,3.182-6.854,6.821l-1.687,19.283c-10.173-3.085-20.921-5.478-32.184-7.153l9.682-110.665
+                            c0.784-8.976,8.728-15.644,17.705-14.856c4.349,0.38,8.289,2.432,11.095,5.776c2.807,3.344,4.143,7.581,3.762,11.929
+                            l-4.155,47.488c-0.192,2.202,0.596,4.377,2.155,5.944c1.559,1.567,3.739,2.366,5.934,2.184l8.037-0.664
+                            c11.254-0.93,21.773-5.257,30.424-12.515l30.566-25.648c6.902-5.794,17.232-4.888,23.024,2.014
+                            c5.792,6.903,4.889,17.232-2.015,23.025c-3.173,2.663-3.587,7.393-0.924,10.566c2.662,3.172,7.392,3.587,10.566,0.924
+                            c13.238-11.109,14.972-30.918,3.862-44.158c-11.11-13.239-30.92-14.971-44.157-3.863l-30.566,25.648
+                            c-6.047,5.074-13.356,8.169-21.188,8.98l3.38-38.619c0.729-8.34-1.833-16.465-7.214-22.879
+                            c-5.382-6.413-12.939-10.347-21.28-11.077c-17.229-1.501-32.45,11.279-33.954,28.493l-9.642,110.209
+                            c-8.426-0.758-17.096-1.149-25.996-1.149c-8.9,0-17.57,0.391-25.996,1.149l-9.642-110.209c-1.504-17.215-16.732-30-33.955-28.494
+                            c-8.341,0.729-15.897,4.664-21.279,11.077c-5.381,6.414-7.942,14.539-7.213,22.879l3.379,38.619
+                            c-7.832-0.811-15.142-3.906-21.188-8.979L109.54,72.536c-13.238-11.109-33.047-9.377-44.158,3.863
+                            c-11.109,13.239-9.376,33.048,3.862,44.157l30.566,25.649c16.249,13.635,36.012,21.764,57.151,23.51l9.876,0.816l1.465,16.745
+                            c-13.866,5.448-26.456,12.324-37.549,20.583c-0.114,0.085-0.224,0.174-0.338,0.259c-2.436-2.863-5.018-5.687-7.764-8.433
+                            c-36.132-36.132-77.68-41.584-99.23-41.618h-0.037c-6.244,0-12.114,2.433-16.533,6.852C2.424,169.346-0.01,175.231,0,181.489
+                            c0.011,7.047,0.611,16.242,2.665,26.678c0.03,0.189,0.066,0.376,0.111,0.561c4.296,21.38,14.737,47.887,38.842,71.992
+                            c11.489,11.489,23.76,20.075,36.55,25.586c-0.302,4.112-0.458,8.294-0.458,12.548c0,41.339,14.211,77.947,41.098,105.867
+                            c2.873,2.984,7.621,3.073,10.604,0.2c2.983-2.873,3.073-7.621,0.2-10.605c-24.142-25.07-36.902-58.081-36.902-95.463
+                            c0-5.6,0.283-11.035,0.833-16.315c0.026-0.164,0.04-0.328,0.055-0.492c1.67-15.532,5.72-29.663,12.13-42.335
+                            c0.42-0.585,0.75-1.222,0.986-1.893c6.71-12.646,15.81-23.81,27.295-33.424c0.026-0.022,0.052-0.044,0.078-0.066
+                            c1.817-1.518,3.692-2.998,5.627-4.439c11.167-8.315,24.064-15.101,38.423-20.302c0.468-0.12,0.916-0.282,1.342-0.484
+                            c13.506-4.768,28.289-8.14,44.14-10.063c0.079-0.004,0.157-0.002,0.236-0.008c0.273-0.024,0.541-0.064,0.805-0.116
+                            c10.042-1.175,20.504-1.776,31.343-1.776s21.301,0.602,31.343,1.776c0.263,0.052,0.531,0.092,0.805,0.116
+                            c0.087,0.007,0.173,0.007,0.259,0.011c15.842,1.923,30.617,5.294,44.117,10.06c0.426,0.202,0.874,0.364,1.342,0.484
+                            c14.358,5.201,27.255,11.987,38.423,20.302c1.935,1.441,3.81,2.921,5.627,4.439c0.026,0.022,0.052,0.044,0.078,0.066
+                            c11.485,9.614,20.585,20.778,27.295,33.424c0.236,0.672,0.566,1.309,0.986,1.893c6.41,12.672,10.46,26.803,12.13,42.335
+                            c0.014,0.164,0.029,0.328,0.055,0.492c0.549,5.279,0.833,10.715,0.833,16.315c0,42.774-16.374,79.161-47.352,105.227
+                            c-29.476,24.802-70.649,38.46-115.939,38.46c-37.913,0-72.689-9.4-100.567-27.185c-3.49-2.228-8.128-1.204-10.356,2.289
+                            c-2.228,3.492-1.202,8.129,2.29,10.356c30.292,19.325,67.857,29.54,108.634,29.54c48.816,0,93.421-14.91,125.596-41.983
+                            c34.474-29.007,52.695-69.362,52.695-116.704c0-4.254-0.156-8.436-0.458-12.548c12.79-5.511,25.061-14.097,36.55-25.586
+                            c24.105-24.105,34.546-50.611,38.842-71.991c0.044-0.185,0.081-0.372,0.111-0.562c2.053-10.436,2.653-19.63,2.664-26.677
+                            C512.01,175.231,509.576,169.346,505.148,164.918z M80.106,290.669c-9.625-4.767-18.972-11.648-27.881-20.557
+                            c-18.267-18.267-27.764-38.057-32.577-55.288c32.529,2.269,56.54,15.966,71.509,40.814
+                            C85.996,266.468,82.303,278.182,80.106,290.669z M99.437,240.915c-18.459-25.948-46.317-39.808-83.039-41.291
+                            c-1.051-6.987-1.39-13.175-1.398-18.158c-0.004-2.242,0.869-4.352,2.458-5.94c1.586-1.586,3.69-2.458,5.927-2.458h0.014
+                            c19.235,0.03,56.33,4.906,88.646,37.224c2.436,2.436,4.723,4.933,6.877,7.46C111.428,224.775,104.928,232.518,99.437,240.915z
+                             M182.917,182.205l-1.687-19.283c-0.318-3.639-3.213-6.52-6.854-6.821l-16.179-1.337c-18.029-1.489-34.885-8.422-48.744-20.051
+                            l-30.565-25.648c-6.903-5.793-7.807-16.122-2.015-23.025c5.794-6.904,16.123-7.807,23.025-2.015l30.565,25.648
+                            c8.65,7.258,19.17,11.586,30.424,12.515l8.037,0.664c2.194,0.182,4.374-0.617,5.934-2.184c1.56-1.567,2.348-3.742,2.155-5.944
+                            l-4.154-47.489c-0.381-4.348,0.955-8.585,3.761-11.929c2.806-3.344,6.746-5.395,11.094-5.775
+                            c8.974-0.788,16.922,5.88,17.706,14.857l9.682,110.664C203.838,176.726,193.089,179.12,182.917,182.205z M459.775,270.112
+                            c-8.909,8.909-18.256,15.789-27.881,20.557c-2.197-12.487-5.89-24.201-11.051-35.031c14.969-24.848,38.98-38.545,71.509-40.814
+                            C487.539,232.055,478.043,251.845,459.775,270.112z M495.602,199.623c-36.722,1.483-64.58,15.343-83.039,41.291
+                            c-5.49-8.396-11.991-16.14-19.485-23.164c2.154-2.527,4.441-5.024,6.877-7.46c32.316-32.318,69.411-37.194,88.646-37.224h0.014
+                            c2.236,0,4.341,0.872,5.927,2.458c1.589,1.589,2.462,3.698,2.458,5.94C496.992,186.448,496.653,192.637,495.602,199.623z" />
+                                        <path d="M294.938,322.763c0.831-6.721-1.092-12.946-5.56-18.002c-6.784-7.675-18.949-12.076-33.377-12.076
+                            c-14.428,0-26.593,4.401-33.377,12.076c-4.469,5.056-6.392,11.281-5.561,18.001c2.314,18.715,21.615,29.898,38.938,29.898
+                            S292.623,341.477,294.938,322.763z M280.051,320.921c-0.999,8.084-10.902,16.739-24.051,16.739s-23.052-8.655-24.051-16.74
+                            c-0.301-2.431,0.307-4.409,1.913-6.226c3.764-4.258,12.454-7.01,22.138-7.01s18.374,2.752,22.138,7.01
+                            C279.744,316.512,280.352,318.49,280.051,320.921z" />
+                                    </g>
+                                </g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                            <g>
+                            </g>
+                        </svg>
+                    </a>
+                    
+            </div>
+            <div class="nav-space"></div>
+            <div class="header-nav-items">
+                
+
+                        
+                            <a href="/tags" class="header-nav-link">
+                                Tags
+                            </a>
+                            
+
+                                
+            </div>
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/" class="mobile-nav-title-link">Seongrok Lee's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/archives" class="mobile-nav-link">Archives</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/tags" class="mobile-nav-link">Tags</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/about/" class="mobile-nav-link">About</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h1 class="title">NodeJS 평문 데이터 해시화 하기 - 실전편</h2>
+            <div class="post-meta">
+                <span class="post-time">2021-02-09</span>
+                
+                <span class="post-category">
+                    
+                    <a class="category" href="/categories/NodeJS/">NodeJS</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">목차</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%EB%A1%9C%EC%A7%81-%EC%9E%91%EC%84%B1"><span class="toc-text">1.로직 작성</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%AA%A8%EB%93%88-%EC%9E%84%ED%8F%AC%ED%8A%B8"><span class="toc-text">모듈 임포트</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9E%91%EC%84%B1"><span class="toc-text">클래스 작성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto-pbkdf2"><span class="toc-text">crypto.pbkdf2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto-pbkdf2-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81"><span class="toc-text">crypto.pbkdf2 리팩토링</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto-randomBytes"><span class="toc-text">crypto.randomBytes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto-randomBytes-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81"><span class="toc-text">crypto.randomBytes 리팩토링</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hashencryption-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%B6%94%EA%B0%80"><span class="toc-text">hashencryption 메서드 추가</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%84%EC%B2%B4-%EC%BD%94%EB%93%9C"><span class="toc-text">전체 코드</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0"><span class="toc-text">사용해보기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B2%B0%EA%B3%BC"><span class="toc-text">결과</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%EA%B8%B0%EC%A1%B4-DB%EC%97%90-Salt%EA%B0%92%EC%9D%84-%EC%A0%80%EC%9E%A5%ED%95%98%EB%8A%94-Column-%EC%B6%94%EA%B0%80"><span class="toc-text">2.기존 DB에 Salt값을 저장하는 Column 추가</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EB%A1%9C%EC%A7%81%EC%97%90-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0"><span class="toc-text">3.로그인, 회원가입 로직에 추가하기</span></a></li></ol>
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">최상단으로</a>
+    </div>
+</div>
+        <div class="post-content">
+            </br>
+NodeJS에서 해시 알고리즘을 사용하기 위해서는 `crypto` 모듈을 사용하면 됩니다.
+
+<p> <code>crypto</code> 모듈은 callback을 지원하는 함수로 되어 있기때문에 서버에 적용하기전 async형태로 리팩토링 하였습니다</p>
+<h1 id="1-로직-작성"><a href="#1-로직-작성" class="headerlink" title="1.로직 작성"></a>1.로직 작성</h1><h2 id="모듈-임포트"><a href="#모듈-임포트" class="headerlink" title="모듈 임포트"></a>모듈 임포트</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</br>
+
+<h2 id="클래스-작성"><a href="#클래스-작성" class="headerlink" title="클래스 작성"></a>클래스 작성</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Crypto</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Crypto</code> 라는 클래스를 작성 하였습니다<br></br></p>
+<h2 id="crypto-pbkdf2"><a href="#crypto-pbkdf2" class="headerlink" title="crypto.pbkdf2"></a>crypto.pbkdf2</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crypto.pbkdf2(<span class="string">&#x27;secret&#x27;</span>, <span class="string">&#x27;salt&#x27;</span>, <span class="number">100000</span>, <span class="number">64</span>, <span class="string">&#x27;sha512&#x27;</span>, <span class="function">(<span class="params">err, derivedKey</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(derivedKey.toString(<span class="string">&#x27;hex&#x27;</span>));  <span class="comment">// &#x27;3745e48...08d59ae&#x27;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>crypto.pbkdf2</code> 는 패스워드, 솔트값, 암호화 연산 반복 횟수, 해시길이, 암호화 방식, 콜백함수를 인자로 받아 Hash 암호화한뒤 값을 derivedKey로 buffer를 반환합니다</p>
+<blockquote>
+<p>이론편에서 언급한<br>서버는 패스워드를  Hash 암호화로 난독화 ( “1234” → “11161b2f1e” ) 부분입니다<br><a target="_blank" rel="noopener" href="http://localhost:4000/2021/02/09/6_BabelFish/#Salt-%EB%B0%A9%EB%B2%95%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%B4%EC%84%9C-%EB%AC%B4%EA%B2%B0%EC%84%B1%EC%9D%84-%EA%B2%80%EC%A6%9D%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95">바로가기</a></p>
+</blockquote>
+<h3 id="crypto-pbkdf2-리팩토링"><a href="#crypto-pbkdf2-리팩토링" class="headerlink" title="crypto.pbkdf2 리팩토링"></a>crypto.pbkdf2 리팩토링</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> pbkdf2(password, iterationsCount, keyLength, randomByteBuffer, digSet) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejects</span>) =&gt;</span> &#123;</span><br><span class="line">            crypto.pbkdf2(password, randomByteBuffer, iterationsCount, keyLength, digSet, <span class="function">(<span class="params">error, key</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                    resolve(&#123; <span class="attr">key</span>: key, <span class="attr">salt</span>: randomByteBuffer &#125;);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rejects(error);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>crypto.pbkdf2</code> 를 Promise 형태로 <code>Crypto</code> 클래스 내부 메서드로 리팩토링 하였습니다<br></br></br></p>
+<h2 id="crypto-randomBytes"><a href="#crypto-randomBytes" class="headerlink" title="crypto.randomBytes"></a>crypto.randomBytes</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crypto.randomBytes(<span class="number">256</span>, <span class="function">(<span class="params">err, buf</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;buf.length&#125;</span> bytes of random data: <span class="subst">$&#123;buf.toString(<span class="string">&#x27;hex&#x27;</span>)&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>crypto.randomBytes</code> 해시길이, 콜백함수를 인자로 받아 랜덤한 salt buffer를 반환합니다.</p>
+<blockquote>
+<p>이론편에서 언급한<br>서버에서 Salt값을 발급 (Salt : “34309e”) 부분입니다<br><a target="_blank" rel="noopener" href="http://localhost:4000/2021/02/09/6_BabelFish/#Salt-%EB%B0%A9%EB%B2%95%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%B4%EC%84%9C-%EB%AC%B4%EA%B2%B0%EC%84%B1%EC%9D%84-%EA%B2%80%EC%A6%9D%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95">바로가기</a></p>
+</blockquote>
+</br>
+
+<h3 id="crypto-randomBytes-리팩토링"><a href="#crypto-randomBytes-리팩토링" class="headerlink" title="crypto.randomBytes 리팩토링"></a>crypto.randomBytes 리팩토링</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> createRandomBytes(customByte = <span class="number">64</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejects</span>) =&gt;</span> &#123;</span><br><span class="line">            crypto.randomBytes(customByte, <span class="function">(<span class="params">error, buffer</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                    resolve(buffer);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rejects(error);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>crypto.randomBytes</code> 를 Promise 형태로 <code>Crypto</code> 클래스 내부 메서드로 리팩토링 하였습니다</p>
+<p></br></br></p>
+<h2 id="hashencryption-메서드-추가"><a href="#hashencryption-메서드-추가" class="headerlink" title="hashencryption 메서드 추가"></a>hashencryption 메서드 추가</h2><p>위에서 리팩토링한 메서드를 이용해서</p>
+<p>비밀번호만 입력하면 알아서 해쉬값을 반환해주는 메서드를 추가했습니다</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> hashencryption(password, keyLength = <span class="number">64</span>, iterationsCount = <span class="number">100000</span>, digSet = <span class="string">&#x27;sha512&#x27;</span>, salt) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!password) &#123; <span class="comment">//인자값이 입력 되었는지 체크</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`Password is required.`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!salt) &#123; <span class="comment">// Decrypt 하는 경우가 아닐때</span></span><br><span class="line">                salt = <span class="keyword">await</span> <span class="built_in">this</span>.createRandomBytes(keyLength); <span class="comment">// createRandomBytes에서 salt 값을 생성합니다</span></span><br><span class="line">                salt = salt.toString(<span class="string">&#x27;hex&#x27;</span>); <span class="comment">// 생성된 salt값을 toString(&#x27;hex&#x27;) 합니다</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="built_in">this</span>.pbkdf2(password, iterationsCount, keyLength, salt, digSet); <span class="comment">// pbkdf2메서드를 사용해 encryption 합니다</span></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">key</span>: result.key.toString(<span class="string">&#x27;hex&#x27;</span>), <span class="attr">salt</span>: result.salt.toString(<span class="string">&#x27;hex&#x27;</span>) &#125;; <span class="comment">// 결과값을 toString(&#x27;hex&#x27;) 해서 반환합니다</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">throw</span> error; <span class="comment">// 에러를 반환합니다</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>text:password(패스워드), int:keyLength = 64(해시 길이), int:iterationsCount = 100000(암호화 연산 반복횟수)</p>
+<p>String:digSet = ‘sha512’(암호화 방식), text:salt(디코드할경우 기존 솔트값)</p>
+<p>를 인자값으로 받고 salt값이 undefined인경우엔 새로 salt를 생성해서 암호화 하고 해시암호화한 <code>Key</code>와 사용한 <code>Salt</code>값을 반환합니다</p>
+<p></br></br></p>
+<h2 id="전체-코드"><a href="#전체-코드" class="headerlink" title="전체 코드"></a>전체 코드</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Crypto</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// createRandomBytes</span></span><br><span class="line">    <span class="comment">// TODO - crypto API randomBytes 를 이용해 random salt를 리턴합니다</span></span><br><span class="line">    <span class="comment">// int:customByte = 64(해시 길이)</span></span><br><span class="line">    <span class="comment">// RETURN -&gt; Buffer:buffer</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// * special note *</span></span><br><span class="line">    <span class="comment">// 해당 메서드는 salt값을 Buffer:buffer 형식으로 리턴합니다</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// 2021.2.7 - Code Author.leeseongrok(argon1025@gmail.com)</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="keyword">async</span> createRandomBytes(customByte = <span class="number">64</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejects</span>) =&gt;</span> &#123;</span><br><span class="line">            crypto.randomBytes(customByte, <span class="function">(<span class="params">error, buffer</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                    resolve(buffer);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rejects(error);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// pbkdf2</span></span><br><span class="line">    <span class="comment">// TODO - crypto API pbkdf2를 사용해 나온 결과를 리턴합니다</span></span><br><span class="line">    <span class="comment">// text:password(패스워드), int:iterationsCount(암호화 연산 반복 횟수), int:keyLength(해시길이), String:randomByteBuffer(솔트값), String:digSet(암호화 방식)</span></span><br><span class="line">    <span class="comment">// RETURN -&gt; Buffer:key, String:randomByteBuffer</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// * special note *</span></span><br><span class="line">    <span class="comment">// salt값을 해당 메서드에 보낼때는 무조건 toString(&#x27;hex&#x27;)로 디코드된 값을 해당 클래스에서 사용해야합니다</span></span><br><span class="line">    <span class="comment">//  만약 Buffer 데이터를 md5으로 변경을 원할경우 hash hashDecrypt 내부 salt 생성 코드블럭을 변경해야합니다</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// 2021.2.7 - Code Author.leeseongrok(argon1025@gmail.com)</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="keyword">async</span> pbkdf2(password, iterationsCount, keyLength, randomByteBuffer, digSet) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, rejects</span>) =&gt;</span> &#123;</span><br><span class="line">            crypto.pbkdf2(password, randomByteBuffer, iterationsCount, keyLength, digSet, <span class="function">(<span class="params">error, key</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                    resolve(&#123; <span class="attr">key</span>: key, <span class="attr">salt</span>: randomByteBuffer &#125;);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rejects(error);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// hashencryption</span></span><br><span class="line">    <span class="comment">// TODO - 비밀번호를 해쉬화해서 리턴합니다</span></span><br><span class="line">    <span class="comment">// text:password(패스워드), int:keyLength = 64(해시 길이), int:iterationsCount = 100000(암호화 연산 반복횟수), String:digSet = &#x27;sha512&#x27;(암호화 방식), text:salt(디코드할경우 기존 솔트값)</span></span><br><span class="line">    <span class="comment">// RETURN -&gt; &#123;key:String, salt:String&#125;</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// * special note *</span></span><br><span class="line">    <span class="comment">// </span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// 2021.2.7 - Code Author.leeseongrok(argon1025@gmail.com)</span></span><br><span class="line">    <span class="comment">// ---------------------------------------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="keyword">async</span> hashencryption(password, keyLength = <span class="number">64</span>, iterationsCount = <span class="number">100000</span>, digSet = <span class="string">&#x27;sha512&#x27;</span>, salt) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!password) &#123; <span class="comment">//인자값이 입력 되었는지 체크</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`Password is required.`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!salt) &#123; <span class="comment">// Decrypt 하는 경우가 아닐때</span></span><br><span class="line">                salt = <span class="keyword">await</span> <span class="built_in">this</span>.createRandomBytes(keyLength); <span class="comment">// createRandomBytes에서 salt 값을 생성합니다</span></span><br><span class="line">                salt = salt.toString(<span class="string">&#x27;hex&#x27;</span>); <span class="comment">// 생성된 salt값을 toString(&#x27;hex&#x27;) 합니다</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="built_in">this</span>.pbkdf2(password, iterationsCount, keyLength, salt, digSet); <span class="comment">// pbkdf2메서드를 사용해 encryption 합니다</span></span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">key</span>: result.key.toString(<span class="string">&#x27;hex&#x27;</span>), <span class="attr">salt</span>: result.salt.toString(<span class="string">&#x27;hex&#x27;</span>) &#125;; <span class="comment">// 결과값을 toString(&#x27;hex&#x27;) 해서 반환합니다</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="keyword">throw</span> error; <span class="comment">// 에러를 반환합니다</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p></br></br></p>
+<h2 id="사용해보기"><a href="#사용해보기" class="headerlink" title="사용해보기"></a>사용해보기</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> test = <span class="keyword">new</span> Crypto();</span><br><span class="line">test.hashencryption(<span class="string">&#x27;123123&#x27;</span>)<span class="comment">//암호화</span></span><br><span class="line">.then(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123; </span><br><span class="line">        <span class="built_in">console</span>.log(val.key); <span class="comment">//암호화 결과 -&gt; Key</span></span><br><span class="line">        <span class="built_in">console</span>.log(val.salt); <span class="comment">//암호화 결과 -&gt; Salt</span></span><br><span class="line">        <span class="keyword">return</span> test.hashencryption(<span class="string">&#x27;123123&#x27;</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, val.salt); <span class="comment">//다시 암호화시도</span></span><br><span class="line">    &#125;)</span><br><span class="line">.then(<span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(val.key); <span class="comment">//암호화 결과 -&gt; Key</span></span><br><span class="line">        <span class="built_in">console</span>.log(val.salt); <span class="comment">//암호화 결과 -&gt; Salt</span></span><br><span class="line">    &#125;)</span><br><span class="line">.catch(</span><br><span class="line">        (error) =&gt; &#123; <span class="comment">//에러 처리</span></span><br><span class="line">            <span class="built_in">console</span>.log(error);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p>처음 암호화 후에 Key와 Salt값을 반환 받았고 받은 Salt값을 이용해서 다시 암호화를 하는 예제입니다</p>
+<p></br></br></p>
+<h3 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5719</span>ad4b32fcdec5b858cb26735d858b16fc2516ab0d1d2e76ce716ec74ae19ae82767cd21c8eb26efc8de3efa8cb2edbc9445e35d8da0125cb2713a01fb8f23</span><br><span class="line">afa33e2ac80de2c7b107ecfc35d2677a5e150bbe2d974edd1a36ee600cba9e9bcdbda16e0222ec3983749f4cbe41d5c904c1f46d96365677a4c3d887547ece75</span><br><span class="line"></span><br><span class="line"><span class="number">5719</span>ad4b32fcdec5b858cb26735d858b16fc2516ab0d1d2e76ce716ec74ae19ae82767cd21c8eb26efc8de3efa8cb2edbc9445e35d8da0125cb2713a01fb8f23</span><br><span class="line">afa33e2ac80de2c7b107ecfc35d2677a5e150bbe2d974edd1a36ee600cba9e9bcdbda16e0222ec3983749f4cbe41d5c904c1f46d96365677a4c3d887547ece7</span><br></pre></td></tr></table></figure>
+<p>같은 Salt값과 패스워드를 사용했기때문에 hash값이 똑같은결과가 나오게 됩니다.</p>
+<blockquote>
+<p>참고 : <a target="_blank" rel="noopener" href="https://tutorialpost.apptilus.com/code/posts/nodejs/md-cryto/">https://tutorialpost.apptilus.com/code/posts/nodejs/md-cryto/</a></p>
+</blockquote>
+<p></br></br></p>
+<h1 id="2-기존-DB에-Salt값을-저장하는-Column-추가"><a href="#2-기존-DB에-Salt값을-저장하는-Column-추가" class="headerlink" title="2.기존 DB에 Salt값을 저장하는 Column 추가"></a>2.기존 DB에 Salt값을 저장하는 Column 추가</h1><p>제가 적용하려고 하는 서버 데이터베이스에는 Salt값을 저장할 Column도 없었고</p>
+<p>비밀번호 Column도 char(32)공간을 할당했었기 때문에 수정이 필요했습니다</p>
+<ul>
+<li>Mysql Column 추가와 수정</li>
+</ul>
+<p></br></br></p>
+<h1 id="3-로그인-회원가입-로직에-추가하기"><a href="#3-로그인-회원가입-로직에-추가하기" class="headerlink" title="3.로그인, 회원가입 로직에 추가하기"></a>3.로그인, 회원가입 로직에 추가하기</h1>
+        </div>
+        
+        <div class="post-tag">
+            
+            <a class="tag" href="/tags/Project/" title="Project">Project</a>
+            
+            <a class="tag" href="/tags/BabelFish/" title="BabelFish">BabelFish</a>
+            
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/2021/02/10/Mysql/Mysql_Column/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Mysql Column 추가, 수정, 삭제</span>
+                <span class="nav-mobile">Prev</span>
+            </a>
+        
+        
+            <a class="next" href="/2021/02/09/6_BabelFish/">
+                <span class="nav-default">NodeJS 평문 데이터 해시화 하기 -이론편</span>
+                <span class="nav-mobile">Next</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            <a target="_blank" href="https://github.com/argon1025">Modifier Seongrok Lee</a>
+            &copy;
+            
+            
+            2021
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>, Theme by base on
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>, Icons made by Freepik from Flaticon
+        </p>
+    </div>
+</footer>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":2,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"position":"right","width":150,"height":300,"hOffset":0,"vOffset":-60},"mobile":{"show":true,"scale":0.4},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+</html>
