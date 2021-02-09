@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     
-        <title>NodeJS express 설치 | Leeseongrok 기술블로그</title>
+        <title>NodeJS 평문 데이터 해시화 하기 -이론편 | Leeseongrok 기술블로그</title>
     
     <title>Leeseongrok 기술블로그</title>
     
@@ -183,13 +183,13 @@
         <div class="posts">
     <article class="post-whole">
         <div class="post-title">
-            <h1 class="title">NodeJS express 설치</h2>
+            <h1 class="title">NodeJS 평문 데이터 해시화 하기 -이론편</h2>
             <div class="post-meta">
-                <span class="post-time">2021-01-12</span>
+                <span class="post-time">2021-02-09</span>
                 
                 <span class="post-category">
                     
-                    <a class="category" href="/categories/Node-js/">Node.js</a>
+                    <a class="category" href="/categories/Hash/">Hash</a>
                     
                 </span>
                 
@@ -197,22 +197,67 @@
         </div>
         <div class="post-toc" id="post-toc">
     <strong class="post-toc-title">목차</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#express%EB%9E%80"><span class="toc-text">express란?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%A4%EC%B9%98"><span class="toc-text">설치</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash%EB%9E%80"><span class="toc-text">Hash란?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8B%A4%EC%A0%9C-%ED%8C%A8%EC%8A%A4%EC%9B%8C%EB%93%9C%EB%A5%BC-%EB%AC%B4%EA%B2%B0%EC%84%B1%EC%9D%84-%EA%B2%80%EC%A6%9D%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95"><span class="toc-text">실제 패스워드를 무결성을 검증하는 방법</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rainbow-Table"><span class="toc-text">Rainbow Table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Salt-%ED%95%B4%EC%8B%9C%EC%97%90-%EC%86%8C%EA%B8%88%EC%B9%98%EA%B8%B0"><span class="toc-text">Salt 해시에 소금치기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Salt-%EB%B0%A9%EB%B2%95%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%B4%EC%84%9C-%EB%AC%B4%EA%B2%B0%EC%84%B1%EC%9D%84-%EA%B2%80%EC%A6%9D%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95"><span class="toc-text">Salt 방법을 적용해서 무결성을 검증하는 방법</span></a></li></ol></li></ol>
     <div class="back-to-top" id="back-to-top">
         <a href="javascript:void(0);">최상단으로</a>
     </div>
 </div>
         <div class="post-content">
-            <h2 id="express란"><a href="#express란" class="headerlink" title="express란?"></a>express란?</h2><p>Express는 웹 및 모바일 애플리케이션을 위한 일련의 강력한 기능을 제공하는 간결하고 유연한 Node.js 웹 애플리케이션 프레임워크입니다.<br>nodeJS에서 부족했던 기능을 보안해 백엔드를 좀더 쉽게 구성할 수 있도록 도움을 줍니다.</p>
-<h2 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h2><p>nodeJS가 설치되었다는 가정한 상태에서 진행됩니다 아직 설치하지 않은경우 <a target="_blank" rel="noopener" href="https://nodejs.org/en/">NodeJS 홈페이지</a>를 참고하세요</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//디렉토리 생성</span><br><span class="line">$ mkdir myapp</span><br><span class="line"></span><br><span class="line">//디렉토리로 이동</span><br><span class="line">$ <span class="built_in">cd</span> myapp</span><br><span class="line"></span><br><span class="line">// npm 초기화</span><br><span class="line">$ npm init</span><br><span class="line"></span><br><span class="line">//해당 디렉토리에 종속적인 형태로 express를 install 합니다</span><br><span class="line">$ npm install express --save</span><br></pre></td></tr></table></figure>
+            </br>
+Babelfish Project를 진행하면서 사용자의 암호 데이터를 평문 그대로 저장한다는 문제가 있었습니다
+
+<p>이문제를 개선하기위해 단방향 해시 알고리즘을 이용해 사용자의 데이터를 난독화 해보려고 합니다<br></br></p>
+<h2 id="Hash란"><a href="#Hash란" class="headerlink" title="Hash란?"></a>Hash란?</h2><p>단방향 암호화 알고리즘으로 임의의 길이의 데이터를 고정된 길이의 데이터로 암호화(매핑)하는 알고리즘 입니다 복호화가 불가능 하지만 데이터의 무결성을 검증할 수 있습니다</p>
+<blockquote>
+<p>무결성 : 데이터의 정확성, 일관성, 유효성이 유지되는것을 말합니다</p>
+</blockquote>
+<p></br></br></p>
+<h3 id="실제-패스워드를-무결성을-검증하는-방법"><a href="#실제-패스워드를-무결성을-검증하는-방법" class="headerlink" title="실제 패스워드를 무결성을 검증하는 방법"></a>실제 패스워드를 무결성을 검증하는 방법</h3><p>회원가입시</p>
+<ol>
+<li>사용자가 패스워드를 서버에 전송 (패스워드 : “1234”)</li>
+<li>서버는 패스워드를  Hash 암호화로 난독화 ( “1234” → “11161b2f1e” )</li>
+<li>DB에 Hash암호화한 값만 저장 (“11161b2f1e”)</li>
+</ol>
+<p>로그인시</p>
+<ol>
+<li>사용자가 로그인 시도 (패스워드 : “1234”)</li>
+<li>서버는 사용자가 입력한 패스워드를  Hash 암호화로 난독화 ( “1234” → “11161b2f1e” )</li>
+<li>DB에 Hash 암호화 되어 있는 데이터와 일치하는지 비교 (“11161b2f1e” === “11161b2f1e”)</li>
+<li>로그인 성공<br></br></br></li>
+</ol>
+<h2 id="Rainbow-Table"><a href="#Rainbow-Table" class="headerlink" title="Rainbow Table"></a>Rainbow Table</h2><p>해시 알고리즘을 통해 나올 수 있는 가능한 모든 경우의수를 다 기록하자 라는 발상에서 나온것이 Rainbow Table 입니다</p>
+<p>Rainbow Table을 이용해서 MD5 해시 알고리즘이 쉽게 복호화 되었다고 합니다</p>
+<blockquote>
+<p>레퍼런스 : <a target="_blank" rel="noopener" href="http://wiki.hash.kr/index.php/%EB%A0%88%EC%9D%B8%EB%B3%B4%EC%9A%B0_%ED%85%8C%EC%9D%B4%EB%B8%94">http://wiki.hash.kr/index.php/레인보우_테이블</a></p>
+</blockquote>
+<p></br></br></p>
+<h2 id="Salt-해시에-소금치기"><a href="#Salt-해시에-소금치기" class="headerlink" title="Salt 해시에 소금치기"></a>Salt 해시에 소금치기</h2><p>Rainbow Table 해킹 기법을 방어하기위해 나온 방법입니다</p>
+<p>Hash 암호화를 할때마다 랜덤한 문자열을 생성해서 평문 텍스트에 추가한 뒤</p>
+<p>Hash 암호화를 해서 Rainbow Table을 쓰기 힘들게 하는 방식입니다</p>
+<h3 id="Salt-방법을-적용해서-무결성을-검증하는-방법"><a href="#Salt-방법을-적용해서-무결성을-검증하는-방법" class="headerlink" title="Salt 방법을 적용해서 무결성을 검증하는 방법"></a>Salt 방법을 적용해서 무결성을 검증하는 방법</h3><p>회원가입시</p>
+<ol>
+<li>사용자가 패스워드를 서버에 전송 (패스워드 : “1234”)</li>
+<li>서버에서 Salt값을 발급 (Salt : “34309e”)</li>
+<li>패스워드 텍스트 끝에 무작위로 발급한 Salt 값 추가  (패스워드 : “1234” + Salt : “34309e”)</li>
+<li>서버는 패스워드를  Hash 암호화로 난독화 ( “123434309e” → “34309e72f32” )</li>
+<li>DB에 Hash암호화한 값과 Salt값 두개를 저장 (패스워드 : “34309e72f32”, Salt : “34309e”)</li>
+</ol>
+<p>로그인시</p>
+<ol>
+<li>사용자가 로그인 시도 (패스워드 : “1234”)</li>
+<li>서버는 사용자가 입력한 패스워드와 저장된 salt값을 불러와 텍스트 끝에 추가 (패스워드 : “1234” + Salt : “34309e”)</li>
+<li>서버는 패스워드를  Hash 암호화로 난독화 ( “123434309e” → “34309e72f32” )</li>
+<li>DB에 Hash 암호화 되어 있는 데이터와 일치하는지 비교 (“34309e72f32” === “34309e72f32”)</li>
+<li>로그인 성공</li>
+</ol>
+
         </div>
         
         <div class="post-tag">
             
-            <a class="tag" href="/tags/Node-js/" title="Node.js">Node.js</a>
+            <a class="tag" href="/tags/Project/" title="Project">Project</a>
             
-            <a class="tag" href="/tags/express/" title="express">express</a>
+            <a class="tag" href="/tags/BabelFish/" title="BabelFish">BabelFish</a>
             
         </div>
         
@@ -221,15 +266,15 @@
 <div class="paginator">
     
         
-            <a class="prev" href="/2021/01/12/NodeJS/express%20middleware/">
+            <a class="prev" href="/2021/02/10/Mysql/Mysql_Column/">
                 <i class="iconfont icon-prev"></i>
-                <span class="nav-default">NodeJS express middleware</span>
+                <span class="nav-default">Mysql Column 추가, 수정, 삭제</span>
                 <span class="nav-mobile">Prev</span>
             </a>
         
         
-            <a class="next" href="/2021/01/12/NodeJS/NodeJS%EA%B8%B0%EC%B4%88/">
-                <span class="nav-default">NodeJS의 기초적 운용방법</span>
+            <a class="next" href="/2021/02/03/5_BabelFish/">
+                <span class="nav-default">5_babelFish 프로젝트 - React를 이용한 프론트엔드 구성기</span>
                 <span class="nav-mobile">Next</span>
                 <i class="iconfont icon-next"></i>
             </a>
