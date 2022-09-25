@@ -1,0 +1,31 @@
+<div class="w-full">
+  <div class="post-list">
+    <%
+      var prev = -10086;// prev year
+      var curr;// curr year, ever step be updated
+
+      site.posts.sort('date', -1).each((item, index)=> {
+        curr = item.date.year()
+        if (curr !== prev) {
+          prev = curr;
+      %>
+        <!-- 년도 -->
+        <div class="flex w-full justify-center">
+            <span class="text-4xl font-bold text-blue-500"><%- curr %></span>
+        </div>
+      <%
+        }
+      %>
+      <div class="grid grid-cols-2">
+          <div class="text-sm ml-auto mr-3"><%- item.date.format("MM-DD") %></div>
+          <div class="mr-auto border-l-2 p-3 hover:border-l-4 hover:border-blue-500 transition duration-200 ease-in-out">
+            <a href="<%- url_for(item.path) %>">
+              <span><%- item.title %></span>
+            </a>
+        </div>
+      </div>
+    <%
+      });
+    %>
+  </div>
+</div>

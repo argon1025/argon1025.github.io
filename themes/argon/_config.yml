@@ -1,0 +1,142 @@
+
+# 파비콘 설정
+favicon:
+  enable: true
+  icon: /images/favicon.png
+  touch_icon: /images/favicon.png
+
+# 아바타 이미지
+avatar:
+  author_photo: /images/avatar.jpg
+  author_nickname: Argon
+  author_job: "@Backend-engineer"
+  author_bio: "사소한 곳에 들이는 노력의 가치를 중요시하는 개발자, 배우고 도전하는 것을 좋아하는 모험가"
+  path: /
+
+# 대체 썸네일 구성, 기본 10개 이상
+thumbnail:
+  - url: /thumbnail/t1.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t2.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t3.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t4.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t5.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t6.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t7.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t8.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t9.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+  - url: /thumbnail/t10.jpg
+    auth: Photo by Pawel Czerwinski on Unsplash
+    textColor: white
+
+# Google GA설정
+# https://analytics.google.com
+gtag:
+  enable: false
+  gtagkey: UA-xxxxxxx-x
+
+# 코멘트 구성
+comments:
+  enable: true
+  gitalk:
+    enable: false
+    clientID:
+    clientSecret:
+    repo:
+    owner:
+    admin:
+    id: location.pathname
+    distractionFreeMode: false
+  disqus:
+    # https://disqus.com/
+    enable: true
+    shortname: argon1025
+
+# 主题页面导航栏
+navbar:
+  - name: 메인
+    enable: true
+    path: /
+    key: home
+  - name: 시리즈
+    enable: true
+    path: /categories/
+    key: categories
+  - name: 히스토리
+    enable: true
+    path: /archives/
+    key: archives
+  - name: Tags
+    enable: false
+    path: /tags/
+    key: tags
+  - name: Friends
+    enable: false
+    path: /friends/
+    key: friends
+  - name: About
+    enable: false
+    path: /about/
+    key: about
+
+# 文章目录
+catalog:
+  enable: true
+
+# 게시글 이동 버튼 활성화
+prevnext:
+  enable: true
+
+# 하단 설정
+# 아이콘 FontAwesome -> fa-{icon} 형식만 지원
+footer:
+  social:
+    - name: github
+      icon: github
+      path: https://github.com/argon1025
+footerContent:
+  copyright: Copyright © 2022 Argon1025
+
+
+# 文章搜索
+search:
+  enable: true
+  placeholder:
+
+# cdn配置，默认关闭，如需启动，先确保对应插件版本cdn资源可用后再开启
+# 如资源加载失败，可替换cdn提供商或设置enable:false默认走本地资源
+# 也可使用自己的cdn服务，资源在/theme/oranges/source/plugins下
+cdns:
+  # 评论系统
+  comments:
+    gitalk:
+      enable: false
+      url:
+        css: https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css
+        js: https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js
+    valine:
+      enable: false
+      url: https://cdn.jsdelivr.net/npm/valine@1.4.18/dist/Valine.min.js
+    waline:
+      enable: false
+      url: https://cdn.jsdelivr.net/npm/@waline/client@2.5.1/dist/legacy.min.js
+
+# 主题色
+themeColor: "#808080"

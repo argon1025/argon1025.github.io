@@ -1,0 +1,47 @@
+<div class="flex flex-col w-full justify-center items-center">
+  <div class="flex flex-col max-w-3xl w-full mt-10">
+    <i class="text-sm text-gray-400 fa-solid fa-pen border-b border-gray-300 p-5"> 주절주절</i>
+        <!-- Posts - 게시글 리스트 -->
+        <% page.posts.forEach((item) => { %>
+          <% const iconName = item.tech ?  item.tech.toLowerCase() : 'buffer'; %>
+          <% const techName = item.tech || 'Else'; %>
+          <% const iconColor = item.techColor || 'gray'; %>
+          <% const subTitle = item.subTitle ? item.subTitle : "기타"; %>
+          <div class="flex flex-col my-5">
+            <!-- 테크 아이콘, 타이틀 분리 -->
+            <div class="flex flex-row border-l-4 border-gray-300 hover:bg-blue-100 hover:border-blue-500 transition duration-300 ease-in-out">
+              <!-- 아이콘 -->
+              <div class="flex items-center justify-center mx-5">
+                <i class="text-xl fa-brands fa-<%- iconName %> text-<%- iconColor %>-400"></i>
+              </div>
+              <!-- 타이틀, 서브 타이틀 -->
+              <div class=" w-full">
+                <div class="flex flex-row title text-xs">
+                  <div class="my-1 bg-<%- iconColor %>-200 text-<%- iconColor %>-500 rounded p-1"><%- subTitle %></div>
+                  <div class="ml-auto text-sm text-gray-400"><%- item.date.format("YYYY-MM-DD") %></div>
+                </div>
+                <div class="title text-2xl">
+                  <a href="<%- url_for(item.path) %>">
+                    <span><%- item.title %></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+        <% }) %>
+         <!-- Posts - 게시글 리스트 -->
+  </div>
+  <!-- 네비게이터 -->
+  <div class="flex flex-col max-w-3xl w-full pt-10 border-t border-gray-300">
+    <!-- Posts - 게시글 네비 -->
+    <nav class="flex justify-center">
+      <% if(page.prev == 0){ %>
+        <a class="text-sm text-gray-500 mx-5" href="<%- url_for(page.prev_link)%>"><i class="fa-solid fa-chevron-left"></i></a>
+      <% } %>
+      <span class="text-sm text-gray-600"><%- page.current %> <i class="mx-5 fa-solid fa-paperclip"></i> <%- page.total -%></span>
+      <% if(page.next == 0){ %>
+        <a class="text-sm text-gray-500 mx-5" href="<%- url_for(page.next_link)%>"><i class="fa-solid fa-chevron-right"></i></a>
+      <% } %>
+    </nav>
+    <!-- Posts - 게시글 네비 -->
+  </div>
+</div>

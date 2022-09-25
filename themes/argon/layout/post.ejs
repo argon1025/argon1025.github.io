@@ -1,0 +1,137 @@
+<% if (page.type==="tags" ) { %>
+<div class="container tag-index">
+  <div>
+    <%- list_tags({ class: "tag" }) %>
+  </div>
+</div>
+<% } %>
+
+<!-- 카테고리 뷰 페이지 -->
+<% if (page.type==="categories" ) { %>
+  <div class="flex flex-col justify-center items-center">
+  <%
+  site.categories.sort('date', -1).each((item,index)=>{
+    console.log(item.path)
+  %>
+    <div>
+      <div><%- item.name %></div>
+
+    </div>
+  <% }) %>
+  </div>
+<% } %>
+
+<% if(page.type==="about" ) { %>
+<div class="container about-index">
+  <div class="markdown-body">
+    <%- page.content %>
+  </div>
+</div>
+<% } %>
+
+<!-- 게시글 페이지 -->
+<% if (!page.type) { %>
+  <% 
+    const iconName=page.tech ? page.tech.toLowerCase() : 'buffer' ;
+    const techName=page.tech || 'Else' ;
+    const iconColor=page.techColor || 'gray'
+    const subTitle=page.subTitle;
+    const randomThumbnailCount=Math.floor(Math.random() * theme.thumbnail.length);
+    const thumbnailImage=page.thumbnailImage || theme.thumbnail[randomThumbnailCount].url;
+    const thumbnailAuth=theme.thumbnail[randomThumbnailCount].auth;
+    const thumbnailTextColor=theme.thumbnail[randomThumbnailCount].textColor;
+  %>
+  <div class="flex flex-col w-full justify-center items-center" id="post-details">
+    <!-- 테크 아이콘 -->
+    <i class="my-5 text-3xl fa-brands fa-<%- iconName %> text-<%- iconColor %>-400"></i>
+
+    <!-- 타이틀 -->
+    <div class="flex flex-col my-5 post-title text-5xl font-['Poppins'] font-bold">
+      <%- page.title %>
+      <span class="font-thin text-sm text-gray-400">
+        <%- page.date.format("YYYY-MM-DD") %>
+      </span>
+    </div>
+
+    <!-- 썸네일&서브타이틀 -->
+    <div class="my-5 flex flex-col justify-center items-center h-[40rem] max-h-[40rem] w-full max-w-[80rem] bg-cover bg-[url('<%- thumbnailImage %>')]">
+      <% if(subTitle) { %>
+      <span class="font-thin text-4xl text-<%- thumbnailTextColor %> w-full break-words p-5 text-center">
+        <%- subTitle %>
+      </span>
+      <% }%>
+    </div>
+
+    <!-- 이미지 저작권 표시 -->
+    <span class="text-xs text-gray-200 w-full text-right max-w-[80rem]">
+      <%- thumbnailAuth %>
+    </span>
+
+    <!-- 태그, 카테고리 표시 -->
+    <div class="my-10">
+      <% for(item of theme.navbar) { if (item.key==='tags' && item.enable) { if(page.tags && page.tags.length> 0) { %>
+      <span class="post-tags">
+        <i class="iconfont icon-tags mr-10" title="<%= __('tags') %>"></i>
+        <% for(let item of page.tags.data) { %>
+        <span class="bg-blue-300 text-blue-500 rounded">
+          <a href="<%= url_for(item.path)%>" title="<%- item.name %>">
+            #<%- item.name %>
+          </a>
+        </span>
+        <% } %>
+      </span>
+      <% } } if (item.key==='categories' && item.enable) { if(page.tags && page.categories.length> 0) { %>
+      <span class="post-categories">
+        <i class="iconfont icon-bookmark" title="<%= __('categories') %>"></i>
+        <% for(let item of page.categories.data){ %>
+        <span class="bg-blue-200 text-blue-500 rounded p-1">
+          <a href="<%= url_for(item.path)%>" title="<%- item.name %>">
+            <b>#</b>
+            <%- item.name %>
+          </a>
+        </span>
+        <% } %>
+      </span>
+      <% } } } %>
+    </div>
+    <!-- 게시글 콘텐츠 -->
+    <div class="post-content flex flex-col max-w-3xl w-full mt-10 prose prose-neutral">
+      <%- page.content %>
+    </div>
+  </div>
+<% if(theme.prevnext.enable) { %>
+<div class="p-5 flex flex-col w-full justify-center items-center">
+  <div class='my-5'>
+    <div class="post-foot-next">
+      <% if(page.next) { %>
+      <a href="<%- url_for(page.next.path) %>" target="_self">
+        <i class="fa-solid fa-angle-left"></i>
+        <span>
+          <%= __('이전글') %>
+        </span>
+      </a>
+      <% } %>
+    </div>
+    <div class="post-foot-prev">
+      <% if(page.prev) { %>
+      <a href="<%- url_for(page.prev.path) %>" target="_self">
+        <span>
+          <%= __('다음글') %>
+        </span>
+        <i class="fa-solid fa-angle-right"></i>
+      </a>
+      <% } %>
+    </div>
+  </div>
+  <!-- 댓글 구성 -->
+  <% if(theme.comments.enable) { %>
+  <div class="max-w-3xl w-full justify-center">
+    <%- partial("_partial/comments") %>
+  </div>
+  <% } %>
+</div>
+<% } %>
+</div>
+<%- partial("_partial/catalog") %>
+</div>
+<% } %>
