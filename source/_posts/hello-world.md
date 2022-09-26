@@ -1,9 +1,9 @@
 ---
-title: NestJS 테스트 코드 작성하기
-category: nest-js
+title: 테스트 게시글
+category: 테스트
 tech: js
 techColor: yellow
-subTitle: Jest를 곁들인 테스트 코드 작성하기
+subTitle: 이제 테스트를 곁들인
 date: 2022-09-09
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
