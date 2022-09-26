@@ -28,7 +28,7 @@
       <a class="text-sm text-gray-400" href="<%- theme.avatar.path %>"
         ><%- theme.avatar.author_job %></a
       >
-      <% if(is_home()) { %>
+      <% if(is_home() || is_current('/categories') || is_archive()) { %>
       <a class="text-sm text-gray-300 w-80" href="<%- theme.avatar.path %>"
         ><%- theme.avatar.author_bio %></a
       >

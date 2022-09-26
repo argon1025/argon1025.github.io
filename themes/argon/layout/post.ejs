@@ -9,12 +9,20 @@
 <!-- 카테고리 뷰 페이지 -->
 <% if (page.type==="categories" ) { %>
   <div class="flex flex-col justify-center items-center">
+    <i class="text-lg text-gray-400 fa-solid fa-person-military-pointing border-b border-gray-300 p-5"> 시리즈 <span class="text-sm text-gray-300">카테고리 별 게시글</span></i>
   <%
   site.categories.sort('date', -1).each((item,index)=>{
-    console.log(item.path)
+    const randomFromColor=Math.floor(Math.random() * 10);
+    const randomToColor=Math.floor(Math.random() * 10);
+    const colorList = ['pink','violet','blue','red','orange','lime','teal','indigo','pink','blue']
   %>
-    <div>
-      <div><%- item.name %></div>
+    <!-- 카테고리 뷰 출력 -->
+    <div class="my-5 flex flex-col max-w-3xl w-full border-l-4 border-gray-300 hover:border-<%- colorList[randomFromColor] %>-500 transition duration-300 ease-in-out">
+      <div>
+        <a class="p-3 text-gray-300 text-8xl font-extrabold hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-<%- colorList[randomFromColor] %>-500 hover:to-<%- colorList[randomToColor] %>-500" href="/<%- item.path %>">
+          <%- item.name %>
+        </a>
+        </div>
 
     </div>
   <% }) %>
