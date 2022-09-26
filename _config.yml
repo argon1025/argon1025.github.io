@@ -102,4 +102,7 @@ theme: argon
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/argon1025/argon1025.github.io
+  branch: publish
+  message: published
