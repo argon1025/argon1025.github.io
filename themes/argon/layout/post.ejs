@@ -104,6 +104,9 @@
     </div>
     <!-- 게시글 콘텐츠 -->
     <article class="post-content flex flex-col max-w-3xl w-full mt-10 prose prose-zinc p-3 prose-figure:overflow-x-auto prose-figure:m-0 prose-h1:mt-10 prose-h1:mb-1 lg:prose-figure:overflow-visible prose-code:bg-blue-200 prose-code:font-normal prose-code:text-blue-500 prose-code:rounded prose-code:p-1">
+      <h1>Overview</h1>
+      <%- toc(page.content,{list_number:false}) %>
+      <hr>
       <%- page.content %>
     </article>
   </div>
