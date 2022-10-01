@@ -103,7 +103,7 @@
       <% } } } %>
     </div>
     <!-- 게시글 콘텐츠 -->
-    <div class="post-content flex flex-col max-w-3xl w-full mt-10 prose prose-neutral">
+    <div class="post-content flex flex-col max-w-3xl w-full mt-10 prose prose-neutral p-3">
       <%- page.content %>
     </div>
   </div>
@@ -133,7 +133,7 @@
   </div>
   <!-- 댓글 구성 -->
   <% if(theme.comments.enable) { %>
-  <div class="max-w-3xl w-full justify-center">
+  <div class="max-w-3xl w-full justify-center p-3">
     <%- partial("_partial/comments") %>
   </div>
   <% } %>
