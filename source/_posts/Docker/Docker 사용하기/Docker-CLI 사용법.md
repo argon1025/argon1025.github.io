@@ -1,6 +1,8 @@
 ---
 title: 자주 사용하는 Docker 명령어들 
-category: Docker
+category: Docker 사용하기
+tags:
+	- Docker
 tech: Docker
 techColor: blue
 subTitle: 📜 Docker CLI 정리
