@@ -159,7 +159,7 @@ N개의 데이터를 한꺼번에 INSERT 하는 것이 퍼포먼스가 좋다는
 일반적인 RDBMS와 마찬가지로 **갱신손실**이 발생할 수 있습니다
 트랜잭션을 사용해서 데이터의 고립성을 지켜야 합니다
 
-> 레디스에서 잠금, 트랜잭션이 필요한 이유 [https://stackoverflow.com/questions/30004364/redis-race-condition-and-single-threaded](https://stackoverflow.com/questions/30004364/redis-race-condition-and-single-threaded)
+> 레디스에서 잠금, 트랜잭션이 필요한 이유 [스택 오버 플로우 링크](https://stackoverflow.com/questions/30004364/redis-race-condition-and-single-threaded)
 
 > 레디스 트랜잭션 공식 문서 [https://redis.io/topics/transactions](https://redis.io/topics/transactions)
 

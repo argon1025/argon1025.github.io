@@ -81,7 +81,7 @@ BullModule.forRootAsync({
 
 설정 옵션은 `interface QueueOptions` 인터페이스를 참조하세요
 
-[https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue](https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue)
+[Bull Docs](https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue)
 
 
 ### task-manager.module 작업 큐 생성하기
