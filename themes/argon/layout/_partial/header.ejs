@@ -31,13 +31,13 @@
     }
   %>
   <title>
-    <%= config.title %>
     <% if (title) { %>
-      |
       <%= __(title) %> 
       <% if (page.tag) { %> : <%= page.tag %><% } %>
       <% if (page.category) { %> : <%= page.category %><% } %>
+      |
     <% } %>
+    <%= config.title %>
   </title>
   <!-- Title - 타이틀 설정 -->
 
