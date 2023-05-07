@@ -1,5 +1,5 @@
-<div class="">
-  <div class="flex justify-center mt-5">
+<div class=" m-10">
+  <div class="flex justify-center">
     <ul class="flex flex-row">
       <% for(let item of theme.navbar) { if (item.enable) { %>
       <li class="mx-5 transition duration-300 ease-in-out text-base font-medium hover:text-sky-500 hover:decoration-2 hover:underline hover:decoration-sky-500" data-path="<%- item.path %>">
@@ -7,32 +7,6 @@
       </li>
       <% } } %>
     </ul>
-  </div>
-  <div class="my-20 flex flex-col items-center justify-center sm:flex-row">
-    <!-- Avarta - 아바타 -->
-    <div class="mx-3 w-14 h-14 rounded-full overflow-hidden drop-shadow-lg">
-        <img
-          class="object-cover"
-          src="<%- theme.avatar.author_photo %>"
-          alt="avarta"
-        />
-    </div>
-    <!-- Avarta - 아바타 -->
-    <!-- Name - 이름 -->
-    <div class="flex flex-col w-60 text-center sm:text-left sm:w-80">
-      <p class="text-lg font-semibold text-gray-900" href="<%- theme.avatar.path %>"
-        ><%- theme.avatar.author_nickname %></p
-      >
-      <p class="text-sm text-gray-400" href="<%- theme.avatar.path %>"
-        ><%- theme.avatar.author_job %></p
-      >
-      <% if(is_home() || is_current('/categories') || is_archive()) { %>
-      <p class="text-sm text-gray-300" href="<%- theme.avatar.path %>"
-        ><%- theme.avatar.author_bio %></p
-      >
-      <% } %>
-    </div>
-    <!-- Name - 이름 -->
   </div>
 </div>
 

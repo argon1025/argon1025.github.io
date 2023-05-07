@@ -10,6 +10,8 @@ avatar:
   author_nickname: Argon
   author_job: "@Backend-engineer"
   author_bio: "사소한 곳에 들이는 노력의 가치를 중요시하는 개발자, 배우고 도전하는 것을 좋아하는 모험가"
+  author_email: "argon1025@gmail.com"
+  author_job_place: "StageFive"
   path: /
 
 # 대체 썸네일 구성, 기본 10개 이상
@@ -54,35 +56,26 @@ gtag:
 # 코멘트 구성
 comments:
   enable: true
-  gitalk:
-    enable: false
-    clientID:
-    clientSecret:
-    repo:
-    owner:
-    admin:
-    id: location.pathname
-    distractionFreeMode: false
   disqus:
     # https://disqus.com/
     enable: true
     shortname: argon1025
 
-# 主题页面导航栏
+# 메뉴 구성
 navbar:
-  - name: 메인
+  - name: Index
     enable: true
     path: /
     key: home
-  - name: 시리즈
+  - name: Series
     enable: true
     path: /categories/
     key: categories
-  - name: 테크태그
+  - name: TechTag
     enable: true
     path: /tags/
     key: tags
-  - name: 히스토리
+  - name: Archive
     enable: true
     path: /archives/
     key: archives
@@ -108,3 +101,10 @@ footer:
       path: https://github.com/argon1025
 footerContent:
   copyright: Copyright © 2022 Argon1025
+
+# 게시글 테크 아이콘 설정
+# simple-icons :https://github.com/simple-icons/simple-icons/blob/master/slugs.md
+icons:
+  nodeJs:
+    - type: simpleIcon
+      name: nodedotjs
