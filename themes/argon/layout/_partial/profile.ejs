@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center sm:flex-row m-10">
     <!-- Profile Image-->
-    <div class="relative w-20 h-20 drop-shadow-lg">
+    <div class="w-20 h-20 drop-shadow-lg p-1">
         <div class="rounded-full overflow-hidden w-full h-full">
             <img
             class="object-cover"
@@ -8,12 +8,6 @@
             alt="avatar"
           />
         </div>
-        <!-- Mail Button-->
-        <a href="mailto:<%- theme.avatar.author_email %>" title="Send an email to <%- theme.avatar.author_nickname %>">
-            <div class="absolute top-0 right-0 flex rounded-full w-7 h-7 bg-blue-300 drop-shadow-lg hover:bg-blue-500 ease-out duration-300">
-                <%- simpleIcons('siGmail','m-2','fill-white').svg %>
-            </div>
-        </a>
     </div>
     <!-- 소개 -->
     <div class="flex flex-col w-72 text-center sm:text-left sm:ml-5 sm:w-80">
@@ -28,9 +22,11 @@
         </div>
         <!-- BIO -->
         <% if(is_home()) { %>
-        <p class="text-sm text-gray-700" >
-            <%- theme.avatar.author_bio %>
-        </p>
+            <div>
+                <p class="text-sm text-gray-700" >
+                    <%- theme.avatar.author_bio %>
+                </p>
+            </div>
         <% } %>
-      </div>
+    </div>
 </div>

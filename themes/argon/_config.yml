@@ -9,8 +9,9 @@ avatar:
   author_photo: /images/avatar.jpg
   author_nickname: Argon
   author_job: "@Backend-engineer"
-  author_bio: "사소한 곳에 들이는 노력의 가치를 중요시하는 개발자, 배우고 도전하는 것을 좋아하는 모험가"
+  author_bio: "즐거운 개발자<br />배우고 도전하는 것을 좋아하는 모험가"
   author_email: "argon1025@gmail.com"
+  author_github: "https://github.com/argon1025"
   author_job_place: "StageFive"
   path: /
 
@@ -105,6 +106,18 @@ footerContent:
 # 게시글 테크 아이콘 설정
 # simple-icons :https://github.com/simple-icons/simple-icons/blob/master/slugs.md
 icons:
-  nodeJs:
-    - type: simpleIcon
-      name: nodedotjs
+  node-js:
+    type: simpleIcon
+    name: siNodedotjs
+  nestJs:
+    type: simpleIcon
+    name: siNestjs
+  Redis:
+    type: simpleIcon
+    name: siRedis
+  AWS:
+    type: simpleIcon
+    name: siAmazonaws
+  default:
+    type: simpleIcon
+    name: siAcademia
