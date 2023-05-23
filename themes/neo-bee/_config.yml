@@ -16,4 +16,26 @@ header:
   googleFont:
     use: true
     link: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'
-    
+
+navigation:
+  logo:
+    useImage: false
+    titleText: 'NeoBlog'
+    titleImage: 'images/logo.png'
+  menu:
+    - name: '게시글'
+      use: true
+      path: ''
+      hoverColor: 'gray'
+    - name: '카테고리'
+      use: true
+      path: ''
+      hoverColor: 'sky'
+    - name: '폴더'
+      use: true
+      path: ''
+      hoverColor: 'sky'
+    - name: '이력'
+      use: true
+      path: ''
+      hoverColor: 'sky'
