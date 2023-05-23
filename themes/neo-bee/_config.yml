@@ -1,0 +1,18 @@
+# Setting up header tags
+# Title text settings are managed in the languages file
+header:
+  additionalMetadata:
+    use: false
+    keywords: 'develop'
+    author: 'argon1025'
+    description: 'developer Blog'
+  favicon:
+    use: false
+    icon: ''
+    shortcutIcon: ''
+    appleTouchIcon72: ''
+    appleTouchIcon114: ''
+    appleTouchIcon144: ''
+  googleFont:
+    use: true
+    link: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'

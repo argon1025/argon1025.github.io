@@ -1,0 +1,34 @@
+<head>
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% if (theme.header.additionalMetadata.use){ %>
+    <meta name="keywords" content="<%= theme.header.additionalMetadata.keywords %>" />
+    <meta name="author" content="<%= theme.header.additionalMetadata.author %>" />
+    <meta name="description" content="<%= theme.header.additionalMetadata.description %>" />
+    <% } %>
+    <!-- MetaData End -->
+
+    <!-- Title -->
+    <title><%= __('title') %></title>
+    <!-- Title End -->
+
+    <% if (theme.header.favicon.use){ %>
+        <!-- Favicon -->
+        <link rel="icon" href="<%- theme.header.favicon.icon %>">
+        <link rel="shortcut icon" href="<%- theme.header.favicon.shortcutIcon %>" />
+        <link rel="apple-touch-icon" sizes="72x72" href="<%- theme.header.favicon.appleTouchIcon72 %>" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="<%- theme.header.favicon.appleTouchIcon114 %>" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="<%- theme.header.favicon.appleTouchIcon144 %>" />
+        <!-- Favicon End  -->
+    <% } %>
+
+    <% if (theme.header.googleFont.use){ %>
+        <!-- Google Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="<%- theme.header.googleFont.link %>" rel="stylesheet">
+        <!-- Google Font End -->
+    <% } %>
+
+</head>
