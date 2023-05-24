@@ -8,9 +8,12 @@
     <meta name="description" content="<%= theme.header.additionalMetadata.description %>" />
     <% } %>
     <!-- MetaData End -->
+    <% if (theme.header.additionalManifest.use){ %>
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    <% } %>
 
     <!-- Title -->
-    <title><%= __('title') %></title>
+    <title><%= theme.header.title %></title>
     <!-- Title End -->
 
     <% if (theme.header.favicon.use){ %>
@@ -38,7 +41,7 @@
         theme: {
             extend: {
             fontFamily: {
-                'sans-serif': ['Poppins', 'Noto Sans KR'],
+                'sans': ['Instrument Sans', 'Noto Sans KR'],
             }
             }
         }
