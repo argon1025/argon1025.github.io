@@ -25,8 +25,9 @@
                 const techIcon = firstPost.tech ||  __('index.defaultSubTitle');
                 const tags = firstPost.tags.data.map(({name, path})=>name);
                 const date = firstPost.date.format(theme.post.timeFormat);
+                const postPath = url_for(firstPost.path);
                 %>
-                <%- mainFeed(title, subTitle, category, techIcon, date, tags) %>
+                <%- mainFeed(title, subTitle, category, techIcon, date, tags, postPath) %>
             <%}%>
             <!-- First Post End -->
         </div>
@@ -44,8 +45,9 @@
                             const tags = post.tags.data.map(({name, path})=>name);
                             const date = post.date.format(theme.post.timeFormat);
                             const firstPageAndFirstPost = page.current === 1 && index === 0;
+                            const postPath = url_for(post.path);
                         %>
-                        <%- firstPageAndFirstPost ? '' : feed(title, subTitle, category, techIcon, date, tags) %>
+                        <%- firstPageAndFirstPost ? '' : feed(title, subTitle, category, techIcon, date, tags, postPath) %>
                     <%})%>
                     <%- page.current === 1 ? nextButtonFeed(url_for(page.next_link)) : '' %>
                 </div>
