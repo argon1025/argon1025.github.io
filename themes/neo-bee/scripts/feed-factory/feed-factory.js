@@ -31,7 +31,7 @@ hexo.extend.helper.register(
                             <span>${createdAt}</span>
                     </div>
                      <div class="space-y-1">
-                        <h2 class="text-3xl font-bold">${title}</h2>
+                        <h2 class="text-xl md:text-3xl font-semibold">${title}</h2>
                         <h3 class="text-gray-500">${subtitle}</h3>
                     </div>
                     <div class="text=sm text-gray-300">${tagInfo}</div>
@@ -76,7 +76,7 @@ hexo.extend.helper.register(
                             <span>${createdAt}</span>
                     </div>
                      <div class="space-y-1">
-                        <h2 class="text-3xl font-bold">${title}</h2>
+                        <h2 class="text-xl md:text-3xl font-semibold">${title}</h2>
                         <h3 class="text-gray-500">${subtitle}</h3>
                     </div>
                     <div class="text=sm text-gray-300">${tagInfo}</div>

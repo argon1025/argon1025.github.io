@@ -23,25 +23,17 @@ header:
 navigation:
   logo:
     useImage: false
-    titleText: '네오비'
+    titleText: 'Argon'
     titleImage: '/images/logo1.png'
   menu:
-    - name: '게시글'
+    - name: 'Index'
       use: true
       path: ''
       hoverColor: 'gray'
-    - name: '카테고리'
+    - name: 'GitHub'
       use: true
-      path: ''
+      path: 'https://github.com/argon1025'
       hoverColor: 'gray'
-    - name: '폴더'
-      use: true
-      path: ''
-      hoverColor: 'gray'
-    - name: '이력'
-      use: true
-      path: ''
-      hoverColor: 'sky'
 
 post:
   timeFormat: 'YYYY년 MM월 DD일'
