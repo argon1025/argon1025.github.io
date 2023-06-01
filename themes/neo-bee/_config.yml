@@ -20,6 +20,10 @@ header:
     use: true
     link: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap'
 
+footer:
+  content1: 'Created By Argon1025 (argon1025@gmail.com)'
+  content2: 'Special thanks | Feed Thumbnail By Milad Fakurian'
+
 navigation:
   logo:
     useImage: false
