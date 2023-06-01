@@ -1,0 +1,117 @@
+# Setting up header tags
+header:
+  title: '네오비'
+  # use /source/manifest.webmanifest
+  additionalManifest:
+    use: true
+  additionalMetadata:
+    use: true
+    keywords: 'develop'
+    author: 'argon1025'
+    description: 'developer Blog'
+  favicon:
+    use: false
+    icon: ''
+    shortcutIcon: ''
+    appleTouchIcon72: ''
+    appleTouchIcon114: ''
+    appleTouchIcon144: ''
+  googleFont:
+    use: true
+    link: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap'
+
+footer:
+  content1: 'Created By Argon1025 (argon1025@gmail.com)'
+  content2: 'Special thanks | Feed Thumbnail By Milad Fakurian'
+
+navigation:
+  logo:
+    useImage: false
+    titleText: 'Argon'
+    titleImage: '/images/logo1.png'
+  menu:
+    - name: 'Index'
+      use: true
+      path: ''
+      hoverColor: 'gray'
+    - name: 'GitHub'
+      use: true
+      path: 'https://github.com/argon1025'
+      hoverColor: 'gray'
+
+post:
+  timeFormat: 'YYYY년 MM월 DD일'
+  thumbnail:
+    - source: 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/9qLYZ_y25pg'
+      createBy: 'ilgmyzin'
+      path: '/feed-thumbnail/object1.jpg'
+    - source: 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/3iFOosUelfk'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object2.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object3.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object4.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object5.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object6.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object7.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object8.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object9.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object10.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object11.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object12.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object13.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object14.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object15.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object16.jpg'
+    - source: 'https://unsplash.com/ko/@fakurian'
+      createBy: 'Milad Fakurian'
+      path: '/feed-thumbnail/object17.jpg'
+  categoryIcon:
+    Gmail:
+      iconType: 'simpleIcons'
+      iconName: 'siGmail'
+    Redis:
+      iconType: simpleIcon
+      iconName: siRedis
+    AWS:
+      iconType: simpleIcon
+      iconName: siAmazonaws
+    NodeJS:
+      iconType: simpleIcon
+      iconName: siNodedotjs
+    NestJS:
+      iconType: simpleIcon
+      iconName: siNestjs
+    Git:
+      iconType: simpleIcon
+      iconName: siGitHub
+    default:
+      iconType: simpleIcon
+      iconName: siAcademia
