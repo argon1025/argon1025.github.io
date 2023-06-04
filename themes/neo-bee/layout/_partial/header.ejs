@@ -26,14 +26,9 @@
         <!-- Favicon End  -->
     <% } %>
 
-    <% if (theme.header.googleFont.use){ %>
-        <!-- Google Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="<%- theme.header.googleFont.link %>" rel="stylesheet">
-        <!-- Google Font End -->
-    <% } %>
+    <!-- pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- pretendard Font End -->
 
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
@@ -42,7 +37,7 @@
         theme: {
             extend: {
             fontFamily: {
-                'sans': ['Pretendard Variable', 'Pretendard'],
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
             }
             }
         }
@@ -50,4 +45,7 @@
     </script>
     <!-- TailwindCSS End -->
 
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/<%- theme.header.highlightJs.styleName %>.min.css">
+    <!-- highlight.js Theme End -->
 </head>
