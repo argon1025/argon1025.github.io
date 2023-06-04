@@ -1,40 +1,35 @@
 ---
 title: NestJS S3 파일업로드
+subTitle: AWS S3와 서비스 DB 사이 정합성에 대해
+tech: NestJS
 category: NestJS 사용하기
 tags:
 	- NestJS
 	- AWS
 	- AWS S3
-tech: node-js
-techColor: lime
-subTitle: AWS S3와 서비스 DB 사이 정합성에 대해
 date: 2021-12-02
 ---
 
-
 # 요구조건
--   AWS S3 버킷을 사용해 파일을 업로드합니다
--   업로드 기록을 데이터베이스에 저장해야합니다
--   데이터베이스에 저장된 기록은 S3에 대조 했을 때 항상 정합성을 유지해야합니다
--   탈퇴한 유저인 경우 스케쥴링을 통해 해당 유저가 소유한 파일을 삭제할 수 있어야합니다
 
+- AWS S3 버킷을 사용해 파일을 업로드합니다
+- 업로드 기록을 데이터베이스에 저장해야합니다
+- 데이터베이스에 저장된 기록은 S3에 대조 했을 때 항상 정합성을 유지해야합니다
+- 탈퇴한 유저인 경우 스케쥴링을 통해 해당 유저가 소유한 파일을 삭제할 수 있어야합니다
 
 ---
-
-
 
 # 정합성에 대해
 
 `정합성`이 보장된다는것은 데이터들의 값이 서로 일치하다는 뜻입니다.
 
 데이터베이스의 경우 FK, 트랜잭션을 통해 데이터의 일관성과 정합성을 보장해주고 있지만
-AWS S3와 같이 우리 서비스와 동 떨어져 있는 상황에서 어떻게하면 위 요구조건을 만족할 수 있을까요? 
-
+AWS S3와 같이 우리 서비스와 동 떨어져 있는 상황에서 어떻게하면 위 요구조건을 만족할 수 있을까요?
 
 ---
 
-
 # 설계
+
 ![image](https://user-images.githubusercontent.com/55491354/193412101-670d536d-12d8-4a18-b72b-65142f1c0b89.png)
 트랜잭션을 통해서 업로드 정보를 기록하는 것 까지는 쉬워 보이지만
 AWS S3가 포함될 경우 데이터 정합성을 일부 보장할 수 없다는 문제가 있습니다
@@ -45,23 +40,20 @@ S3는 롤백의 개념이 없기 때문에 추가로 요청된 삭제요청이 �
 그렇기에 S3 삭제 요청 실패로 삭제되지 못한 파일이 남아 있을 수 있는 가능성에 대해서는 인정하되
 데이터베이스에 기록된 파일 리스트에 대한 데이터 정확성은 반드시 지켜져야 한다 판단하고 플로우를 작성했습니다
 
-
-
 ---
 
-
-
 # ERD
+
 ```sql
 -- imageUpload Table Create SQL
 CREATE TABLE imageUpload
 (
-    `id`             BIGINT          NOT NULL        AUTO_INCREMENT COMMENT '이미지 업로드 아이디', 
-    `usersID`        INT UNSIGNED    NULL    COMMENT '유저 아이디', 
-    `pathUrl`        VARCHAR(300)    NOT NULL    COMMENT '이미지 URL 정보', 
-    `fileSizeBytes`  INT             NOT NULL    COMMENT '파일 사이즈 정보', 
-    `fileType`       VARCHAR(20)     NOT NULL    COMMENT '파일 타입 정보', 
-    `createdAt`      DATETIME        NOT NULL    COMMENT '파일 업로드일', 
+    `id`             BIGINT          NOT NULL        AUTO_INCREMENT COMMENT '이미지 업로드 아이디',
+    `usersID`        INT UNSIGNED    NULL    COMMENT '유저 아이디',
+    `pathUrl`        VARCHAR(300)    NOT NULL    COMMENT '이미지 URL 정보',
+    `fileSizeBytes`  INT             NOT NULL    COMMENT '파일 사이즈 정보',
+    `fileType`       VARCHAR(20)     NOT NULL    COMMENT '파일 타입 정보',
+    `createdAt`      DATETIME        NOT NULL    COMMENT '파일 업로드일',
     CONSTRAINT PK_imageUpload PRIMARY KEY (id)
 );
 
@@ -73,16 +65,13 @@ ALTER TABLE imageUpload
         REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE;
 ```
 
--   유저가 탈퇴(하드 딜리트)되었을 경우의 지표로 사용하기위해 외래키 제약을
--   ON DELETE SET NULL로 설정했습니다
-
-
+- 유저가 탈퇴(하드 딜리트)되었을 경우의 지표로 사용하기위해 외래키 제약을
+- ON DELETE SET NULL로 설정했습니다
 
 ---
 
-
-
 # ImageUpload Service
+
 ## constructor
 
 ```tsx
@@ -93,10 +82,10 @@ export class FileUploadsService {
 
   constructor(private readonly configService: ConfigService, private connection: Connection) {
     // S3 초기화
-    this.S3_BUCKET_NAME = this.configService.get<string>('AWS_S3_BUCKET', 'noName');
+    this.S3_BUCKET_NAME = this.configService.get<string>("AWS_S3_BUCKET", "noName");
     this.S3 = new AWS.S3({
-      accessKeyId: this.configService.get<string>('AWS_S3_ACCESS_KEY', 'noKey'),
-      secretAccessKey: this.configService.get<string>('AWS_S3_KEY_SECRET', 'noKey'),
+      accessKeyId: this.configService.get<string>("AWS_S3_ACCESS_KEY", "noKey"),
+      secretAccessKey: this.configService.get<string>("AWS_S3_KEY_SECRET", "noKey"),
     });
   }
 }
@@ -106,9 +95,8 @@ AWS S3버킷 이름과 S3 서비스 객체를 생성합니다
 
 S3 서비스 객체를 생성할 때 사용된 IAM의 권한은 `AmazonS3FullAccess` 입니다.
 
-
- 
 ## s3FileUpload
+
 ```tsx
 /**
    * s3 파일 업로드를 요청합니다.
@@ -141,11 +129,10 @@ S3 서비스 객체를 생성할 때 사용된 IAM의 권한은 `AmazonS3FullAcc
   }
 ```
 
-파일 업로드를 요청하는 메서드 입니다  
-
-
+파일 업로드를 요청하는 메서드 입니다
 
 ## s3FileDelete
+
 ```typescript
 /**
    * s3 파일 삭제를 요청합니다.
@@ -163,13 +150,13 @@ S3 서비스 객체를 생성할 때 사용된 IAM의 권한은 `AmazonS3FullAcc
     } catch (error) {
       return false;
     }
-  } 
+  }
 ```
 
 파일 삭제를 요청하는 메서드 입니다
 
-
 ## imageFileUpload : public
+
 ```tsx
 /**
    * 하나의 이미지를 업로드하고 URL을 반환합니다.
@@ -278,20 +265,15 @@ S3 서비스 객체를 생성할 때 사용된 IAM의 권한은 `AmazonS3FullAcc
 
 위 두개의 메서드를 통해 파일 업로드서비스 로직을 작성했습니다.
 
-
 ---
-
 
 # 부가 목표
+
 - 작업 큐를 통한 업로드, 삭제 처리
-	- S3 성능 최적화 관련 이슈
+  - S3 성능 최적화 관련 이슈
 - 스케쥴러를 통한 탈퇴회원 업로드 파일 관리 처리
 
-
 ---
-
-
-
 
 # Reference
 

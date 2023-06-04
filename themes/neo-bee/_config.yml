@@ -93,9 +93,11 @@ post:
     - source: 'https://unsplash.com/ko/@fakurian'
       createBy: 'Milad Fakurian'
       path: '/feed-thumbnail/object17.jpg'
+  # now Support only simpleIcon
+  # https://github.com/simple-icons/simple-icons/blob/master/slugs.md
   categoryIcon:
     Gmail:
-      iconType: 'simpleIcons'
+      iconType: simpleIcons
       iconName: 'siGmail'
     Redis:
       iconType: simpleIcon
@@ -111,7 +113,25 @@ post:
       iconName: siNestjs
     Git:
       iconType: simpleIcon
-      iconName: siGitHub
+      iconName: siGit
+    Book:
+      iconType: simpleIcon
+      iconName: siGitbook
+    CircleCI:
+      iconType: simpleIcon
+      iconName: siCircleci
+    Docker:
+      iconType: simpleIcon
+      iconName: siDocker
+    MySQL:
+      iconType: simpleIcon
+      iconName: siMysql
+    NGINX:
+      iconType: simpleIcon
+      iconName: siNginx
+    Prisma:
+      iconType: simpleIcon
+      iconName: siPrisma
     default:
       iconType: simpleIcon
       iconName: siAcademia

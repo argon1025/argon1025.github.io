@@ -1,13 +1,12 @@
 ---
 title: Redis와 Queue에 대해
+subTitle: Redis로 NestJS에서 Queue 구현하기
+tech: Redis
 category: Redis 사용하기
 tags:
 	- Redis
 	- NestJS
 	- Queue
-tech: hive
-techColor: red
-subTitle: Redis로 NestJS에서 Queue 구현하기
 date: 2022-01-05
 ---
 
@@ -18,50 +17,40 @@ Slack WebHook lateLimit의 영향으로 초당 1개 이상의 슬랙 메시지�
 이번 포스트를 통해 큐란 무엇인가에 대해 간단히 정리하고
 슬랙의 요청 제한에 대응하는 메시지 큐 서비스를 구현해 보겠습니다
 
-
-
 ---
 
-
-
 # 메시지 큐 종류
+
 메시지 큐는 대표적으로 `Kafka` `RabbitMQ` `Amazon MQ` 등이 있습니다
 Redis는 기본적으로 in-memory 스토리지지만
 Stream이나 pub/sub 컬렉션을 지원하기에 레디스에서도 메시지 큐를 사용할 수 있습니다
 프로젝트에서 메시지큐로 레디스를 사용하기로 했고 이유는 다음과 같습니다
 
--   이미 레디스를 프로젝트에서 사용하고 있습니다
--   작은 프로젝트이기 때문에 추가로 다른 인스턴스를 할당하기가 어렵습니다
--   메시지의 크기가 작고, 메시지를 저장해서 재사용할 필요가 없습니다
--   FIFO 구조의 작업 큐 형태만 필요합니다
-
+- 이미 레디스를 프로젝트에서 사용하고 있습니다
+- 작은 프로젝트이기 때문에 추가로 다른 인스턴스를 할당하기가 어렵습니다
+- 메시지의 크기가 작고, 메시지를 저장해서 재사용할 필요가 없습니다
+- FIFO 구조의 작업 큐 형태만 필요합니다
 
 > Kafka vs RabbitMQ 비교 문서 [https://blog.logrocket.com/kafka-vs-rabbitmq-comparing-node-js-message-brokers/](https://blog.logrocket.com/kafka-vs-rabbitmq-comparing-node-js-message-brokers/)
 
 > Kafka vs Redis 비교문서 [https://logz.io/blog/kafka-vs-redis/](https://logz.io/blog/kafka-vs-redis/)
 
-
-
 ---
 
-
-
 # Redis Bull
+
 Bull은 Redis 기반 큐 시스템을 빠르게 사용할 수 있도록 만들어진 노드 라이브러리입니다.
 그냥 Redis command를 통해서도 구현할 수 있지만
 Bull을 사용할 경우 Redis command를 직접적으로 다루지 않고도
 쉽게 처리할 수 있도록 간략화된 API를 제공합니다
 
 ## WorkFlow
+
 ![image](https://user-images.githubusercontent.com/55491354/193415820-835ca506-91bb-414a-9db4-f46d89f86273.png)
 
 Bull을 사용할 경우 다음과 같이 작업이 추가되고 처리됩니다
 
-
-
 ---
-
-
 
 # NestJS에서 구현하기
 
@@ -83,8 +72,8 @@ BullModule.forRootAsync({
 
 [Bull Docs](https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue)
 
-
 ### task-manager.module 작업 큐 생성하기
+
 ```typescript
 @Module({
   imports: [
@@ -111,8 +100,6 @@ log라는 하나의 큰 작업 대기열을 생성하고 `limiter` 옵션을 적
 
 그리고 다른 서비스에서 해당 작업 큐를 사용하기 위해 밑에서 생성한
 TaskManagerService, LogConsumer를 프로바이더로 등록했습니다
-
-
 
 ### task-manager.service Producer 작업 생산자 생성
 
@@ -148,7 +135,6 @@ log 작업 대기열에 send 작업을 추가합니다
 실패했을 때 3초 간격으로 5회 다시 시도하도록 설정했습니다
 
 > 재시도 설정 [https://docs.bullmq.io/guide/retrying-failing-jobs](https://docs.bullmq.io/guide/retrying-failing-jobs)
-
 
 ### log.processor 소비자 생성
 
@@ -192,20 +178,19 @@ export class LogConsumer {
 log 작업 대기열의 send 작업을 처리하는 소비자를 생성했습니다
 인수로 전달받는 job 객체는 작업 생산자가 전달한 데이터와 작업의 상태를 관리하는 여러 메서드가 있습니다
 
-
 ### ExceptionFilter에 DI하기
 
 ```jsx
 // ExceptionFilter
-  const taskManagerService = app.get<TaskManagerService>(TaskManagerService);
-  app.useGlobalFilters(new HttpExceptionFilter(taskManagerService));
+const taskManagerService = app.get < TaskManagerService > TaskManagerService;
+app.useGlobalFilters(new HttpExceptionFilter(taskManagerService));
 ```
 
 이전 에러 처리 리팩터링 때 추가한 개발자 코멘트 객체를 웹훅에 전달하기위해서
 글로벌 익셉션 필터에서 taskManagerService(작업 생산자 서비스)를 DI 했습니다.
 
-
 ### ExceptionFilter에서 작업 생성하기
+
 ```typescript
 export class HttpExceptionFilter implements ExceptionFilter {
   constructor(private taskManagerService: TaskManagerService) {}
@@ -218,16 +203,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
       errorCode: status,
       errorObjectCode: errorObjectCode,
       message: message,
-    }); 
+    });
 ```
+
 ExceptionFilter에서 오류가 생성될 때 마다 log 의 send 작업을 생성하게 작성했습니다
-
-
 
 ---
 
-
 # 결과
+
 ![image](https://user-images.githubusercontent.com/55491354/193415934-b67e0237-1b18-4c3e-8e10-9c9f78d87ae1.png)
 
 급격한 로깅 증가에도 `Slack WebHook lateLimit`에 맞춰 메시지를 받을 수 있게되었습니다
