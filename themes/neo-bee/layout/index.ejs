@@ -24,7 +24,7 @@
                 const category = firstPost.categories.data[0]?.name ||  __('index.defaultSubTitle');
                 const techIcon = firstPost.tech ||  __('index.defaultSubTitle');
                 const tags = firstPost.tags.data.map(({name, path})=>name);
-                const date = firstPost.date.format(theme.post.timeFormat);
+                const date = firstPost.date.format(__("post.timeFormat"));
                 const postPath = url_for(firstPost.path);
                 %>
                 <%- mainFeed(title, subTitle, category, techIcon, date, tags, postPath) %>
@@ -43,7 +43,7 @@
                             const category = post.categories.data[0]?.name ||  __('index.defaultSubTitle');
                             const techIcon = post.tech ||  __('index.defaultSubTitle');
                             const tags = post.tags.data.map(({name, path})=>name);
-                            const date = post.date.format(theme.post.timeFormat);
+                            const date = post.date.format(__("post.timeFormat"));
                             const firstPageAndFirstPost = page.current === 1 && index === 0;
                             const postPath = url_for(post.path);
                         %>

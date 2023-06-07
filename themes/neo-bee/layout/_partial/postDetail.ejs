@@ -7,6 +7,7 @@
       <% const category = page.categories?.data[0]?.name || '-'%>
       <% const iconConfigData = theme.post.categoryIcon[techIcon] || theme.post.categoryIcon.default %>
       <% const iconData = simpleIcons(iconConfigData.iconName,'w-full','h-full') %>
+      <% const tagList = page.tags?.data ? page.tags.data : [] %>
       <!-- Header Category -->
       <div class="flex text-xs">
         <div class="flex flex-row rounded-md justify-center items-center space-x-1">
@@ -22,11 +23,11 @@
       <!-- Header Tags And CreatedAt -->
       <div class="flex flex-row text-xs items-center">
         <div>
-          <% for(let tag of page.tags.data) { %>
+          <% for(let tag of tagList) { %>
             <span class="text-[#53C1F8]">#<%= tag.name %> </span>
             <% } %>
         </div>
-        <div class="text-gray-400 ml-auto"><%= page.date.format("YYYY-MM-DD") %></div>
+        <div class="text-gray-400 ml-auto"><%= page.date.format(__("post.timeFormat")) %></div>
       </div>
       <!-- Header Tags And CreatedAt End -->
     </div>

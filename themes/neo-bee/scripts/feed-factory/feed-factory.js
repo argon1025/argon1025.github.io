@@ -58,9 +58,9 @@ hexo.extend.helper.register(
     // create Tag List
     const tagInfo = tags.map((tag) => `<span> #${tag} </span>`);
     return `
-    <a href="${postPath}" class="w-full">
-        <div class="flex w-full justify-center">
-            <div class="flex relative flex-col w-full max-w-5xl justify-center space-y-4">
+    <div class="flex w-full justify-center">
+        <div class="flex relative flex-col w-full max-w-5xl justify-center">
+            <a href="${postPath}" class="space-y-4">
                 <div class="z-0 rounded-3xl overflow-hidden h-96 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
                     <img src=${thumbnailPath} alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
                 </div>
@@ -81,9 +81,9 @@ hexo.extend.helper.register(
                     </div>
                     <div class="text=sm text-gray-300">${tagInfo}</div>
                 </div>
-            </div>
+            </a>
         </div>
-    </a>
+    </div>
     `;
   }
 );
@@ -98,7 +98,7 @@ hexo.extend.helper.register("nextButtonFeed", (nextPageUrl) => {
             </svg>
         </div>
         <div>
-            <span class="text-base">이전 포스트 확인</span>
+            <span class="text-base">Next</span>
         </div>
     </div>
     </a>
