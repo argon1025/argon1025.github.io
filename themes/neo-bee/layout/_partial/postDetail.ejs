@@ -8,6 +8,8 @@
       <% const iconConfigData = theme.post.categoryIcon[techIcon] || theme.post.categoryIcon.default %>
       <% const iconData = simpleIcons(iconConfigData.iconName,'w-full','h-full') %>
       <% const tagList = page.tags?.data ? page.tags.data : [] %>
+      <% const randomThumbnailData = theme.post.thumbnail.sort(() => Math.random() - 0.5)[0]; %>
+      <% const thumbnailPath = randomThumbnailData.path; %>
       <!-- Header Category -->
       <div class="flex text-xs">
         <div class="flex flex-row rounded-md justify-center items-center space-x-1">
@@ -22,9 +24,9 @@
       </div>
       <!-- Header Tags And CreatedAt -->
       <div class="flex flex-row text-xs items-center">
-        <div>
+        <div class="flex flex-row space-x-1">
           <% for(let tag of tagList) { %>
-            <span class="text-[#53C1F8]">#<%= tag.name %> </span>
+            <p class="text-[#53C1F8]">#<%= tag.name %></p>
             <% } %>
         </div>
         <div class="text-gray-400 ml-auto"><%= page.date.format(__("post.timeFormat")) %></div>
@@ -34,8 +36,6 @@
     <!-- Post Detail Header End -->
     <!-- Thumbnail -->
     <div class="w-full max-w-5xl">
-      <% const randomThumbnailData = theme.post.thumbnail.sort(() => Math.random() - 0.5)[0]; %>
-      <% const thumbnailPath = randomThumbnailData.path; %>
       <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
         <img src=<%- thumbnailPath %> alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
       </div>
