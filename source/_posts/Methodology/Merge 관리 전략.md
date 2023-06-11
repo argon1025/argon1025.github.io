@@ -1,5 +1,5 @@
 ---
-title: 그런 merge 관리 전략으로 괜찮은가
+title: Merge 관리 전략 종류
 subTitle: 대표적인 Merge 관리 전략에 대해
 tech: Git
 category: 개발방법론

@@ -15,9 +15,10 @@ CI/CD Tool CircleCI를 이용해서 CircleCI 파이프라인에 ECS를 연결하
 
 정리하고자 합니다.
 
----
 
-# CICD는 어떤 문제를 해결하는가
+
+# CICD가 해결하는 문제
+---
 
 기존에 최신 코드를 배포하기위해서
 프로덕션에 맞게 환경설정 작성 → 도커 빌드 → ECR Push → ECS Task 개정 생성 → 서비스 업데이트 개정 생성
@@ -26,9 +27,10 @@ CI/CD Tool CircleCI를 이용해서 CircleCI 파이프라인에 ECS를 연결하
 배포 시 마다 개발 코드를 프로덕션 환경에 맞게 코드를 수정, 개선 하기 위해 오랜 시간 작업해야 하는
 **integration Hell** 문제를 해결할 수 있습니다
 
----
+
 
 # CICD 키워드 정리
+---
 
 ![image](https://user-images.githubusercontent.com/55491354/193439506-69046637-4e88-479a-93a1-998614d793eb.png)
 
@@ -52,9 +54,10 @@ DevOps를 구현한 결과가 바로 CI/CD 파이프라인입니다
 
 지속적 전달(Continuous Delivery)과 달리 코드의 변경사항을 프로덕션 환경까지 자동으로 릴리스하는 것
 
----
+
 
 # CircleCI 선택과 이유
+---
 
 - 무료입니다
 - 무료플랜에서 Private 저장소를 사용할 수 있습니다
@@ -63,9 +66,10 @@ DevOps를 구현한 결과가 바로 CI/CD 파이프라인입니다
 
 [이곳](https://ichi.pro/ko/hyeonjae-sayong-ganeunghan-choegoui-ci-cd-dogu-27gaji-194611649728144)에서 다른 다양한 CICD도구의 특징에 대해서 자세히 알아볼 수 있습니다.
 
----
+
 
 # CircleCI 키워드
+---
 
 ## Orb
 
@@ -90,9 +94,10 @@ DevOps를 구현한 결과가 바로 CI/CD 파이프라인입니다
 
 스탭은 실행가능한 명령어를 정의합니다
 
----
+
 
 # 프로젝트 CICD Pipeline 구성
+---
 
 ![image](https://user-images.githubusercontent.com/55491354/193439554-2b57d20b-725a-4b92-84c2-a304b2157c08.png)
 
@@ -102,9 +107,10 @@ CI/CD : `CircleCI`
 컨테이너 오케스트레이션 : `AWS ECS`
 컨테이너 인스턴스: `AWS EC2`
 
----
+
 
 # Dockerfile
+---
 
 프로젝트 앱의 도커파일을 작성합니다
 도커파일에는 프로젝트의 구성환경, 빌드 명령어가 명시되어 있습니다
@@ -134,9 +140,10 @@ EXPOSE 80
 CMD [ "node", "dist/main.js"]
 ```
 
----
+
 
 # CircleCI config.yml
+---
 
 CircleCI config.yml 파일에는 푸시가 되었을때 실행되는 파이프라인에대한 설정을 포함하고 있습니다
 
@@ -259,9 +266,10 @@ workflows:
                 - release
 ```
 
----
+
 
 # 적용 결과
+---
 
 ## 깃허브 PR 결과확인
 
@@ -273,9 +281,10 @@ workflows:
 배포가 성공하면
 ECS에서 새로운 태스크가 개정되고 서비스가 업데이트됩니다
 
----
+
 
 # Else
+---
 
 ## CircleCI에서 Slack으로 메시지 전송하기
 
@@ -283,9 +292,10 @@ Orb를 사용하면 Slack에 쉽게 사용자정의 메시지를 전송할 수 �
 
 [공식문서](https://circleci.com/developer/orbs/orb/circleci/slack)
 
----
+
 
 # Reference
+---
 
 [CircleCI 공식문서](https://circleci.com/docs/2.0/getting-started/)
 

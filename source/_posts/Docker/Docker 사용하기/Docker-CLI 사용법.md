@@ -1,8 +1,8 @@
 ---
 title: 자주 사용하는 Docker 명령어들 
 subTitle: 📜 Docker CLI 정리
-category: Docker 사용하기
 tech: Docker
+category: Docker 사용하기
 tags:
 	- Docker
 date: 2021-02-02
@@ -13,12 +13,12 @@ Docker(도커)는 컨테이너 기반의 오픈소스 가상화 플랫폼입니�
 서버 관리 및 배포를 단순하게 해주고 있습니다
 
 # Docker 설치
+---
 
 도커는 [링크](https://www.docker.com/get-started)를 통해 설치할 수 있습니다
 
----
-
 # Docker 버전 확인하기
+---
 
 ```bash
 docker version
@@ -26,9 +26,10 @@ docker version
 
 설치된 docker 서버와 클라이언트 정보를 조회합니다
 
----
+
 
 # Docker pull 명령어로 ubuntu 이미지 설치하기
+---
 
 ```bash
 docker pull ubuntu:latest
@@ -38,9 +39,10 @@ docker pull ubuntu:latest
 
 `ubuntu:latest` 는 최신 LTS Ubuntu 이미지를 말합니다
 
----
+
 
 # Docker images 명령어로 설치된 이미지 확인하기
+---
 
 ```bash
 docker images
@@ -53,9 +55,10 @@ ubuntu                   latest    f63181f19b2f   3 weeks ago      72.9MB
 
 `docker images` 명령어로 설치했거나 빌드한 이미지를 확인할 수 있습니다
 
----
+
 
 # Docker run 명령어로 ubuntu 설치해보기
+---
 
 ```bash
 docker run --rm -it ubuntu:latest /bin/bash
@@ -72,9 +75,10 @@ ubuntu 컨테이너를 실행합니다 `ubuntu:latest` 는 최신 LTS Ubuntu 이
 `-rm` 컨테이너 프로세스가 종료되면 자동으로 컨테이너를 제거합니다
 `-d` 백그라운드 모드로 실행합니다
 
----
+
 
 # Docker ps 명령어로 실행된 컨테이너 확인하기
+---
 
 ```bash
 docker ps
@@ -99,9 +103,10 @@ CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS            
 
 `docker ps -a` 명령어로 실행,종료된 모든 컨테이너의 리스트를 볼 수 있습니다
 
----
+
 
 # Docker stop 명령어로 컨테이너 중지하기
+---
 
 ```bash
 docker stop ${CONTAINER ID}
@@ -110,9 +115,10 @@ docker stop ${CONTAINER ID}
 `docker ps -a` 명령어로 `CONTAINER ID` 를 확인한뒤 `docker stop` 를 통해 컨테이너를 중지할 수 있습니다
 띄어쓰기로 여러개의 컨테이너를 동시에 종료할수도 있습니다
 
----
+
 
 # Docker rmi 명령어로 이미지 제거하기
+---
 
 ```bash
 docker rmi ${IMAGE ID}
@@ -132,9 +138,10 @@ Deleted: sha256:9f32931c9d28f10104a8eb1330954ba90e76d92b02c5256521ba864feec14009
 `docker rmi` 명령어를 사용하여 사용하지 않는 이미지를 제거할 수 있습니다
 이미지를 제거하려면 반드시 관련 컨테이너가 모두 삭제되어야 합니다
 
----
+
 
 # Docker logs 명령어로 컨테이너 로그 보기
+---
 
 ```bash
 docker logs ${CONTAINER ID}
@@ -157,9 +164,10 @@ Running on <http://0.0.0.0:8080>
 `-f` 옵션으로 로그를 실시간으로 볼 수 있습니다
 `--tail` 옵션으로 마지막 10줄만 출력할 수 있습니다
 
----
+
 
 # Docker exec 명령어로 컨테이너에 명령어 실행하기
+---
 
 ```bash
 docker exec -it ${CONTAINER ID} /bin/bash

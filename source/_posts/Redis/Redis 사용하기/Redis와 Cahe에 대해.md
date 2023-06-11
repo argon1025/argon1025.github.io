@@ -1,8 +1,8 @@
 ---
 title: Redis와 캐싱에 대해
 subTitle: Redis로 NestJS에서 Database Cahe 적용하기
-category: Redis 사용하기
 tech: Redis
+category: Redis 사용하기
 tags:
 	- Redis
 	- NestJS
@@ -14,17 +14,19 @@ date: 2022-01-02
 최근 게시글 랭킹 시스템을 개선하기 위해서 조금 더 깊이 레디스를 알 필요가 있다고 생각했고
 Redis를 활용한 데이터베이스 캐싱을 적용한 과정을 공유하고자 합니다
 
----
+
 
 # Redis 란
+---
 
 `In-Memory Data Structure Store`
 
 데이터베이스, 캐시, 메시지 브로커로 사용되는 인 메모리 데이터 구조 저장소입니다
 
----
+
 
 # 지원하는 데이터 자료구조(Collection)
+---
 
 Redis는 Mem cached와 다르게 여러 가지 데이터 자료구조를 지원합니다.
 간단하게 주로 사용되는 것들을 나열해 보겠습니다
@@ -75,9 +77,10 @@ Score가 같다면 사전 순으로 정렬됩니다
 >
 > [https://redis.io/commands](https://redis.io/commands) 공식문서에서 확인할 수 있었습니다.
 
----
 
-# Cache는 어떤 문제를 해결하는가
+
+# Cache가 해결하는 문제
+---
 
 캐시는 고속 데이터 스토리지 계층으로
 A 데이터를 캐시 스토리지에 저장한 뒤 이후에 A 데이터에 대한 요청이 있으면
@@ -86,9 +89,10 @@ A 데이터를 캐시 스토리지에 저장한 뒤 이후에 A 데이터에 대
 실시간 변경이 필요하지 않고
 데이터를 새로 고침하는 주기가 일정한(랭킹, 연산 결과의 저장(팩토리얼)) 환경에서 주로 사용합니다
 
----
+
 
 # Cache 적용 패턴
+---
 
 ## Inline Cache
 
@@ -129,9 +133,10 @@ N개의 데이터를 한꺼번에 INSERT 하는 것이 퍼포먼스가 좋다는
 - 캐시 스토리지가 다운되면 저장되지 않은 데이터는 모두 사라집니다
 - 캐시 스토리지가 다운된 후 다시 서비스를 시작하기 위해서 추가 작업이 필요합니다
 
----
+
 
 # 레디스도 동시성 문제가 발생할 수 있다
+---
 
 레디스는 단일 스레드이고 단일 명령을 실행할 때는 원자성을 보장하지만
 여러 클라이언트가 동일한 데이터를 상대로 명령을 실행 할 경우
@@ -142,9 +147,10 @@ N개의 데이터를 한꺼번에 INSERT 하는 것이 퍼포먼스가 좋다는
 
 > 레디스 트랜잭션 공식 문서 [https://redis.io/topics/transactions](https://redis.io/topics/transactions)
 
----
+
 
 # NestJS에서 캐싱 적용하기
+---
 
 위 사항들을 모두 숙지한 상태에서 NestJS를 통해 캐싱을 구현해보도록 하겠습니다
 
@@ -242,17 +248,19 @@ const cacheResult = await this.CacheManagerService.getTrendPost({ ScopeData: sea
 
 `CacheManager.Service`를 Post 트랜드 리스트를 보여주는 서비스 로직에 적용 했습니다
 
----
+
 
 # 적용 결과
+---
 
 ![image](https://user-images.githubusercontent.com/55491354/193415324-86fbb025-859e-48f7-962c-0e2f8dc9d694.png)
 
 데이터베이스에 직접 액세스하는 첫번째 요청보다 더 빠르게 사용자에게 데이터를 제공할 수 있었습니다
 
----
+
 
 # 더 읽어보면 좋은 글
+---
 
 글을 작성하면서 추가로 리서치한 페이지들 입니다
 
@@ -277,9 +285,10 @@ NestJS에서는 대표적으로 두가지의 Redis Client 모듈이 존재합니
 지금 포스트에서는 공식 Node-Redis 모듈을 사용하지만 아래와 같은 문제점이 있을 가능성이 높습니다
 [https://ably.com/blog/migrating-from-node-redis-to-ioredis](https://ably.com/blog/migrating-from-node-redis-to-ioredis)
 
----
+
 
 # Reference
+---
 
 우아한 레디스
 [https://www.youtube.com/watch?v=mPB2CZiAkKM&t=1364s](https://www.youtube.com/watch?v=mPB2CZiAkKM&t=1364s)

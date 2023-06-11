@@ -9,19 +9,20 @@ tags:
 date: 2022-01-06
 ---
 
-프로젝트에 VPC를 적용하기 위해서 공부한 내용을 정리하고자 합니다
+프로젝트에 VPC를 적용하기 위해서 공부한 내용을 정리했습니다
 
+
+# VPC가 해결하는 문제
 ---
-
-# VPC는 어떤 문제를 해결하는가?
 
 기존 공용 클라우드, AWS VPC 기본 설정에서는 동일한 네트워크 환경에 엑세스하기 때문에
 엔드포인트가 닿는 면적이 넣어 보안에 취약한 문제점이 있었습니다.
 VPC(Virtual Private Cloud)는 공용 클라우드 내에서 안전하고 격리된 네트워크 공간을 만들 수 있습니다.
 
----
 
 # 키워드 정리
+---
+VPC를 구성하기 전 필요한 용어에 대해 먼저 정리해보겠습니다.
 
 ## Region (리전)
 
@@ -61,7 +62,13 @@ public subnet의 라우팅 테이블을 따라 인터넷 통신을 가능하게 
 Subnet 단위로 적용되는 방화벽입니다
 Subnet은 하나의 ACL만 가질 수 있고 ACL은 여러 개의 Subnet에 연결할 수 있습니다
 
+
+
 # 구성 목표
+---
+해당 포스트에서는 VPC를 보안성을 고려해 public, private으로 나누고
+두개의 가용영역을 통해 가용성을 확보하도록 하겠습니다.
+
 
 ![image](https://user-images.githubusercontent.com/55491354/193416652-40261765-a460-4654-958f-32a9a4b0fa44.png)
 
@@ -89,9 +96,10 @@ private subnet2: 172.16.0.96/27
 미사용: 172.16.0.160/27
 ```
 
----
+
 
 # AWS에서 구성하기
+---
 
 ## VPC 생성하기
 
@@ -101,7 +109,6 @@ private subnet2: 172.16.0.96/27
 ![image](https://user-images.githubusercontent.com/55491354/193438158-7a04557d-8ab1-4c42-9702-43b572bd6a39.png)
 어떤 VPC에 해당 서브넷을 생성할지 선택합니다.
 
----
 
 ## 서브넷 생성하기
 
@@ -117,14 +124,14 @@ private subnet2: 172.16.0.96/27
 각 서브넷 관리 아이피( 앞4개 뒤1개는 예약됨 )를 제외하고 한개 이상이어야 합니다
 나머지 3개의 서브넷도 위와 같이 설정했습니다.
 
----
+
 
 ## Internet Gatway 생성하기
 
 ![image](https://user-images.githubusercontent.com/55491354/193438190-5f9cc5dd-824a-41a6-b47e-c7bde37772bf.png)
 외부 통신을 위한 Internet Gatway를 생성합니다
 
----
+
 
 ## Public subnet Routing
 
@@ -139,7 +146,7 @@ private subnet2: 172.16.0.96/27
 
 에서 라우팅 테이블을 적용할 서브넷을 클릭하고 저장합니다
 
----
+
 
 ## NAT Gateway 생성하기
 
@@ -172,20 +179,20 @@ NAT-Gateway를 생성합니다
 
 에서 적용할 서브넷을 클릭하고 저장합니다
 
----
+
 
 ## 퍼블릭 서브넷 아이피 자동할당 설정
-
+---
 ![image](https://user-images.githubusercontent.com/55491354/193438316-eeef4d17-f180-4665-9c42-3fb8c0bb3d60.png)
 
 인스턴스를 퍼블릭 서브넷에 배치할 경우 퍼블릭 IP주소 할당이 비활성화되어 있기 때문에
 라우팅 테이블이 제대로 설정되어 있더라도 외부에서 접근할 수 없습니다
 기본 AWS VPC와 같이 퍼블릭 IP를 할당하려면 서브넷 설정에서 자동할당 설정을 활성화 해야 합니다
 
----
+
 
 # ACL
-
+---
 ACL은 네트워크 구성단계에서 적용하지 않고 각 인스턴스별 보안그룹만 적용 했습니다.
 
 > AWS 공식문서의 권장 ACL 규칙 문서 [링크](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html#nacl-rules-scenario-2)
@@ -206,9 +213,10 @@ AWS Lambda 함수는 포트 1024-65535를 사용합니다.
 
 > ACL 구성 참고 문서 [https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports)
 
----
+
 
 # Reference
+---
 
 [VPC와 서브넷 AWS 공식 문서](https://docs.aws.amazon.com/ko_kr/vpc/latest/userguide/VPC_Subnets.html)
 

@@ -1,5 +1,5 @@
 ---
-title: 그런 Branch 관리 전략으로 괜찮은가
+title: Branch 관리 전략의 종류
 subTitle: 체계적이고 빠르게 개발하는 방법에 대해
 tech: Git
 category: 개발방법론

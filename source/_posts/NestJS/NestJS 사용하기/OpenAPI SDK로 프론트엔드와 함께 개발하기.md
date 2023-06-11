@@ -1,8 +1,8 @@
 ---
 title: OpenAPI SDK로 프론트엔드와 함께 개발하기
 subTitle: OpenAPI-Generator로 SDK 생성해 공유하기
-category: NestJS 사용하기
 tech: NestJS
+category: NestJS 사용하기
 tags:
 	- NestJS
 	- TypeScript
