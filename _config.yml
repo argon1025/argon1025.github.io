@@ -10,6 +10,7 @@ keywords: 'nodejs'
 author: SeongRokLee
 language: kr
 timezone: 'Asia/Seoul'
+permalink: '/:title/'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
