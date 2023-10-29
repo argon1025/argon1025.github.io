@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - Branch 관리 전략의 종류">
+    <meta property="og:description" content="체계적이고 빠르게 개발하는 방법에 대해">
+    <meta property="og:image" content="/feed-thumbnail/object16.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Methodology/Branch 관리 전략/">
+    <meta property="og:site_name" content="Argon.Blog - Branch 관리 전략의 종류">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - Branch 관리 전략의 종류</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - Branch 관리 전략의 종류">
+    <link rel="canonical" href="https://argon1025.github.io/Methodology/Branch 관리 전략/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="체계적이고 빠르게 개발하는 방법에 대해" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Git</title><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg></div>
+              <span class="text-gray-400">개발방법론</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">Branch 관리 전략의 종류</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">체계적이고 빠르게 개발하는 방법에 대해</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#Git</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 04월 06일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object7.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <h1 id="브랜치-관리-전략"><a href="#브랜치-관리-전략" class="headerlink" title="브랜치 관리 전략"></a>브랜치 관리 전략</h1><hr>
+<p>버전 관리 시스템에는 대표적으로 SVN, Git 두 가지가 존재합니다<br>최근엔 Git을 주로 사용하는 것이 추세고 Git에서 제공하는 대표적인 기능인 브랜치(Branch) 기능을 통해<br>많은 사람과 체계적으로 개발할 수 있게 되었습니다.</p>
+<p>그럼 Branch를 어떤 식으로 관리해야 많은 사람이 코드 베이스에 참여하더라도<br>체계적이고 빠르게 개발할 수 있을지<br>대표적은 브랜치 관리 전략에 대해 알아보고 이전엔 어떤 식으로 했는지 되돌아보는 시간을 가지고자 합니다</p>
+<h1 id="Git-flow"><a href="#Git-flow" class="headerlink" title="Git flow"></a>Git flow</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/207642801-942fab1d-7519-468e-8671-b605c5df6589.png" alt="image"><br>가장 최초로 제안된 브랜치 관리 전략 → <a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a><br>정기적으로 배포되는 대규모 프로젝트 관리에 적합합니다.<br>배포하기까지 많은 branch를 거쳐야 하므로 CI&#x2F;CD를 지향하는 프로젝트에서는 사용하기 힘들다는 단점이 있습니다</p>
+<h2 id="Master-main"><a href="#Master-main" class="headerlink" title="Master(main)"></a>Master(main)</h2><p>최종적으로 배포되는 브랜치 입니다</p>
+<h2 id="Develop"><a href="#Develop" class="headerlink" title="Develop"></a>Develop</h2><p>개발을 진행하는 중심 브랜치 입니다<br>기능개발 브랜치( Feature )에서 개발을 진행하고 Develop 브랜치에 merge 합니다</p>
+<h2 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h2><p>Develop 브랜치에서 생성되며 한 기능 단위를 구현하는 브랜치 입니다<br>기능 구현이 완료되면 develop 브랜치로 merge 됩니다</p>
+<h2 id="Release"><a href="#Release" class="headerlink" title="Release"></a>Release</h2><p>개발한 내용을 Master(main)에 배포 하기위해 준비(테스트, 버그수정)하는 브랜치 입니다</p>
+<h2 id="HotFix"><a href="#HotFix" class="headerlink" title="HotFix"></a>HotFix</h2><p>Master(main)에서 생성되는 브랜치로 배포된 소스에서 버그가 발생하면 생성하는 브랜치 입니다</p>
+<h1 id="Github-Flow"><a href="#Github-Flow" class="headerlink" title="Github Flow"></a>Github Flow</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/207642829-10f1d5b9-0e40-45ec-a68c-e54414fbdc79.png" alt="image"><br>GitFlow를 개선하기 위해 제안된 방식으로<br>CI&#x2F;CD를 염두하고 고안된 개념으로 PR을 적극적으로 사용합니다</p>
+<h2 id="Master-main-1"><a href="#Master-main-1" class="headerlink" title="Master(main)"></a>Master(main)</h2><p>메인 브랜치 이며 기능, 오류 수정 모두 이곳에 merge되어 최신 상태를 유지합니다<br>따라서 Merge 전에 충분한 테스트 과정을 거쳐야 합니다</p>
+<h2 id="자유로운-브랜치-생성"><a href="#자유로운-브랜치-생성" class="headerlink" title="자유로운 브랜치 생성"></a>자유로운 브랜치 생성</h2><p>GitFlow와 다르게 develop 브랜치가 없어 자유롭게 Master(main)에서 브랜치를 생성하고 작업합니다<br>단 작업이 종료되었을 경우 PR 및 코드리뷰를 거쳐야 합니다</p>
+<h1 id="GitLab-Flow"><a href="#GitLab-Flow" class="headerlink" title="GitLab Flow"></a>GitLab Flow</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/207642854-0a963674-119d-49b0-9b63-66ab5ab2f150.png" alt="image"><br>GitFlow처럼 복잡하지 않으면서 GithubFlow처럼 너무 단순하지 않고 효율을 높이고자 생긴 브랜치 전략입니다</p>
+<h2 id="Master-main-2"><a href="#Master-main-2" class="headerlink" title="Master(main)"></a>Master(main)</h2><p>GirFlow의 develop 브랜치와 동일한 역할을 합니다</p>
+<h2 id="Feature-1"><a href="#Feature-1" class="headerlink" title="Feature"></a>Feature</h2><p>Master(main)에서 생성되는 브랜치로<br>모든 기능 개발을 진행합니다<br>기능 구현이 완료되면 PR후 Master(main)브랜치로 merge합니다</p>
+<h2 id="Pre-production"><a href="#Pre-production" class="headerlink" title="Pre-production"></a>Pre-production</h2><p>Master(main) 와 Production 사이에 Staging을 위한 브랜치입니다<br>안정성과 배포시기 조절에 대한 부분을 이곳에서 조율합니다</p>
+<h2 id="Production"><a href="#Production" class="headerlink" title="Production"></a>Production</h2><p>Pre-production 브랜치에서 일방적으로 deploy 하는 브랜치로<br>이곳에서 코드가 배포됩니다</p>
+<h1 id="팀에-맞는-전략을-세우자"><a href="#팀에-맞는-전략을-세우자" class="headerlink" title="팀에 맞는 전략을 세우자"></a>팀에 맞는 전략을 세우자</h1><hr>
+<p>어떤 브랜치 관리 전략에 좋은가 라는 답은 없습니다<br>팀, 배포 목표에 따라 적합한 관리 전략을 선택하거나 새로운 전략을 수립해야 합니다<br>또한 언제든지 기존 전략에서 자기 팀에 맞는 전략으로 변경할 수 있습니다</p>
+<p><a target="_blank" rel="noopener" href="https://woowabros.github.io/experience/2017/10/30/baemin-mobile-git-branch-strategy.html">우아한형제들에서 git 브랜치 전략을 변경하게 된 글</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://blog.gangnamunni.com/post/understanding_git_flow/">https://blog.gangnamunni.com/post/understanding_git_flow&#x2F;</a></p>
+<p><a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">https://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<p><a target="_blank" rel="noopener" href="https://tecoble.techcourse.co.kr/post/2021-07-15-git-branch/">https://tecoble.techcourse.co.kr/post/2021-07-15-git-branch/</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

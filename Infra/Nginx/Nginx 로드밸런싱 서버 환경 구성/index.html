@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - NGINX 로드밸런싱 서버 환경 구성">
+    <meta property="og:description" content="NGINX로 nodeJS 로드밸런싱 구성하기">
+    <meta property="og:image" content="/feed-thumbnail/object7.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Infra/Nginx/Nginx 로드밸런싱 서버 환경 구성/">
+    <meta property="og:site_name" content="Argon.Blog - NGINX 로드밸런싱 서버 환경 구성">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - NGINX 로드밸런싱 서버 환경 구성</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - NGINX 로드밸런싱 서버 환경 구성">
+    <link rel="canonical" href="https://argon1025.github.io/Infra/Nginx/Nginx 로드밸런싱 서버 환경 구성/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="NGINX로 nodeJS 로드밸런싱 구성하기" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>NGINX</title><path d="M12 0L1.605 6v12L12 24l10.395-6V6L12 0zm6 16.59c0 .705-.646 1.29-1.529 1.29-.631 0-1.351-.255-1.801-.81l-6-7.141v6.66c0 .721-.57 1.29-1.274 1.29H7.32c-.721 0-1.29-.6-1.29-1.29V7.41c0-.705.63-1.29 1.5-1.29.646 0 1.38.255 1.83.81l5.97 7.141V7.41c0-.721.6-1.29 1.29-1.29h.075c.72 0 1.29.6 1.29 1.29v9.18H18z"/></svg></div>
+              <span class="text-gray-400">NGINX 사용하기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">NGINX 로드밸런싱 서버 환경 구성</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">NGINX로 nodeJS 로드밸런싱 구성하기</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#Docker</p>
+            
+            <p class="text-[#53C1F8]">#NGINX</p>
+            
+            <p class="text-[#53C1F8]">#NodeJS</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2021년 08월 06일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object19.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <h1 id="용어-정리"><a href="#용어-정리" class="headerlink" title="용어 정리"></a>용어 정리</h1><hr>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>이벤트 방식으로 응답하는 동시접속에 특화된 웹서버입니다<br>기본적인 서버로서의 역할도 할 수 있지만 <a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/%EB%A6%AC%EB%B2%84%EC%8A%A4_%ED%94%84%EB%A1%9D%EC%8B%9C">리버스 프록시</a>의 기능도 수행할 수 있습니다</p>
+<h2 id="Load-balancing"><a href="#Load-balancing" class="headerlink" title="Load balancing"></a>Load balancing</h2><p>여러 서버 중 하나가 다운되더라도 다른 서버가 온라인을 유지할 수 있습니다<br>여러 서버에 사용자를 고르게 분산시키는 프로세스입니다</p>
+<h1 id="구현"><a href="#구현" class="headerlink" title="구현"></a>구현</h1><p><img src="https://user-images.githubusercontent.com/55491354/207363007-1d2d77fb-8f9b-4a9e-84d7-f2055bf29179.png" alt="시스템 구성도"></p>
+<h2 id="프로젝트-적용"><a href="#프로젝트-적용" class="headerlink" title="프로젝트 적용"></a>프로젝트 적용</h2><p>Nginx 리버스 프록시 기능을 통해 NodeJS 컨테이너에 사용자를 나누어 요청을 보내<br>부하를 분산할 수 있도록 했습니다<br>Nginx에서 지속적인 Health check를 통해서 NodeJS 컨테이너가 종료되었을 경우<br>Backup 컨테이너로 요청을 보내도록 합니다</p>
+<h2 id="Docker-compose-yml"><a href="#Docker-compose-yml" class="headerlink" title="Docker-compose.yml"></a>Docker-compose.yml</h2><pre><code class="hljs yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">Nginx:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">proxy</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./docker/nginx/nginx.conf:/etc/nginx/nginx.conf</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;80:80&quot;</span>
+  <span class="hljs-attr">express_1:</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./app</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">express_1</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NodeJS_PORT=8001</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_ROOT_PASSWORD=dbrootPassword</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_DATABASE=database</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_USER=dbuser</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_PASSWORD=dbuserPassword</span>
+    <span class="hljs-attr">expose:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8001&quot;</span>
+  <span class="hljs-attr">express_2:</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./app</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">express_2</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NodeJS_PORT=8002</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_ROOT_PASSWORD=dbrootPassword</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_DATABASE=database</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_USER=dbuser</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_PASSWORD=dbuserPassword</span>
+    <span class="hljs-attr">expose:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8002&quot;</span>
+  <span class="hljs-attr">express_3:</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./app</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">express_3</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NodeJS_PORT=8003</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_ROOT_PASSWORD=dbrootPassword</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_DATABASE=database</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_USER=dbuser</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_PASSWORD=dbuserPassword</span>
+    <span class="hljs-attr">expose:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8003&quot;</span>
+  <span class="hljs-attr">db:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mysql:5.7</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">Database</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_ROOT_PASSWORD=dbrootPassword</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_DATABASE=database</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_USER=dbuser</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_PASSWORD=dbuserPassword</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;./docker/mysql/mysql-data:/var/lib/mysql&quot;</span>
+    <span class="hljs-attr">expose:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;3306&quot;</span></code></pre>
+
+<p>다중 컨테이너 애플리케이션을 정의하기 위해 Docker-Compose를 사용합니다<br>이 문서에서는 Nginx, NodeJS(Node1, Node2, backup_Node), MySQL 컨테이너를 정의했습니다.<br>NodeJS의 포트는 expose로 내부 컨테이너 끼리만 네트워크 공유가 가능하게 설정되었습니다</p>
+<h2 id="nginx-conf-작성"><a href="#nginx-conf-작성" class="headerlink" title="nginx.conf 작성"></a>nginx.conf 작성</h2><pre><code class="hljs conf">worker_processes 4;
+events &#123; worker_connections 1024; &#125;
+
+http &#123;
+
+  upstream node-app &#123;
+    # 커넥션이 가장 적은 서버를 할당
+    least_conn;
+
+    # 클라이언트 IP 를 hash 해서 특정 클라이언트는 특정 서버로 연결하는 설정
+    # ession clustering 이 구성되지 않은 경우
+    # ip_hash;
+
+    # weight
+    # 업스트림 서버의 비중을 설정합니다 값을 2로 설정할경우 두배더 자주 선택됩니다
+
+    # max_fails
+    # n번 실패할경우 서버가 죽은것으로 간주합니다
+
+    # fail_timeout
+    # n초만큼 응답하지 않으면 죽은것으로 간주합니다
+    server express_1:8001 max_fails=3 fail_timeout=5s;
+    server express_2:8002 max_fails=3 fail_timeout=5s;
+
+    # 1,2번 노드가 죽은 경우에 사용됩니다
+    server express_3:8003 backup;
+  &#125;
+
+  server &#123;
+    listen 80;
+
+    location / &#123;
+      proxy_pass &lt;http://node-app&gt;;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection &#x27;upgrade&#x27;;
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+    &#125;
+  &#125;
+&#125;</code></pre>
+
+<p>nginx 볼륨 설정으로 할당한 <code>./docker/nginx/</code> 경로에 nginx.conf 파일을 생성하고<br>위와같이 설정합니다</p>
+<h1 id="실제-서비스에-적용전에"><a href="#실제-서비스에-적용전에" class="headerlink" title="실제 서비스에 적용전에"></a>실제 서비스에 적용전에</h1><hr>
+<p>무료 nginx에서는 로드밸런싱만 가능하고 헬스체크는 비활성화되어<br>문제가 있는 컨테이너를 서비스에서 제외하는 기능만 수행할 수 있습니다.<br>해결 방법에는 아래의 솔루션이 있습니다</p>
+<ul>
+<li>돈을 지불하고 nginx plus를 사용할 수 있습니다.</li>
+<li>nginx 오픈소스 헬스체크모듈을 사용합니다. <a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module"><strong>nginx_upstream_check_module</strong></a></li>
+<li>nginx 대신 AWS ELB를 사용합니다.</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p>Docker-compose<br><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/compose-file/compose-file-v3/">https://docs.docker.com/compose/compose-file/compose-file-v3/</a></p>
+<p>Docker-compose 에서 MySQL 초기화 하기<br><a target="_blank" rel="noopener" href="https://pythonq.com/so/mysql/1520092">https://pythonq.com/so/mysql/1520092</a></p>
+<p>nginX 헬스체크<br><a target="_blank" rel="noopener" href="https://blog.naver.com/sehyunfa/221694064329">https://blog.naver.com/sehyunfa/221694064329</a></p>
+<p>nginX 헬스체크 오픈소스 모듈<br><a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">https://github.com/yaoweibin/nginx_upstream_check_module</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

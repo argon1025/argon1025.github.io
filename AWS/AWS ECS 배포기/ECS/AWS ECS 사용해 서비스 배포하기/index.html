@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - AWS ECS로 서비스 배포하기">
+    <meta property="og:description" content="AWS 컨테이너 오케스트레이션 서비스 알아보기">
+    <meta property="og:image" content="/feed-thumbnail/object25.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/AWS/AWS ECS 배포기/ECS/AWS ECS 사용해 서비스 배포하기/">
+    <meta property="og:site_name" content="Argon.Blog - AWS ECS로 서비스 배포하기">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - AWS ECS로 서비스 배포하기</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - AWS ECS로 서비스 배포하기">
+    <link rel="canonical" href="https://argon1025.github.io/AWS/AWS ECS 배포기/ECS/AWS ECS 사용해 서비스 배포하기/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="AWS 컨테이너 오케스트레이션 서비스 알아보기" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Amazon AWS</title><path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/></svg></div>
+              <span class="text-gray-400">AWS ECS 배포기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">AWS ECS로 서비스 배포하기</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">AWS 컨테이너 오케스트레이션 서비스 알아보기</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#ECS</p>
+            
+            <p class="text-[#53C1F8]">#AWS</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 01월 13일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object7.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>Docker-compose로 환경을 구성 및 배포해오다<br>컨테이너 오케스트레이션 서비스로 배포하기 위해<br>공부한 내용을 정리했습니다.</p>
+<h1 id="컨테이너-오케스트레이션이-해결하는-문제"><a href="#컨테이너-오케스트레이션이-해결하는-문제" class="headerlink" title="컨테이너 오케스트레이션이 해결하는 문제"></a>컨테이너 오케스트레이션이 해결하는 문제</h1><hr>
+<p>기존 Docker-compose를 활용해서 개발환경을 쉽고 빠르게 설정할 수 있지만<br>서비스를 배포할 때 Docker-compose로 부하 분산 서비스를 구현하기 위해서<br>Docker-compose 내에서 리버스 프록시, 애플리케이션 컨테이너 설정을 모두 명시해주고<br>각각의 컨테이너가 실행된 상태에서 업데이트, 확장, 장애 회복 등 모든 상황에 들어가서 직접 작업해야 했습니다</p>
+<p>컨테이너 오케스트레이션을 사용함으로써 다음 영역을 자동화할 수 있었습니다.</p>
+<ul>
+<li>배포 자동화 (무중단 배포)</li>
+<li>자동 로드밸런싱<ul>
+<li>업, 다운 스케일링 대응 트래픽 라우팅</li>
+</ul>
+</li>
+<li>컨테이너 상태 모니터링 및 가용성 제공<ul>
+<li>컨테이너 업&#x2F;다운 스케일링</li>
+<li>컨테이너 스케일링 전략</li>
+</ul>
+</li>
+<li>인스턴스 자원관리, 리소스 할당 및 가용성 제공<ul>
+<li>인스턴스의 업&#x2F;다운 스케일링</li>
+<li>인스턴스 스케일링 전략</li>
+<li>컨테이너의 배치 전략</li>
+</ul>
+</li>
+</ul>
+<h1 id="ECS선정-이유"><a href="#ECS선정-이유" class="headerlink" title="ECS선정 이유"></a>ECS선정 이유</h1><hr>
+<p>최근 가장 많이 사용되는 <strong>EKS</strong>를 적용하려 했지만<br>저렴한 인스턴스를 사용하지 못해 추가 비용이 발생할 여지가 있어 선택지에서 제외했습니다.</p>
+<ul>
+<li>러닝 커브가 다른 컨테이너 오케스트레이션 툴에 비해 비교적 낮습니다.</li>
+<li>자체적인 클러스터 관리를 지원합니다.</li>
+<li>API 호출, aws cli 로 모든 관리를 할 수 있습니다.</li>
+<li>클라우드 와치를 통한 모니터링</li>
+<li>EC2 인스턴스를 통해 ECS를 사용할 경우 비용 절감 (Pay as you go)</li>
+<li>ECR을 통해 ECS를 구성하기에 추후에 EKS로 전환이 용이합니다.</li>
+</ul>
+<h1 id="AWS-컨테이너-오케스트레이션-서비스-구성"><a href="#AWS-컨테이너-오케스트레이션-서비스-구성" class="headerlink" title="AWS 컨테이너 오케스트레이션 서비스 구성"></a>AWS 컨테이너 오케스트레이션 서비스 구성</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438641-5919ada6-8ce5-439b-aa64-62cc22076e12.png" alt="image"></p>
+<h2 id="Image-Registry"><a href="#Image-Registry" class="headerlink" title="Image Registry"></a>Image Registry</h2><h3 id="ECR-Amazon-Elastic-Container-Registry"><a href="#ECR-Amazon-Elastic-Container-Registry" class="headerlink" title="ECR(Amazon Elastic Container Registry)"></a>ECR(Amazon Elastic Container Registry)</h3><p>Docker Private Repository를 구축해 컨테이너 이미지를 저장, 공유, 배포할 수 있는 이미지 레지스트리 서비스입니다<br>S3 버킷에 이미지를 저장하고 IAM을 통해 이미지 Push, Pull 인가를 관리합니다</p>
+<h2 id="Management"><a href="#Management" class="headerlink" title="Management"></a>Management</h2><h3 id="ECS-Amazon-Elastic-Container-Service"><a href="#ECS-Amazon-Elastic-Container-Service" class="headerlink" title="ECS(Amazon Elastic Container Service)"></a>ECS(Amazon Elastic Container Service)</h3><p>컨테이너 이미지의 손쉬운 배포, 관리, 스케일링을 지원하는 완전관리형 컨테이너 오케스트레이션 서비스</p>
+<h3 id="EKS-Amazon-Elastic-Kubernetes-Service"><a href="#EKS-Amazon-Elastic-Kubernetes-Service" class="headerlink" title="EKS(Amazon Elastic Kubernetes Service)"></a>EKS(Amazon Elastic Kubernetes Service)</h3><p>AWS에서 오픈소스 프로젝트인 컨테이너 이미지 자동 배포, 스케일링을 제공하는<br>쿠버네티스를 사용할 수 있도록 하는 서비스</p>
+<h2 id="Hosting"><a href="#Hosting" class="headerlink" title="Hosting"></a>Hosting</h2><h3 id="Fargate"><a href="#Fargate" class="headerlink" title="Fargate"></a>Fargate</h3><p>서버리스 컴퓨팅 엔진으로 EC2 인스턴스를 관리할 필요 없이 컨테이너를 실행하기 위해 ECS EKS에서 사용할 수 있는 기술</p>
+<h3 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h3><p>AWS EC2 인스턴스를 이용해 컨테이너를 실행하는 기본적인 기술</p>
+<h1 id="ECS-구성"><a href="#ECS-구성" class="headerlink" title="ECS 구성"></a>ECS 구성</h1><hr>
+<h2 id="클러스터-인스턴스-컨테이너-인스턴스"><a href="#클러스터-인스턴스-컨테이너-인스턴스" class="headerlink" title="클러스터 인스턴스 ( 컨테이너 인스턴스 )"></a>클러스터 인스턴스 ( 컨테이너 인스턴스 )</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438721-a8a30c17-ea09-4dde-9a5d-9384821a0df0.png" alt="image"></p>
+<p>도커 컨테이너 구동을 위한 물리적 인스턴스를 말합니다.</p>
+<h2 id="클러스터"><a href="#클러스터" class="headerlink" title="클러스터"></a>클러스터</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438727-fbf8aca1-f165-4a67-b4fc-be730e528a6c.png" alt="image"></p>
+<p>클러스터 인스턴스의 묶음으로 논리적인 단위입니다</p>
+<h2 id="태스크"><a href="#태스크" class="headerlink" title="태스크"></a>태스크</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438731-25ef1380-a75f-4316-ae63-665447dc82aa.png" alt="image"></p>
+<p>클러스터 위에서 구동되는 도커 컨테이너를 말합니다</p>
+<h2 id="태스크-디피니션"><a href="#태스크-디피니션" class="headerlink" title="태스크 디피니션"></a>태스크 디피니션</h2><p><img src="https://tilog-file-service-s3.s3.ap-northeast-2.amazonaws.com/20us8j71zc0rj2022-01-14%2014%3A41%3A43.png"></p>
+<p>태스크에서 구동되는 도커 컨테이너의 설정 템플릿 입니다</p>
+<h2 id="서비스"><a href="#서비스" class="headerlink" title="서비스"></a>서비스</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438739-35104417-131a-4dc3-9d32-88c617725aa4.png" alt="image"></p>
+<p>태스크(작업)를 관리하는 단위입니다</p>
+<ul>
+<li>서비스에서 정의한 대로 태스크가 실행되는 상태를 유지합니다</li>
+<li>서비스에서 정의한 대로 서비스를 스케일 인 아웃 합니다</li>
+<li>클러스터 인스턴스의 ASG 정책을 ECS Capacity Provider를 통해 관리하여 인스턴스를 스케일 인 아웃 합니다<ul>
+<li>이후 새로 시작하는 태스크가 있다면 ECS가 태스크가 적은 인스턴스에 태스크를 분배합니다</li>
+</ul>
+</li>
+<li>스케일 인 아웃에 맞춰 ALB 설정을 최신화합니다</li>
+</ul>
+<h1 id="ECS-오토스케일링"><a href="#ECS-오토스케일링" class="headerlink" title="ECS 오토스케일링"></a>ECS 오토스케일링</h1><hr>
+<p>ECS에서 하는 오토 스케일링은 두 가지로 나눌 수 있습니다</p>
+<h3 id="서비스-오토-스케일링"><a href="#서비스-오토-스케일링" class="headerlink" title="서비스 오토 스케일링"></a>서비스 오토 스케일링</h3><p>ECS는 <strong>Scaling policy</strong> 설정을 통해 서비스를 스케일 인 아웃(태스크 수 증가 및 감소)하게 설정할 수 있습니다.<br>이때 증가 및 감소한 태스크와의 연결은 ALB가 담당합니다</p>
+<h3 id="클러스터-오토-스케일링"><a href="#클러스터-오토-스케일링" class="headerlink" title="클러스터 오토 스케일링"></a>클러스터 오토 스케일링</h3><p>ECS는 <strong>Capacity Provider</strong>를 통해 클러스터 인스턴스의 스케일 인 아웃(인스턴스 추가 삭제)하게 설정할 수 있습니다<br>EC2 인스턴스를 사용할 경우에만 적용됩니다</p>
+<h1 id="직접-ECS-생성-하고-설정하기"><a href="#직접-ECS-생성-하고-설정하기" class="headerlink" title="직접 ECS 생성 하고 설정하기"></a>직접 ECS 생성 하고 설정하기</h1><hr>
+<p>ECS에 작업을 할당하기 위해서는 ECR에 이미지를 푸시하는 과정이 필요하지만<br>해당 작업은 완료했다 가정하고 진행하겠습니다</p>
+<h2 id="ECS-클러스터-클러스터-인스턴스-생성"><a href="#ECS-클러스터-클러스터-인스턴스-생성" class="headerlink" title="ECS 클러스터, 클러스터 인스턴스 생성"></a>ECS 클러스터, 클러스터 인스턴스 생성</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438833-21999d30-7547-4a6c-86d5-58f190d54b07.png" alt="image"><br>클러스터의 이름을 입력합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438837-8ff93781-ca97-4229-9d8b-c5e7690436cd.png" alt="image"><br>클러스터 인스턴스 생성을 위한 정보를 입력합니다<br>제가 진행하는 서비스에서는 인스턴스가 많이 필요하지 않아 인스턴스 수를 1개로 생성할 예정입니다<br>다음에 추가 인스턴스가 필요할 경우 클러스터 설정을 변경할 수 있습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438840-c6520bec-acec-4ab1-b46e-00f3c481873f.png" alt="image"><br>인스턴스가 사용할 VPC를 구성합니다<br>프로젝트를 위해 구성한 VPC를 사용하고 오토스케일링 가용성을 위해 다른 가용영역의 서브넷을 두 개 할당했습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438844-80712ccc-d9fb-44d1-8ea2-8f936a67ac0c.png" alt="image"><br>인스턴스에 IAM정책을 부여합니다<br>해당 정책을 통해 ECS가 컨테이너 인스턴스의 활성화 여부, 자원관리 및 태스크를 관리할 수 있습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438847-7ee53661-1117-49f6-92a3-2cd366ae6e8b.png" alt="image"><br>각 태스크에서 발생하는 로그 모니터링 솔루션입니다<br>ECS 클러스터 오토 스케일링에서 CloudWach 지표를 사용함으로 체크해주세요</p>
+<h2 id="CloudWatch-로깅을-위한-인스턴스-IAM-설정"><a href="#CloudWatch-로깅을-위한-인스턴스-IAM-설정" class="headerlink" title="CloudWatch 로깅을 위한 인스턴스 IAM 설정"></a>CloudWatch 로깅을 위한 인스턴스 IAM 설정</h2><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438870-6dae7166-fd83-4886-bf94-2eee6b3de6ab.png" alt="image"></p>
+<p>컨테이너 로그를 송출하기위해 컨테이너 인스턴스 IAM역할에 CloudWatchLogsFullAccess 권한을 부여합니다</p>
+<h2 id="ECS-Task-추가"><a href="#ECS-Task-추가" class="headerlink" title="ECS Task 추가"></a>ECS Task 추가</h2><hr>
+<p>ECS에서 배포및 관리할 도커 컨테이너를 설정(태스크 디피니션)해 작업(Task)로 만드는 과정입니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438938-217ad8df-f2f7-4184-9889-49730c8e3d2b.png" alt="image"></p>
+<p>태스크 이름을 정의합니다 나머지 값은 기본값으로 설정합니다</p>
+<h3 id="로깅-컨테이너-추가"><a href="#로깅-컨테이너-추가" class="headerlink" title="로깅 컨테이너 추가"></a>로깅 컨테이너 추가</h3><p><img src="https://user-images.githubusercontent.com/55491354/193438943-62828deb-fde5-4ad8-9144-d24baa1beeab.png" alt="image"></p>
+<p>컨테이너 로깅을 위해 로그 라우터 컨테이너를 구성합니다</p>
+<p>로그 기록용으로만 사용하는 경우 Fluent Bit 유형을 선택해야 합니다</p>
+<p>유형을 선택한 뒤 적용 버튼을 클릭할 경우 로깅 컨테이너가 작업에 추가됩니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438961-890b76a3-2626-4c05-a04e-52a5cb3909e4.png" alt="image"></p>
+<p>log_router 컨테이너 이름을 클릭해 컨테이너 편집 창으로 이동합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439022-b8f2f9f4-9df8-414f-8b6a-ee97aff0455d.png" alt="image"></p>
+<p>스토리지 및 로깅 설정에서 다음과 같이 설정합니다</p>
+<pre><code class="hljs crmsh">awslogs-<span class="hljs-keyword">group</span> <span class="hljs-title">→ firelens-container</span>
+awslogs-region → 로그 기록 리전( 서울 : ap-northeast-<span class="hljs-number">2</span> )
+awslogs-stream-prefix → firelens
+awslogs-create-<span class="hljs-keyword">group</span> <span class="hljs-title">→ true</span></code></pre>
+
+<p>입력후 업데이트 버튼을 눌러 반영합니다</p>
+<h3 id="앱-컨테이너-추가"><a href="#앱-컨테이너-추가" class="headerlink" title="앱 컨테이너 추가"></a>앱 컨테이너 추가</h3><p>실제로 배포할 서비스 앱 컨테이너를 추가해야합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438986-c6c69004-d199-49af-b920-44477d0e2c6a.png" alt="image"></p>
+<p>컨테이너 추가 버튼을 눌러</p>
+<p>컨테이너 이름과 도커 이미지 링크, 메모리 제한, 포트매핑을 설정했습니다</p>
+<blockquote>
+<p>호스트 포스를 0으로 설정하면 다이나믹 포트로 ECS가 자동으로 포트를 관리합니다. 무중단 배포를 활성화하기 위해서는 꼭 호스트포트를 다이나믹 포트로 설정해야 합니다</p>
+</blockquote>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439046-bc4b9f9a-82bf-49c0-acd4-21ec6c384ff3.png" alt="image"></p>
+<p>로그 라우터 컨테이너와 연결하기위해 고급 구성에서 로그 구성을 설정합니다</p>
+<pre><code class="hljs xl"><span class="hljs-function"><span class="hljs-title">name</span> -&gt;</span> cloudwatch
+<span class="hljs-function"><span class="hljs-title">log_group_name</span> -&gt;</span> 로그 그룹명( ecs-tilog-<span class="hljs-built_in">log</span> )
+<span class="hljs-function"><span class="hljs-title">log_stream_prefix</span> -&gt;</span> from-fluent-bit
+<span class="hljs-function"><span class="hljs-title">region</span> -&gt;</span> 로그 기록 리전( 서울 : ap-northeast-<span class="hljs-number">2</span> )
+<span class="hljs-function"><span class="hljs-title">auto_create_group</span> -&gt;</span> <span class="hljs-literal">true</span></code></pre>
+
+
+<h2 id="ALB-생성"><a href="#ALB-생성" class="headerlink" title="ALB 생성"></a>ALB 생성</h2><hr>
+<p>방금 정의한 Task를 배포하기 위해서는 ECS에서 서비스를 정의해야 합니다 하지만 그전에<br>서비스를 연결해줄 ALB를 먼저 생성해야 빠르게 ECS 서비스를 구성할 수 있습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439067-8fec0c1e-3ad0-4a96-95e5-c629d317aaea.png" alt="image"><img src="https://user-images.githubusercontent.com/55491354/193439072-250a151f-5146-4b4d-bf2b-c8def535bb43.png" alt="image"><br>로드밸런서 이름을 입력하고<br>외부의 접속에 대응하는 Internet-facing 옵션을 선택합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439077-3a8d5612-7b46-4cd6-8284-0690d8ebd97c.png" alt="image"><br>가용영역과 서브넷을 선택했습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439082-5b5e15b9-dc9e-4296-bc78-3f33c48db5c9.png" alt="image"><br>Listener는 클라이언트와 로드밸런서간 연결이며<br>Target은 로드밸런서와 서비스간 연결을 정의합니다<br>해당 프로토콜과 포트로 접근하는 클라이언트에 대해서 어느 서비스로 연결할지 정의하기위해<br>create target group을 클릭해 이동합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439100-74cbe370-989a-4d55-b438-7c6a7161b1b8.png" alt="image"><br>알맞은 VPC를 선택하고 target group을 생성합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439106-0102a08a-5c6f-40c8-8ece-97b2460061ad.png" alt="image"><br>생성한 Target group과 리스너를 매치시키고 로드 밸런서를 생성합니다</p>
+<h2 id="ECS-서비스-정의"><a href="#ECS-서비스-정의" class="headerlink" title="ECS 서비스 정의"></a>ECS 서비스 정의</h2><hr>
+<p>서비스를 통해 지정된 수의 작업(Task)를 실행하고 관리할 수 있습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439143-87ef8dac-949e-4d4e-a60f-b1872e5b78c7.png" alt="image"></p>
+<p>배포할 태스크를 선택하고 서비스 생성을 선택합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439150-544186ca-9aff-4d05-867e-1f4cb96bdb52.png" alt="image"></p>
+<p>서비스에서 작업을 얼만큼 생성하고 관리할지 정의합니다</p>
+<p>태스크 개수는 무중단 배포를 위해서 최소 2개로 최대 4개까지 늘어날 수 있도록 설정했습니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439154-282fa39e-c600-436e-ad7e-e8f7d48a0849.png" alt="image"></p>
+<p>다음을 눌러 로드 밸런싱 설정에 진입합니다</p>
+<p>이전 과정에서 생성했던 ALB를 연결합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439165-dc49f19b-aa35-4d2c-b534-d93ef2b6b8e9.png" alt="image"></p>
+<p>컨테이너에서 오픈할 포트를 지정하고 로드 밸런서에 추가합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439172-702cbcb0-f013-4098-85c8-d58548d2cbb8.png" alt="image"></p>
+<p>해당 컨테이너와 타깃그룹을 연결합니다 이후 동일한 태스크가 늘어나도 ECS에서 자동으로 타깃 그룹에 추가, 삭제합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439177-803bdebc-4fca-4d79-a276-a33c9d67aeca.png" alt="image"></p>
+<p>클러스터 인스턴스 오토 스케일을 사용하지 않는 상태이기때문에 비활성화 한 상태로 서비스를 생성했습니다</p>
+<h1 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/193439197-36b978a2-0574-4064-9b4f-204e5e889567.png" alt="image"></p>
+<ul>
+<li>서비스가 실행되면 클러스터 인스턴스에 태스크를 분배합니다</li>
+<li>태스크가 실행되면 자동으로 ALB 타겟그룹에 추가되고 로드밸런싱됩니다</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="http://ecs.catsdogs.kr.s3-website.ap-northeast-2.amazonaws.com/ko/1.-intro/">AWS ECS 밋업 공식문서</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.44bits.io/ko/post/container-orchestration-101-with-docker-and-aws-elastic-container-service#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0">AWS ECS로 시작하는 컨테이너 오케스트레이션</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/harrythegreat/ecs%EB%A5%BC-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0%EC%A0%84-%EC%95%8C%EC%95%98%EC%9C%BC%EB%A9%B4-%EC%A2%8B%EC%95%98%EC%9D%84-%EA%B2%83%EB%93%A4-1-%EC%9A%A9%EC%96%B4-%EC%84%A4%EB%AA%85-92dbfb9d59f7">ECS를 시작하기전 알았으면 좋았을 것들</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

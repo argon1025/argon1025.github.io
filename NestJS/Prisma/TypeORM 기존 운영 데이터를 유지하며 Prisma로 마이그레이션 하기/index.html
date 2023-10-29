@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기">
+    <meta property="og:description" content="Prisma를 서비스 도중에 적용하는 방법">
+    <meta property="og:image" content="/feed-thumbnail/object12.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/NestJS/Prisma/TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기/">
+    <meta property="og:site_name" content="Argon.Blog - TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기">
+    <link rel="canonical" href="https://argon1025.github.io/NestJS/Prisma/TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="Prisma를 서비스 도중에 적용하는 방법" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Prisma</title><path d="M21.8068 18.2848L13.5528.7565c-.207-.4382-.639-.7273-1.1286-.7541-.5023-.0293-.9523.213-1.2062.6253L2.266 15.1271c-.2773.4518-.2718 1.0091.0158 1.4555l4.3759 6.7786c.2608.4046.7127.6388 1.1823.6388.1332 0 .267-.0188.3987-.0577l12.7019-3.7568c.3891-.1151.7072-.3904.8737-.7553s.1633-.7828-.0075-1.1454zm-1.8481.7519L9.1814 22.2242c-.3292.0975-.6448-.1873-.5756-.5194l3.8501-18.4386c.072-.3448.5486-.3996.699-.0803l7.1288 15.138c.1344.2856-.019.6224-.325.7128z"/></svg></div>
+              <span class="text-gray-400">마이그레이션 가이드</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">TypeORM 기존 운영 데이터를 유지하며 Prisma로 마이그레이션 하기</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">Prisma를 서비스 도중에 적용하는 방법</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#NestJS</p>
+            
+            <p class="text-[#53C1F8]">#Prisma</p>
+            
+            <p class="text-[#53C1F8]">#TypeORM</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 04월 05일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object12.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>TILog 서비스에 기능을 추가하니 기존 데이터를 유지하면서<br>테이블 및 컬럼을 추가, 수정, 삭제 해야 하는 요구 사항들이 많이 발생했습니다</p>
+<p>하지만 기존 TypeORM에서 지원되는 마이그레이션은<br>변경, 롤백에 해당하는 로우 쿼리를 직접 작성하는 방식이기에</p>
+<p>테이블 하나를 수정하는 작업이 너무 많은 시간을 소모하게 했습니다</p>
+<p>이런 상황에서 TypeORM 대신 왜 Prisma를 선택 했는지<br>TILog 처럼 프로덕션에 유지 관리 해야 하는 데이터가 포함되어 있어 데이터베이스를 재설정 할 수 없는 경우<br>기존 데이터를 유지하면서 Prisma로 어떻게 마이그레이션 했는지에 대해 알아보겠습니다!</p>
+<h1 id="Prisma를-선택한-이유"><a href="#Prisma를-선택한-이유" class="headerlink" title="Prisma를 선택한 이유"></a>Prisma를 선택한 이유</h1><hr>
+<p>TypeORM대신 Prisma를 선택한 이유는 크게 두 가지 인데요</p>
+<ul>
+<li>prisma.schema 파일 변경으로 빠른 마이그레이션 지원</li>
+<li>TypeORM보다 뛰어난 타입 안정성</li>
+</ul>
+<p>그 외에도 <a target="_blank" rel="noopener" href="https://www.prisma.io/docs/concepts/more/comparisons/prisma-and-typeorm">Prisma 공식 문서</a>에서 TypeORM과 Prisma의 차이점에 관해서 자세히 설명하고 있습니다</p>
+<h2 id="쉽고-빠른-마이그레이션"><a href="#쉽고-빠른-마이그레이션" class="headerlink" title="쉽고 빠른 마이그레이션"></a>쉽고 빠른 마이그레이션</h2><p>TypeORM은 작업, 작업을 되돌리는 로우 쿼리를 하나의 파일에 기록하는 방식으로 마이그레이션을 지원합니다<br>프로젝트 초기 단계에 이런 변경 사항을 일일이 작성하는 것이 번거롭고<br>데이터베이스를 변경하는 작업은 하나의 장벽처럼 느껴졌었는데요</p>
+<p>→ Prisma는 schema.prisma 파일을 변경하는 것 만으로 자동으로 마이그레이션 파일을 생성하고 특정 지점으로 Rollback할 수 있습니다</p>
+<h2 id="Type-safe"><a href="#Type-safe" class="headerlink" title="Type-safe"></a>Type-safe</h2><p>TypeORM은 컬럼을 Select하거나 Querybuilder를 사용할 때 컬럼명을 텍스트 배열로 전달하기 때문에<br>Typescript 컴파일러에서 리턴타입을 추정할 수 없어 해당 테이블의 Entity 유형만을 반환하는 문제가 있습니다<br>그로인해 존재하지 않는 프로퍼티를 참조하려고 시도하거나, 오타가 나는경우 런타임에러가 빈번해서<br>TypeORM을 사용할 때마다 디버깅해야 실제 데이터가 어떻게 나오는지 알 수 있고 결과에 따른 Interface도 따로 정의해야 했습니다</p>
+<p>→ Prisma는 generate 기능을 통해 TypeScript 컴파일러와 데이터베이스 스키마 간에 정확한 리턴 Type을 작성해주고</p>
+<p>이에 따라 이에 따라 디버깅하지 않고도 에디터에서 자동완성, 참조가 가능해 사이드 이펙트를 에디터 레벨에서 확인할 수 있습니다</p>
+<h2 id="Error가-보인다"><a href="#Error가-보인다" class="headerlink" title="Error가 보인다!"></a>Error가 보인다!</h2><p>TypeORM은 SELECT 대상 컬럼, 테이블을 텍스트로 전달하기 때문에<br>스키마에 변경사항이 발생하더라도 컴파일러에서 에러를 볼 수 없었습니다</p>
+<p>→ Prisma는 정확한 Type을 정의하기때문에 일부 테이블의 스키마가 변경되면 에디터에서 오류를 확인할 수 있습니다</p>
+<h1 id="Prisma-기존-프로젝트에-적용하기"><a href="#Prisma-기존-프로젝트에-적용하기" class="headerlink" title="Prisma 기존 프로젝트에 적용하기"></a>Prisma 기존 프로젝트에 적용하기</h1><hr>
+<h2 id="개발-프로덕션-데이터베이스-스키마-동기화-하기"><a href="#개발-프로덕션-데이터베이스-스키마-동기화-하기" class="headerlink" title="개발, 프로덕션 데이터베이스 스키마 동기화 하기"></a>개발, 프로덕션 데이터베이스 스키마 동기화 하기</h2><p>TypeORM에서 데이터베이스 스키마를 Entity형태로 구성하는 것과 마찬가지로<br>Prisma를 사용하기 위해서는 기존 데이터베이스 스키마를 Prisma에서 지원하는 schema.prisma로 구성하는 것이 필요합니다</p>
+<pre><code class="hljs shell">// prisma db pull
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">dotenv -e environments/.prod.env prisma db pull</span></code></pre>
+
+<p>dotenv-cli를 통해서 프로덕션 서버 정보를 저장하고 있는 .env 파일을 로드해서<br><code>prisma db pull</code> 명령어를 실행했습니다</p>
+<pre><code class="hljs json">generator client <span class="hljs-punctuation">&#123;</span>
+  provider = <span class="hljs-string">&quot;prisma-client-js&quot;</span>
+<span class="hljs-punctuation">&#125;</span>
+
+datasource db <span class="hljs-punctuation">&#123;</span>
+  provider = <span class="hljs-string">&quot;mysql&quot;</span>
+  url      = env(<span class="hljs-string">&quot;DATABASE_URL&quot;</span>)
+<span class="hljs-punctuation">&#125;</span>
+
+model category <span class="hljs-punctuation">&#123;</span>
+  id                         Int                          @id @default(autoincrement()) @db.UnsignedInt
+  categoryName               String                       @db.VarChar(<span class="hljs-number">30</span>)
+  iconURL                    String?                      @db.VarChar(<span class="hljs-number">300</span>)
+  pinnedRepositoryCategories pinnedRepositoryCategories<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+  posts                      posts<span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">&#125;</span>
+
+model comments <span class="hljs-punctuation">&#123;</span>
+  id          BigInt    @id @default(autoincrement())
+  usersID     Int       @db.UnsignedInt
+  postsID     BigInt
+  htmlContent String    @db.VarChar(<span class="hljs-number">300</span>)
+  replyTo     BigInt?
+  replyLevel  Int       @default(<span class="hljs-number">0</span>) @db.TinyInt
+  createdAt   DateTime  @db.DateTime(<span class="hljs-number">0</span>)
+  updatedAt   DateTime? @db.DateTime(<span class="hljs-number">0</span>)
+  deletedAt   DateTime? @db.DateTime(<span class="hljs-number">0</span>)
+  posts       posts     @relation(fields<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>postsID<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> references<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>id<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> onDelete<span class="hljs-punctuation">:</span> Cascade<span class="hljs-punctuation">,</span> map<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FK_comments_postsID_posts_id&quot;</span>)
+  users       users     @relation(fields<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>usersID<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> references<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>id<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> onDelete<span class="hljs-punctuation">:</span> Cascade<span class="hljs-punctuation">,</span> map<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FK_comments_usersID_users_id&quot;</span>)
+
+  @@index(<span class="hljs-punctuation">[</span>postsID<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> map<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FK_comments_postsID_posts_id&quot;</span>)
+  @@index(<span class="hljs-punctuation">[</span>usersID<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> map<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FK_comments_usersID_users_id&quot;</span>)
+<span class="hljs-punctuation">&#125;</span>
+...</code></pre>
+
+<p>명령어를 통해 생성된 schema.prisma 파일의 일부입니다<br>프로덕션 서버의 스키마 정보를 담고 있습니다</p>
+<pre><code class="hljs bash">// prisma db push
+$ dotenv -e environments/.dev.env prisma db push</code></pre>
+
+<p>생성된 schema.prisma를 로컬 개발 서버 데이터베이스에 push해서 반영했습니다<br>위 과정을 통해서 로컬 개발서버, 프로덕션 서버의 데이터베이스 스키마를 정확하게 Sync 할 수 있습니다</p>
+<h2 id="프로덕션-데이터베이스에-마이그레이션-기존-Baselining-설정하기"><a href="#프로덕션-데이터베이스에-마이그레이션-기존-Baselining-설정하기" class="headerlink" title="프로덕션 데이터베이스에 마이그레이션 기존(Baselining) 설정하기"></a>프로덕션 데이터베이스에 마이그레이션 기존(Baselining) 설정하기</h2><hr>
+<h3 id="마이그레이션-기준-Baselining-설정-이란"><a href="#마이그레이션-기준-Baselining-설정-이란" class="headerlink" title="마이그레이션 기준 (Baselining) 설정 이란?"></a>마이그레이션 기준 (Baselining) 설정 이란?</h3><p>기준 설정은 TILog처럼 이미 Prisma 마이그레이션을 사용하지 않고 개발하며 유지 관리 중인 데이터가 있을 때 유용합니다<br><img src="https://user-images.githubusercontent.com/55491354/207647194-263c65d0-8789-43f9-817b-100a9ead8e91.png" alt="image"><br>schema.prisma파일만 존재하는 상태로 마이그레이션 기록을 생성하게되면 위 이미지처럼<br>현재 데이터베이스 스키마를 온전히 재생성하는데 필요한 쿼리가 생성됩니다 (테이블 전체 스키마 백업)<br>결과적으로 이 마이그레이션 기록은 프로덕션 데이터베이스에서는 이미 생성된 기록임으로 반영할 필요가 없기에<br>기준 설정(Baselining)을 통해서 Prisma에게 이미 이 마이그레이션 기록이 적용된 상태라고 가정하도록 명령하는 것입니다.</p>
+<h3 id="첫-마이그레이션-기록-생성하기"><a href="#첫-마이그레이션-기록-생성하기" class="headerlink" title="첫 마이그레이션 기록 생성하기"></a>첫 마이그레이션 기록 생성하기</h3><pre><code class="hljs bash">// prisma migrate dev --name initial-migration --create-only
+$ dotenv -e environments/.dev.env prisma migrate dev --name initial-migration --create-only</code></pre>
+
+<p>프로덕션 서버와 같은 스키마를 가지고 있는 로컬 개발 서버를 이용해서<br>첫 마이그레이션 기록을 생성합니다</p>
+<h3 id="마이그레이션-기준-Baselining-설정"><a href="#마이그레이션-기준-Baselining-설정" class="headerlink" title="마이그레이션 기준(Baselining) 설정"></a>마이그레이션 기준(Baselining) 설정</h3><pre><code class="hljs sql">npx prisma migrate resolve <span class="hljs-comment">--applied &#123;마이그레이션 파일명&#125;</span></code></pre>
+
+<p>resolve 명령어로 이 마이그레이션은 이미 적용된 상태라고 프로덕션 데이터베이스에 기록합니다<br>이후 프로덕션 데이터베이스 서버에 Prisma 전용 테이블이 생성되고 마이그레이션 히스토리가 저장됩니다</p>
+<p>마이그레이션 기준 설정이 모두 끝났습니다. 앞으로 작성되는 새로운 마이그레이션 파일만 프로덕션 데이터베이스에 반영됩니다<br>하지만 테이블의 구조를 크게 변경하거나 특정 컬럼의 이름을 변경하는 경우 데이터가 초기화될 수 있습니다<br>이럴 때 확장 축소 패턴을 사용해서 스키마 작업을 해야 하는데요 관련 내용은 <a target="_blank" rel="noopener" href="https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate/customizing-migrations">Prisma 공식문서</a>에 자세히 작성되어 있습니다</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate/baselining">https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate/baselining</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate">https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate/add-prisma-migrate-to-a-project#update-the-development-environment">https://www.prisma.io/docs/guides/database/developing-with-prisma-migrate/add-prisma-migrate-to-a-project#update-the-development-environment</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

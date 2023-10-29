@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 0장 클린코드 서문 정리">
+    <meta property="og:description" content="책임있는 전문가가 되기위해">
+    <meta property="og:image" content="/feed-thumbnail/object15.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Book/Clean Code/0장 클린코드 서문 정리/">
+    <meta property="og:site_name" content="Argon.Blog - 0장 클린코드 서문 정리">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 0장 클린코드 서문 정리</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 0장 클린코드 서문 정리">
+    <link rel="canonical" href="https://argon1025.github.io/Book/Clean Code/0장 클린코드 서문 정리/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="책임있는 전문가가 되기위해" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>GitBook</title><path d="M10.802 17.77a.703.703 0 11-.002 1.406.703.703 0 01.002-1.406m11.024-4.347a.703.703 0 11.001-1.406.703.703 0 01-.001 1.406m0-2.876a2.176 2.176 0 00-2.174 2.174c0 .233.039.465.115.691l-7.181 3.823a2.165 2.165 0 00-1.784-.937c-.829 0-1.584.475-1.95 1.216l-6.451-3.402c-.682-.358-1.192-1.48-1.138-2.502.028-.533.212-.947.493-1.107.178-.1.392-.092.62.027l.042.023c1.71.9 7.304 3.847 7.54 3.956.363.169.565.237 1.185-.057l11.564-6.014c.17-.064.368-.227.368-.474 0-.342-.354-.477-.355-.477-.658-.315-1.669-.788-2.655-1.25-2.108-.987-4.497-2.105-5.546-2.655-.906-.474-1.635-.074-1.765.006l-.252.125C7.78 6.048 1.46 9.178 1.1 9.397.457 9.789.058 10.57.006 11.539c-.08 1.537.703 3.14 1.824 3.727l6.822 3.518a2.175 2.175 0 002.15 1.862 2.177 2.177 0 002.173-2.14l7.514-4.073c.38.298.853.461 1.337.461A2.176 2.176 0 0024 12.72a2.176 2.176 0 00-2.174-2.174"/></svg></div>
+              <span class="text-gray-400">클린코드</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">0장 클린코드 서문 정리</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">책임있는 전문가가 되기위해</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#책</p>
+            
+            <p class="text-[#53C1F8]">#클린코드</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2023년 07월 21일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object27.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <blockquote>
+<p>개인적으로 클린코드를 읽고 정리한 글입니다</p>
+</blockquote>
+<h1 id="서문"><a href="#서문" class="headerlink" title="서문"></a>서문</h1><hr>
+<p>클린 코드에서 설명하는 원칙과 기본은 변하지 않습니다.<br>또한 책에 나오는 모든 지침은 절대적이지 않으며 개선의 여지가 있습니다.<br>이 책은 공동체에서 서로 동의하는 합리적인 원칙을 세우기 위한 인사이트를 제공하기 위함입니다.<br>그렇기 위해서는 저자가 코드를 고쳐간 방식을 이해하고 납득해야 합니다.</p>
+<p>프로그래머는 코드를 쓰는 시간보다 읽는 시간이 훨씬 더 많습니다<br>그러므로 우리는 코드를 꺼낼 때보다 코드를 넣을 때 더 깨끗한 상태로 만들어야 할 의무가 있습니다.</p>
+<h1 id="책임-있는-전문가가-되기위한-원칙"><a href="#책임-있는-전문가가-되기위한-원칙" class="headerlink" title="책임 있는 전문가가 되기위한 원칙"></a>책임 있는 전문가가 되기위한 원칙</h1><hr>
+<h2 id="TPM-5S-철학"><a href="#TPM-5S-철학" class="headerlink" title="TPM 5S 철학"></a>TPM 5S 철학</h2><ul>
+<li>제조업의 대다수 활동은 제조가 아닌 유지보수인 것을 명심하자<ul>
+<li>정렬 : 적절한 명명법으로 무엇이 어디에 있는지 쉽게 알 수 있다.</li>
+<li>정돈 : 코드는 누구나 예상하는 위치에 있어야 한다</li>
+<li>청소 : 과거 이력이나 미래 바람을 기억한 주석은 제거해라</li>
+<li>청결 : 일관적인 코드 스타일을 구현하자</li>
+<li>생활화 : 관례를 따르고 자기 작품을 자주 돌아보고, 기꺼이 변경하자</li>
+</ul>
+</li>
+<li>책임 있는 개발자라면 제품의 생명주기를 고려하자</li>
+</ul>
+<h2 id="사소한-것에-집중하자"><a href="#사소한-것에-집중하자" class="headerlink" title="사소한 것에 집중하자"></a>사소한 것에 집중하자</h2><blockquote>
+<p>시란 영원히 미완성이라 끝없는 재작업이 필요하며 포기할 때만 끝난다</p>
+</blockquote>
+<p>우리는 불행히도 구현을 끝내면 코드에는 일찌감치 손을 뗍니다.<br>본질보다 모양새를 중시하는 가치체계 때문이죠<br>하지만 품질은 사심 없이 기울이는 무수한 관심에서 얻어집니다.</p>
+<p>고상한 설계 방법론과 도구에 통달해야 품질이 올라가는 것이 아닌<br>아무 생각 없이 행해지는 코더의 일관적인 들여쓰기 스타일이<br>버그 수를 줄여주는 가장 중요한 요인 중 하나입니다.</p>
+<h2 id="사소한-것에-정직하자"><a href="#사소한-것에-정직하자" class="headerlink" title="사소한 것에 정직하자"></a>사소한 것에 정직하자</h2><p>아키텍처도, 깨끗한 코드도, 완벽하지 않습니다.</p>
+<p>코드에 정직하고, 코드의 상태에 관하여 동료들에게 정직하고<br>자기 코드에 대해서 자신에게 정직해야 합니다.</p>
+<p>더러운 빨래를 팀원에게 기꺼이 공개하자!</p>
+<h1 id="들어가면서"><a href="#들어가면서" class="headerlink" title="들어가면서"></a>들어가면서</h1><hr>
+<p>우리가 짠 코드로 인해 난관에 부딪힐 때 옳은 방향으로 향하려면 <code>장인정신</code>이 필요합니다.<br>장인정신을 익히는 과정은 다음과 같습니다.</p>
+<ol>
+<li>장인에게 필요한 원칙, 패턴, 기법, 경험의 지식을 습득한다.</li>
+<li>연습해 지식을 몸과 마음으로 체득한다.</li>
+</ol>
+<p>깨끗한 코드를 작성하는 방법은 배우기 어렵다.<br>단순히 안다고 깨끗한 코드가 나오지 않는다.<br>고생을 해야 하죠</p>
+<p>책에서 언급하는 <strong>고생</strong>은 다음과 같습니다.</p>
+<ul>
+<li>스스로 연습하고 실패한다.</li>
+<li>남들이 시도하다 실패하는 모습을 본다.</li>
+<li>잘못된 결정으로 대가를 치르는 모습을 본다.</li>
+</ul>
+<p>끝.</p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

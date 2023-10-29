@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 1장 협력하는 객체들의 공동체">
+    <meta property="og:description" content="객체지향 패러다임의 핵심은 상속이 아닌 자율적인 객체들의 협력이다">
+    <meta property="og:image" content="/feed-thumbnail/object7.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Book/객체지향의 사실과 오해/1장 협력하는 객체들의 공동체/">
+    <meta property="og:site_name" content="Argon.Blog - 1장 협력하는 객체들의 공동체">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 1장 협력하는 객체들의 공동체</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 1장 협력하는 객체들의 공동체">
+    <link rel="canonical" href="https://argon1025.github.io/Book/객체지향의 사실과 오해/1장 협력하는 객체들의 공동체/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="객체지향 패러다임의 핵심은 상속이 아닌 자율적인 객체들의 협력이다" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>GitBook</title><path d="M10.802 17.77a.703.703 0 11-.002 1.406.703.703 0 01.002-1.406m11.024-4.347a.703.703 0 11.001-1.406.703.703 0 01-.001 1.406m0-2.876a2.176 2.176 0 00-2.174 2.174c0 .233.039.465.115.691l-7.181 3.823a2.165 2.165 0 00-1.784-.937c-.829 0-1.584.475-1.95 1.216l-6.451-3.402c-.682-.358-1.192-1.48-1.138-2.502.028-.533.212-.947.493-1.107.178-.1.392-.092.62.027l.042.023c1.71.9 7.304 3.847 7.54 3.956.363.169.565.237 1.185-.057l11.564-6.014c.17-.064.368-.227.368-.474 0-.342-.354-.477-.355-.477-.658-.315-1.669-.788-2.655-1.25-2.108-.987-4.497-2.105-5.546-2.655-.906-.474-1.635-.074-1.765.006l-.252.125C7.78 6.048 1.46 9.178 1.1 9.397.457 9.789.058 10.57.006 11.539c-.08 1.537.703 3.14 1.824 3.727l6.822 3.518a2.175 2.175 0 002.15 1.862 2.177 2.177 0 002.173-2.14l7.514-4.073c.38.298.853.461 1.337.461A2.176 2.176 0 0024 12.72a2.176 2.176 0 00-2.174-2.174"/></svg></div>
+              <span class="text-gray-400">객체지향의 사실과 오해</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">1장 협력하는 객체들의 공동체</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">객체지향 패러다임의 핵심은 상속이 아닌 자율적인 객체들의 협력이다</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#책</p>
+            
+            <p class="text-[#53C1F8]">#객체지향</p>
+            
+            <p class="text-[#53C1F8]">#객체지향의사실과오해</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 04월 01일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object6.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.yes24.com/Product/Goods/18249021">객체지향의 사실과 오해</a>를 읽고 개인적으로 정리한 내용입니다</p>
+</blockquote>
+<p>객체지향 패러다임의 핵심은 상속이 아닌 자율적인 객체들의 협력이다</p>
+<h1 id="객체지향의-오해"><a href="#객체지향의-오해" class="headerlink" title="객체지향의 오해"></a>객체지향의 오해</h1><hr>
+<p>인터넷에서 객체지향의 정의에 대해서 찾아본다면<br>객체지향이란 실세계를 직접적이고 직관적으로 표현할 수 있는 패러다임 이라는 설명을 쉽게 찾을 수 있다<br>하지만 실세계와 객체지향을 비유하는 이유는 객체지향의 다양한 측면을 이해하는데 좋기 때문이지<br>실제로는 사물과 객체지향의 개념적 거리는 유사성을 찾기 힘들 정도로 멀다<br>객체지향은 실세계를 모방하는 것이 아닌 새로운 객체지향의 세계를 창조하는 것이다!</p>
+<h1 id="협력-역할-책임"><a href="#협력-역할-책임" class="headerlink" title="협력, 역할, 책임"></a>협력, 역할, 책임</h1><hr>
+<p>사람들은 어려운 문제를 혼자서 해결하지보다 협력해 해결하기 위해 특정 역할을 맡고 역할에 따른 적합한 책임을 가진다<br>이는 객체지향도 동일하다.<br>이는 다음과 같은 특징을 가지게 되는데</p>
+<ul>
+<li>여러 사람이 같은 역할을 수행할 수 있다<ul>
+<li>역할에 따른 책임을 성실이 이행(Response)하기만 하면 된다</li>
+</ul>
+</li>
+<li>역할은 대체 가능하다</li>
+<li>책임을 수행하는 방법은 객체가 자율적으로 선택한다<ul>
+<li>다형성</li>
+</ul>
+</li>
+<li>한사람이 여러 역할을 수행할 수 있다</li>
+</ul>
+<h1 id="객체"><a href="#객체" class="headerlink" title="객체"></a>객체</h1><hr>
+<p>객체지향 어플리케이션의 형태를 결정하는것은 역할, 책임, 협력이지만 실제로 협력에 참여하는 주체는 객체다<br>애플리케이션의 작은 기능조차 객체혼자 감당하기엔 복잡하기 때문에 대부분 협력을 통해 기능을 구현하게 된다<br>그리고 객체는 기능 공동체의 일원으로 다음을 추구한다</p>
+<ul>
+<li>객체는 협력적이어야 한다<ul>
+<li>다른 객체에 대해서 요청, 응답에 열려있어야 합니다</li>
+</ul>
+</li>
+<li>객체는 자율적이어야 한다<ul>
+<li>객체가 무엇(What)을 수행하는지는 알 수 있지만 어떻게(How) 수행하는 지에 대해서는 알 수 없어야 한다</li>
+</ul>
+</li>
+<li>역할과 책임을 지기 위해 필요한 상태와 행동을 스스로 관리하고 외부에서 간섭할 수 없도록 한다<ul>
+<li>캡슐화</li>
+</ul>
+</li>
+</ul>
+<h1 id="객체지향의-본질"><a href="#객체지향의-본질" class="headerlink" title="객체지향의 본질"></a>객체지향의 본질</h1><hr>
+<ul>
+<li>객체지향은 자율적인 객체의 공동체를 이용해서 시스템을 나누는 방법입니다.</li>
+<li>자율적인 객체란 상태와 행위를 지니며 외부에 공유하지 않고 스스로 자기 자신을 책임지는 객체입니다</li>
+<li>객체는 시스템의 기능을 구현하기 위해서 다른 객체와 협력하며 각 객체는 협력 내에서 정해진 역할을 수행합니다</li>
+<li>객체는 서로 협력하기 위해서 메시지를 전송하고 메시지를 수신한 객체는 메서드(행동)을 자율적으로 선택합니다</li>
+</ul>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

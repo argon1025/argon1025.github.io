@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - AWS Multi AZ VPC 네트워크 구성">
+    <meta property="og:description" content="AWS VPC로 가용성이 보장된 안전한 네트워크 환경 구축">
+    <meta property="og:image" content="/feed-thumbnail/object4.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/AWS/AWS ECS 배포기/VPC/AWS Multi AZ VPC 네트워크 구성/">
+    <meta property="og:site_name" content="Argon.Blog - AWS Multi AZ VPC 네트워크 구성">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - AWS Multi AZ VPC 네트워크 구성</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - AWS Multi AZ VPC 네트워크 구성">
+    <link rel="canonical" href="https://argon1025.github.io/AWS/AWS ECS 배포기/VPC/AWS Multi AZ VPC 네트워크 구성/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="AWS VPC로 가용성이 보장된 안전한 네트워크 환경 구축" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Amazon AWS</title><path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/></svg></div>
+              <span class="text-gray-400">AWS ECS 배포기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">AWS Multi AZ VPC 네트워크 구성</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">AWS VPC로 가용성이 보장된 안전한 네트워크 환경 구축</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#AWS</p>
+            
+            <p class="text-[#53C1F8]">#VPC</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 01월 06일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object5.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>프로젝트에 VPC를 적용하기 위해서 공부한 내용을 정리했습니다</p>
+<h1 id="VPC가-해결하는-문제"><a href="#VPC가-해결하는-문제" class="headerlink" title="VPC가 해결하는 문제"></a>VPC가 해결하는 문제</h1><hr>
+<p>기존 공용 클라우드, AWS VPC 기본 설정에서는 동일한 네트워크 환경에 엑세스하기 때문에<br>엔드포인트가 닿는 면적이 넣어 보안에 취약한 문제점이 있었습니다.<br>VPC(Virtual Private Cloud)는 공용 클라우드 내에서 안전하고 격리된 네트워크 공간을 만들 수 있습니다.</p>
+<h1 id="키워드-정리"><a href="#키워드-정리" class="headerlink" title="키워드 정리"></a>키워드 정리</h1><hr>
+<p>VPC를 구성하기 전 필요한 용어에 대해 먼저 정리해보겠습니다.</p>
+<h2 id="Region-리전"><a href="#Region-리전" class="headerlink" title="Region (리전)"></a>Region (리전)</h2><p>AWS 서비스가 위치하고있는 지리적인 장소입니다.<br>특정 국가의 가용영역을 묶으면 리전이 됩니다</p>
+<h2 id="Availability-Zone-가용영역-AZ"><a href="#Availability-Zone-가용영역-AZ" class="headerlink" title="Availability Zone (가용영역 : AZ)"></a>Availability Zone (가용영역 : AZ)</h2><p>가용영역 하나는 물리적인 데이터 센터 하나와 같습니다</p>
+<h2 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC (Virtual Private Cloud)"></a>VPC (Virtual Private Cloud)</h2><p>물리적으로 개방된 네트워크에 <strong>논리적으로 격리된 가상의 네트워크</strong>를 구축할 수 있습니다<br>각각의 VPC는 리전 하나를 두고 완전히 독립된 서브넷 라우팅 게이트웨이를 구성할 수 있습니다</p>
+<h2 id="Subnet"><a href="#Subnet" class="headerlink" title="Subnet"></a>Subnet</h2><p>서브넷은 VPC에서 설정한 IP 대역폭을 잘게 나누어 하나의 가용영역에 연결합니다<br>서브넷은 주로 하나의 가용영역에 public subnet, private subnet으로 나누며<br>인터넷과 연결되어 외부에 노출되어 있는 지점을 최소화할 수 있습니다</p>
+<h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><p>VPC안에서 발생한 네트워크 요청에 대해 그에대한 최적의 경로를 지정합니다</p>
+<h2 id="Internet-Gateway"><a href="#Internet-Gateway" class="headerlink" title="Internet Gateway"></a>Internet Gateway</h2><p>VPC와 외부 인터넷 통신을 활성화하기 위한 게이트웨이입니다</p>
+<h2 id="NAT-Gateway"><a href="#NAT-Gateway" class="headerlink" title="NAT Gateway"></a>NAT Gateway</h2><p>private subnet이 외부의 인터넷 연결이 필요할 경우 구성하며<br>public subnet의 라우팅 테이블을 따라 인터넷 통신을 가능하게 합니다</p>
+<h2 id="ACL"><a href="#ACL" class="headerlink" title="ACL"></a>ACL</h2><p>Subnet 단위로 적용되는 방화벽입니다<br>Subnet은 하나의 ACL만 가질 수 있고 ACL은 여러 개의 Subnet에 연결할 수 있습니다</p>
+<h1 id="구성-목표"><a href="#구성-목표" class="headerlink" title="구성 목표"></a>구성 목표</h1><hr>
+<p>해당 포스트에서는 VPC를 보안성을 고려해 public, private으로 나누고<br>두개의 가용영역을 통해 가용성을 확보하도록 하겠습니다.</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193416652-40261765-a460-4654-958f-32a9a4b0fa44.png" alt="image"></p>
+<ul>
+<li>하나의 리전에 VPC를 생성하고 두 개의 가용영역(Multi AZ)에 각각 public, private subnet을 생성합니다</li>
+<li>public subnet은 하나의 라우팅 테이블을 가지고 인터넷 게이트웨이와 연결 합니다</li>
+<li>private subnet은 각각의 라우팅 테이블을 가지며 각 가용영역의 NAT Gateway를 통해서 외부 인터넷과 연결합니다<ul>
+<li>하나의 가용영역에만 NAT Gateway를 두는 패턴도 많으나 가용성을 유지하려면 해당 배치가 맞다고 판단했습니다</li>
+</ul>
+</li>
+<li>각 서브넷에 동일한 프로파일 ACL 설정</li>
+<li>이후 인스턴스 추가 시 별도의 보안그룹 설정합니다 (인바운드: 서비스 포트만 오픈, 아웃바운드 : 전체 허용)</li>
+</ul>
+<h2 id="CIDR-설정"><a href="#CIDR-설정" class="headerlink" title="CIDR 설정"></a>CIDR 설정</h2><p>네트워크 클래스를 대체하는 라우팅 기법으로 IP주소를<br>여러 네트워크 영역으로 나눌 때 기존방식에 비해 유연하게 할 수 있도록 합니다<br>프로젝트 VPC구성에 사용될 서브넷은 다음과 같습니다</p>
+<pre><code class="hljs gcode"><span class="hljs-comment">// 각 서브넷의 사이더는 총 27개의 ip 대역폭을 가집니다( 앞4개 뒤1개는 예약됨 )</span>
+<span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>
+public <span class="hljs-keyword">sub</span><span class="hljs-symbol">net1</span>: <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">27</span>
+public <span class="hljs-keyword">sub</span><span class="hljs-symbol">net2</span>: <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.32</span>/<span class="hljs-number">27</span>
+private <span class="hljs-keyword">sub</span><span class="hljs-symbol">net1</span> : <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.64</span>/<span class="hljs-number">27</span>
+private <span class="hljs-keyword">sub</span><span class="hljs-symbol">net2</span>: <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.96</span>/<span class="hljs-number">27</span>
+미사용 <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.128</span>/<span class="hljs-number">27</span>
+미사용: <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.160</span>/<span class="hljs-number">27</span></code></pre>
+
+
+
+<h1 id="AWS에서-구성하기"><a href="#AWS에서-구성하기" class="headerlink" title="AWS에서 구성하기"></a>AWS에서 구성하기</h1><hr>
+<h2 id="VPC-생성하기"><a href="#VPC-생성하기" class="headerlink" title="VPC 생성하기"></a>VPC 생성하기</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438154-3afc9893-b08b-41cd-8531-6b08ecd6e93d.png" alt="image"><br>리전, CIDR를 입력하고 VPC를 생성합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438158-7a04557d-8ab1-4c42-9702-43b572bd6a39.png" alt="image"><br>어떤 VPC에 해당 서브넷을 생성할지 선택합니다.</p>
+<h2 id="서브넷-생성하기"><a href="#서브넷-생성하기" class="headerlink" title="서브넷 생성하기"></a>서브넷 생성하기</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438169-c30011f0-478a-4a64-81fd-8b7a0201001b.png" alt="image"></p>
+<p>서브넷 이름을 지정하고<br>서브넷이 어느 가용영역에 속할것인지 정합니다<br>이번 프로젝트에서는 2개의 가용영역에 총 4개의 서브넷을 생성합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438173-45283cb2-bdda-44a6-8f8a-d6ea2915d3e9.png" alt="image"></p>
+<p>해당 서브넷의 ip 대역폭을 설정합니다 VPC 대역폭보다 적어야하며<br>각 서브넷 관리 아이피( 앞4개 뒤1개는 예약됨 )를 제외하고 한개 이상이어야 합니다<br>나머지 3개의 서브넷도 위와 같이 설정했습니다.</p>
+<h2 id="Internet-Gatway-생성하기"><a href="#Internet-Gatway-생성하기" class="headerlink" title="Internet Gatway 생성하기"></a>Internet Gatway 생성하기</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438190-5f9cc5dd-824a-41a6-b47e-c7bde37772bf.png" alt="image"><br>외부 통신을 위한 Internet Gatway를 생성합니다</p>
+<h2 id="Public-subnet-Routing"><a href="#Public-subnet-Routing" class="headerlink" title="Public subnet Routing"></a>Public subnet Routing</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438214-c07e0340-410b-436f-bbf6-ccd567f28ecf.png" alt="image"></p>
+<p>퍼블릭 서브넷은 하나의 라우팅 테이블을 통해 내부와 외부로 통신합니다<br>내부 아이피가 아닌 모든 요청은 인터넷 게이트웨이로 패킷을 전송합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438219-fe685e41-c115-44da-820e-51de2dd686c5.png" alt="image"></p>
+<blockquote>
+<p>라우팅 테이블 → 작업 → 서브넷 연결 편집</p>
+</blockquote>
+<p>에서 라우팅 테이블을 적용할 서브넷을 클릭하고 저장합니다</p>
+<h2 id="NAT-Gateway-생성하기"><a href="#NAT-Gateway-생성하기" class="headerlink" title="NAT Gateway 생성하기"></a>NAT Gateway 생성하기</h2><h3 id="NAT에서-사용할-EIP-생성"><a href="#NAT에서-사용할-EIP-생성" class="headerlink" title="NAT에서 사용할 EIP 생성"></a>NAT에서 사용할 EIP 생성</h3><p><img src="https://user-images.githubusercontent.com/55491354/193438267-237f374c-c0ad-4f6f-b7d8-3411ccf4b1f6.png" alt="image"><br>NAT-gateway에서 사용할 EIP를 생성합니다</p>
+<h3 id="게이트웨이-생성"><a href="#게이트웨이-생성" class="headerlink" title="게이트웨이 생성"></a>게이트웨이 생성</h3><p><img src="https://user-images.githubusercontent.com/55491354/193438274-42e5e9a5-37d1-4227-a798-2d970c21a89f.png" alt="image"></p>
+<p>NAT-Gateway를 생성합니다<br>퍼블릭 서브넷을 지정하고 생성한 EIP를 할당합니다<br>각 가용영역마다 NAT-Gateway를 배치하기위해 해당 작업을 두번 진행합니다<br><strong>NAT-Gateway 생성은 Internet-Gateway가 라우팅된 퍼블릭 서브넷이 있는 상태에서만 생성할 수 있습니다</strong></p>
+<hr>
+<h2 id="Private-subnet-Routing"><a href="#Private-subnet-Routing" class="headerlink" title="Private subnet Routing"></a>Private subnet Routing</h2><p><img src="https://user-images.githubusercontent.com/55491354/193438289-90cfb1b1-d799-40a8-b1e6-dbbc68813584.png" alt="image"></p>
+<p>각 가용역영별로 가용성을 보장하기위해 프라이빗 서브넷은 별도의 라우팅 테이블로 내부와 통신합니다<br>내부 아이피가 아닌 모든 요청은 해당 가용영역의 퍼블릭 서브넷에 존재하는 NAT-Gateway로 전송합니다</p>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438294-38c90400-1a8f-41da-b952-5bcf29ee3619.png" alt="image"></p>
+<blockquote>
+<p>라우팅 테이블 → 작업 → 서브넷 연결 편집</p>
+</blockquote>
+<p>에서 적용할 서브넷을 클릭하고 저장합니다</p>
+<h2 id="퍼블릭-서브넷-아이피-자동할당-설정"><a href="#퍼블릭-서브넷-아이피-자동할당-설정" class="headerlink" title="퍼블릭 서브넷 아이피 자동할당 설정"></a>퍼블릭 서브넷 아이피 자동할당 설정</h2><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/193438316-eeef4d17-f180-4665-9c42-3fb8c0bb3d60.png" alt="image"></p>
+<p>인스턴스를 퍼블릭 서브넷에 배치할 경우 퍼블릭 IP주소 할당이 비활성화되어 있기 때문에<br>라우팅 테이블이 제대로 설정되어 있더라도 외부에서 접근할 수 없습니다<br>기본 AWS VPC와 같이 퍼블릭 IP를 할당하려면 서브넷 설정에서 자동할당 설정을 활성화 해야 합니다</p>
+<h1 id="ACL-1"><a href="#ACL-1" class="headerlink" title="ACL"></a>ACL</h1><hr>
+<p>ACL은 네트워크 구성단계에서 적용하지 않고 각 인스턴스별 보안그룹만 적용 했습니다.</p>
+<blockquote>
+<p>AWS 공식문서의 권장 ACL 규칙 문서 <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html#nacl-rules-scenario-2">링크</a></p>
+</blockquote>
+<pre><code class="hljs dns">많은 Linux 커널(Amazon Linux 커널 포함)은 포트 <span class="hljs-number">32768-61000</span>을 사용합니다.
+
+Elastic Load Balancing에서 시작된 요청은 포트 <span class="hljs-number">1024-65535</span>를 사용합니다.
+
+Windows Server <span class="hljs-number">2003</span>을 통한 Windows 운영 체제는 포트 <span class="hljs-number">1025-5000</span>을 사용합니다.
+
+Windows Server <span class="hljs-number">2008</span> 이상 버전은 포트 <span class="hljs-number">49152-65535</span>를 사용합니다.
+
+NAT 게이트웨이는 포트 <span class="hljs-number">1024-65535</span>를 사용합니다.
+
+AWS Lambda 함수는 포트 <span class="hljs-number">1024-65535</span>를 사용합니다.</code></pre>
+
+<blockquote>
+<p>ACL 구성 참고 문서 <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports">https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#nacl-ephemeral-ports</a></p>
+</blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ko_kr/vpc/latest/userguide/VPC_Subnets.html">VPC와 서브넷 AWS 공식 문서</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.joinc.co.kr/w/Site/cloud/AWS/VPC">AWS VPC구성</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/55067043/aws-private-public-vpc-nat-gateway-multiaz-pattern">AWS 다중 가용영역 패턴에 대해서</a></p>
+<p><a target="_blank" rel="noopener" href="https://jbhs7014.tistory.com/164">VPC 기본개념 이해하기</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

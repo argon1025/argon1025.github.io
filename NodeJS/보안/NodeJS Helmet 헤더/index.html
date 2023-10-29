@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - Npm Helmet 패키지 알고쓰기">
+    <meta property="og:description" content="NodeJS Helmet 패키지의 구성에 대해">
+    <meta property="og:image" content="/feed-thumbnail/object4.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/NodeJS/보안/NodeJS Helmet 헤더/">
+    <meta property="og:site_name" content="Argon.Blog - Npm Helmet 패키지 알고쓰기">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - Npm Helmet 패키지 알고쓰기</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - Npm Helmet 패키지 알고쓰기">
+    <link rel="canonical" href="https://argon1025.github.io/NodeJS/보안/NodeJS Helmet 헤더/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="NodeJS Helmet 패키지의 구성에 대해" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Node.js</title><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg></div>
+              <span class="text-gray-400">NodeJS 보안구성</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">Npm Helmet 패키지 알고쓰기</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">NodeJS Helmet 패키지의 구성에 대해</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#NodeJS</p>
+            
+            <p class="text-[#53C1F8]">#Security</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2021년 01월 04일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object26.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>Helmet은 15개의 보안관련 HTTP 헤더의 설정을 도와주는 미들웨어 기능 모음 모듈입니다.</p>
+<h1 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h1><hr>
+<pre><code class="hljs bash">npm i --save helmet</code></pre>
+
+<h1 id="미들웨어-적용"><a href="#미들웨어-적용" class="headerlink" title="미들웨어 적용"></a>미들웨어 적용</h1><hr>
+<pre><code class="hljs tsx"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> helmet <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;helmet&quot;</span>;
+
+<span class="hljs-comment">// This...</span>
+app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">helmet</span>());
+
+<span class="hljs-comment">// ...is equivalent to this:</span>
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">contentSecurityPolicy</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">dnsPrefetchControl</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">expectCt</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">frameguard</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">hidePoweredBy</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">hsts</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">ieNoOpen</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">noSniff</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">permittedCrossDomainPolicies</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">referrerPolicy</span>());
+app.<span class="hljs-title function_">use</span>(helmet.<span class="hljs-title function_">xssFilter</span>());</code></pre>
+
+<h1 id="보안-헤더-설정"><a href="#보안-헤더-설정" class="headerlink" title="보안 헤더 설정"></a>보안 헤더 설정</h1><hr>
+<p>총 15개의 설정이 있고 11개의 메서드만 기본적으로 포함되어 있으며<br>문서 하단 ‘*‘ 표시된 메서드는 <code>helmet()</code> 에 포함되어 있지 않아 명시적으로 활성화 해야합니다.</p>
+<h2 id="helmet-contentSecurityPolicy"><a href="#helmet-contentSecurityPolicy" class="headerlink" title="helmet.contentSecurityPolicy"></a>helmet.contentSecurityPolicy</h2><p><code>Content-Security-Policy</code> 헤더를 설정합니다<br>자신의 웹사이트에 존재하는 리소스만을 허용하는 헤더를 추가합니다<br>추가 설정을 통해 관련 허용하는 리소스 URL을 추가할 수 있습니다</p>
+<h2 id="helmet-expectCt"><a href="#helmet-expectCt" class="headerlink" title="helmet.expectCt"></a>helmet.expectCt</h2><p><code>Expect-CT</code> 헤더를 설정합니다<br>헤더가 있을 경우 브라우저가 CT logs를 확인해서 발급된 SSL, TLS 인증서의 유효성을 확인합니다.</p>
+<h2 id="helmet-referrerPolicy"><a href="#helmet-referrerPolicy" class="headerlink" title="helmet.referrerPolicy"></a>helmet.referrerPolicy</h2><p><code>Referrer-Policy</code> 헤더를 설정합니다<br>이 헤더의 설정에 따라 A 사이트에서 B 사이트로 이동할 경우 방문객이 어떤 사이트를 통해 방문했는지 알 수 있습니다</p>
+<h2 id="helmet-hsts"><a href="#helmet-hsts" class="headerlink" title="helmet.hsts"></a>helmet.hsts</h2><p><code>Strict-Transport-Security</code> 헤더를 설정합니다<br>HTTP 대신 HTTPS만을 사용해야한다고 브라우저에 요청합니다</p>
+<h2 id="helmet-noSniff"><a href="#helmet-noSniff" class="headerlink" title="helmet.noSniff"></a>helmet.noSniff</h2><p><code>X-Content-Type-Options</code> 헤더를 설정합니다<br>반드시 정해진 mime type으로 문서를 랜더링 해야한다고 브라우저에 요청합니다</p>
+<h2 id="helmet-dnsPrefetchControl"><a href="#helmet-dnsPrefetchControl" class="headerlink" title="helmet.dnsPrefetchControl"></a>helmet.dnsPrefetchControl</h2><p><code>X-DNS-Prefetch-Control</code> 헤더를 설정합니다<br>DNS 프리패치를 제어해서 서비스의 반응성을 개선할 수 있습니다<br>기본적으로 비활성화 되어 있습니다</p>
+<h2 id="helmet-ieNoOpen"><a href="#helmet-ieNoOpen" class="headerlink" title="helmet.ieNoOpen"></a>helmet.ieNoOpen</h2><p><code>X-Download-Options</code> 헤더를 설정합니다 인터넷 익스프롤러 8에서만 해당됩니다<br>안전하지 않은 다운로드 파일 이라고 판단되면 브라우저에서 바로 실행을 막고 사용자가 직접 실행하게 합니다.</p>
+<h2 id="helmet-frameguard"><a href="#helmet-frameguard" class="headerlink" title="helmet.frameguard"></a>helmet.frameguard</h2><p><code>X-Frame-Options</code> 헤더를 설정합니다<br>클릭재킹 공격을 막기위해 다른 페이지에서 frame 태그로 우리 웹사이트를 로드하는것을 막습니다</p>
+<h2 id="helmet-permittedCrossDomainPolicies"><a href="#helmet-permittedCrossDomainPolicies" class="headerlink" title="helmet.permittedCrossDomainPolicies"></a>helmet.permittedCrossDomainPolicies</h2><p><code>X-Permitted-Cross-Domain-Policies</code> 헤더를 설정합니다<br>도메인 간 요청에 대해 PDF 및 Flash 문서를 허용하는데 사용됩니다.</p>
+<h2 id="helmet-hidePoweredBy"><a href="#helmet-hidePoweredBy" class="headerlink" title="helmet.hidePoweredBy"></a>helmet.hidePoweredBy</h2><p><code>X-Powered-By</code> 헤더를 제거합니다<br>서버 정보, 서버 버전정보를 숨겨 공격자에게 최소한의 정보만 주도록 합니다</p>
+<h2 id="helmet-xssFilter"><a href="#helmet-xssFilter" class="headerlink" title="helmet.xssFilter"></a>helmet.xssFilter</h2><p><code>X-XSS-Protection</code> 헤더를 설정합니다<br>XSS 공격을 감지할 때 브라우저에서 페이지 로드를 중지시킬 수 있습니다</p>
+<h2 id="helmet-crossOriginEmbedderPolicy"><a href="#helmet-crossOriginEmbedderPolicy" class="headerlink" title="helmet.crossOriginEmbedderPolicy() *"></a>helmet.crossOriginEmbedderPolicy() *</h2><p><code>Cross-Origin-Embedder-Policy</code> 헤더를 설정합니다<br>CEOP 헤더는 문서가 교차출처 리소스를 로드하지 못하도록 합니다</p>
+<h2 id="helmet-crossOriginOpenerPolicy"><a href="#helmet-crossOriginOpenerPolicy" class="headerlink" title="helmet.crossOriginOpenerPolicy *"></a>helmet.crossOriginOpenerPolicy *</h2><p><code>Cross-Origin-Opener-Policy</code> 헤더를 설정합니다<br>최상위 문서가 원본 문서와 탐색 컨텍스트 그룹을 공유하지 않도록 할 수 있습니다</p>
+<h2 id="helmet-crossOriginResourcePolicy"><a href="#helmet-crossOriginResourcePolicy" class="headerlink" title="helmet.crossOriginResourcePolicy *"></a>helmet.crossOriginResourcePolicy *</h2><p><code>Cross-Origin-Resource-Policy</code> 헤더를 설정합니다<br>브라우저가 리소스에 대한 CORS 요청을 차단하게합니다</p>
+<h2 id="helmet-originAgentCluster"><a href="#helmet-originAgentCluster" class="headerlink" title="helmet.originAgentCluster *"></a>helmet.originAgentCluster *</h2><p><code>Origin-Agent-Cluster</code> 헤더를 설정합니다<br>동일한 사이트간의 동기 스크립트 액세스를 방지하도록 브라우저에 요청합니다</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://helmetjs.github.io/">https://helmetjs.github.io/</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

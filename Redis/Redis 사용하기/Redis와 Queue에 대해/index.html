@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - Redis와 Queue에 대해">
+    <meta property="og:description" content="Redis로 NestJS에서 Queue 구현하기">
+    <meta property="og:image" content="/feed-thumbnail/object13.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Redis/Redis 사용하기/Redis와 Queue에 대해/">
+    <meta property="og:site_name" content="Argon.Blog - Redis와 Queue에 대해">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - Redis와 Queue에 대해</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - Redis와 Queue에 대해">
+    <link rel="canonical" href="https://argon1025.github.io/Redis/Redis 사용하기/Redis와 Queue에 대해/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="Redis로 NestJS에서 Queue 구현하기" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Redis</title><path d="M10.5 2.661l.54.997-1.797.644 2.409.218.748 1.246.467-1.121 2.077-.208-1.61-.613.426-1.017-1.578.519zm6.905 2.077L13.76 6.182l3.292 1.298.353-.146 3.293-1.298zm-10.51.312a2.97 1.153 0 0 0-2.97 1.152 2.97 1.153 0 0 0 2.97 1.153 2.97 1.153 0 0 0 2.97-1.153 2.97 1.153 0 0 0-2.97-1.152zM24 6.805s-8.983 4.278-10.395 4.953c-1.226.561-1.901.561-3.261.094C8.318 11.022 0 7.241 0 7.241v1.038c0 .24.332.499.966.8 1.277.613 8.34 3.677 9.45 4.206 1.112.53 1.9.54 3.313-.197 1.412-.738 8.049-3.905 9.326-4.57.654-.342.945-.602.945-.84zm-10.042.602L8.39 8.26l3.884 1.61zM24 10.637s-8.983 4.279-10.395 4.954c-1.226.56-1.901.56-3.261.093C8.318 14.854 0 11.074 0 11.074v1.038c0 .238.332.498.966.8 1.277.612 8.34 3.676 9.45 4.205 1.112.53 1.9.54 3.313-.197 1.412-.737 8.049-3.905 9.326-4.57.654-.332.945-.602.945-.84zm0 3.842l-10.395 4.954c-1.226.56-1.901.56-3.261.094C8.318 18.696 0 14.916 0 14.916v1.038c0 .239.332.499.966.8 1.277.613 8.34 3.676 9.45 4.206 1.112.53 1.9.54 3.313-.198 1.412-.737 8.049-3.904 9.326-4.569.654-.343.945-.613.945-.841z"/></svg></div>
+              <span class="text-gray-400">Redis 사용하기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">Redis와 Queue에 대해</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">Redis로 NestJS에서 Queue 구현하기</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#NestJS</p>
+            
+            <p class="text-[#53C1F8]">#Redis</p>
+            
+            <p class="text-[#53C1F8]">#Queue</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 01월 05일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object31.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>기존 프로젝트에서 중요한 에러 알림은 슬랙으로 모니터링 중이었습니다<br>Slack WebHook lateLimit의 영향으로 초당 1개 이상의 슬랙 메시지가 봇을 통해 발생할 경우<br>에러 메시지 수신이 일정 시간 동안 중단되는 상황이 발생하게 되는데요</p>
+<p>이번 포스트를 통해 큐란 무엇인가에 대해 간단히 정리하고<br>슬랙의 요청 제한에 대응하는 메시지 큐 서비스를 구현해 보겠습니다</p>
+<h1 id="메시지-큐-종류"><a href="#메시지-큐-종류" class="headerlink" title="메시지 큐 종류"></a>메시지 큐 종류</h1><hr>
+<p>메시지 큐는 대표적으로 <code>Kafka</code> <code>RabbitMQ</code> <code>Amazon MQ</code> 등이 있습니다<br>Redis는 기본적으로 in-memory 스토리지지만<br>Stream이나 pub&#x2F;sub 컬렉션을 지원하기에 레디스에서도 메시지 큐를 사용할 수 있습니다<br>프로젝트에서 메시지큐로 레디스를 사용하기로 했고 이유는 다음과 같습니다</p>
+<ul>
+<li>이미 레디스를 프로젝트에서 사용하고 있습니다</li>
+<li>작은 프로젝트이기 때문에 추가로 다른 인스턴스를 할당하기가 어렵습니다</li>
+<li>메시지의 크기가 작고, 메시지를 저장해서 재사용할 필요가 없습니다</li>
+<li>FIFO 구조의 작업 큐 형태만 필요합니다</li>
+</ul>
+<blockquote>
+<p>Kafka vs RabbitMQ 비교 문서 <a target="_blank" rel="noopener" href="https://blog.logrocket.com/kafka-vs-rabbitmq-comparing-node-js-message-brokers/">https://blog.logrocket.com/kafka-vs-rabbitmq-comparing-node-js-message-brokers/</a></p>
+</blockquote>
+<blockquote>
+<p>Kafka vs Redis 비교문서 <a target="_blank" rel="noopener" href="https://logz.io/blog/kafka-vs-redis/">https://logz.io/blog/kafka-vs-redis/</a></p>
+</blockquote>
+<h1 id="Redis-Bull"><a href="#Redis-Bull" class="headerlink" title="Redis Bull"></a>Redis Bull</h1><hr>
+<p>Bull은 Redis 기반 큐 시스템을 빠르게 사용할 수 있도록 만들어진 노드 라이브러리입니다.<br>그냥 Redis command를 통해서도 구현할 수 있지만<br>Bull을 사용할 경우 Redis command를 직접적으로 다루지 않고도<br>쉽게 처리할 수 있도록 간략화된 API를 제공합니다</p>
+<h2 id="WorkFlow"><a href="#WorkFlow" class="headerlink" title="WorkFlow"></a>WorkFlow</h2><p><img src="https://user-images.githubusercontent.com/55491354/193415820-835ca506-91bb-414a-9db4-f46d89f86273.png" alt="image"></p>
+<p>Bull을 사용할 경우 다음과 같이 작업이 추가되고 처리됩니다</p>
+<h1 id="NestJS에서-구현하기"><a href="#NestJS에서-구현하기" class="headerlink" title="NestJS에서 구현하기"></a>NestJS에서 구현하기</h1><hr>
+<h3 id="AppModule-모듈-등록"><a href="#AppModule-모듈-등록" class="headerlink" title="AppModule 모듈 등록"></a>AppModule 모듈 등록</h3><pre><code class="hljs typescript"><span class="hljs-title class_">BullModule</span>.<span class="hljs-title function_">forRootAsync</span>(&#123;
+      <span class="hljs-attr">imports</span>: [<span class="hljs-title class_">ConfigModule</span>],
+      <span class="hljs-attr">useFactory</span>: <span class="hljs-keyword">async</span> (<span class="hljs-attr">configService</span>: <span class="hljs-title class_">ConfigService</span>) =&gt; &#123;
+        <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">REDIS_HOST</span> = configService.<span class="hljs-property">get</span>&lt;<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">&#x27;REDIS_HOST&#x27;</span>, <span class="hljs-string">&#x27;localhost&#x27;</span>);
+        <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">REDIS_PORT</span> = configService.<span class="hljs-property">get</span>&lt;<span class="hljs-built_in">number</span>&gt;(<span class="hljs-string">&#x27;REDIS_PORT&#x27;</span>, <span class="hljs-number">6379</span>);
+        <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">redis</span>: &#123; <span class="hljs-attr">host</span>: <span class="hljs-variable constant_">REDIS_HOST</span>, <span class="hljs-attr">port</span>: <span class="hljs-variable constant_">REDIS_PORT</span> &#125; &#125;;
+      &#125;,
+      <span class="hljs-attr">inject</span>: [<span class="hljs-title class_">ConfigService</span>],
+    &#125;),</code></pre>
+
+<p>설정 옵션은 <code>interface QueueOptions</code> 인터페이스를 참조하세요</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue">Bull Docs</a></p>
+<h3 id="task-manager-module-작업-큐-생성하기"><a href="#task-manager-module-작업-큐-생성하기" class="headerlink" title="task-manager.module 작업 큐 생성하기"></a>task-manager.module 작업 큐 생성하기</h3><pre><code class="hljs typescript"><span class="hljs-meta">@Module</span>(&#123;
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">BullModule</span>.<span class="hljs-title function_">registerQueue</span>(&#123;
+      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;log&#x27;</span>,
+      <span class="hljs-attr">limiter</span>: &#123;
+        <span class="hljs-attr">max</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">duration</span>: <span class="hljs-number">1000</span>,
+      &#125;,
+    &#125;),
+    <span class="hljs-title class_">HttpModule</span>,
+    <span class="hljs-title class_">ConfigModule</span>,
+  ],
+  <span class="hljs-attr">providers</span>: [<span class="hljs-title class_">TaskManagerService</span>, <span class="hljs-title class_">LogConsumer</span>],
+  <span class="hljs-attr">exports</span>: [<span class="hljs-title class_">TaskManagerService</span>],
+&#125;)</code></pre>
+
+<p>log라는 하나의 큰 작업 대기열을 생성하고 <code>limiter</code> 옵션을 적용했습니다<br>해당 옵션은 전역설정이기 때문에 log 대기열에 대해 10명의 소비자가 있더라도<br>1초에 1개의 작업만 처리됩니다</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.bullmq.io/guide/rate-limiting">대기열 설정 https://docs.bullmq.io/guide/rate-limiting</a></p>
+</blockquote>
+<p>그리고 다른 서비스에서 해당 작업 큐를 사용하기 위해 밑에서 생성한<br>TaskManagerService, LogConsumer를 프로바이더로 등록했습니다</p>
+<h3 id="task-manager-service-Producer-작업-생산자-생성"><a href="#task-manager-service-Producer-작업-생산자-생성" class="headerlink" title="task-manager.service Producer 작업 생산자 생성"></a>task-manager.service Producer 작업 생산자 생성</h3><p>대기열에 작업을 추가하는 서비스를 구현합니다</p>
+<pre><code class="hljs jsx"><span class="hljs-title function_">constructor</span>(<span class="hljs-params">@InjectQueue(<span class="hljs-string">&#x27;log&#x27;</span>) private readonly loggingQueue: Queue</span>) &#123;&#125;
+
+  <span class="hljs-comment">/**</span>
+<span class="hljs-comment">   * 에러 로그 전송작업을 생성합니다</span>
+<span class="hljs-comment">   * <span class="hljs-doctag">@param</span> <span class="hljs-variable">requestData</span></span>
+<span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span>
+<span class="hljs-comment">   */</span>
+  public <span class="hljs-keyword">async</span> <span class="hljs-title function_">sendError</span>(<span class="hljs-params">requestData: &#123; location: string; developerComment: string; errorCode: number; errorObjectCode: string; message: object &#125;</span>) &#123;
+    <span class="hljs-keyword">const</span> jobInfo = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">loggingQueue</span>.<span class="hljs-title function_">add</span>(
+      <span class="hljs-string">&#x27;send&#x27;</span>,
+      &#123; <span class="hljs-attr">data</span>: requestData &#125;,
+      &#123;
+        <span class="hljs-attr">timeout</span>: <span class="hljs-number">3000</span>,
+        <span class="hljs-attr">removeOnComplete</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">removeOnFail</span>: <span class="hljs-number">30</span>,
+        <span class="hljs-attr">attempts</span>: <span class="hljs-number">5</span>,
+        <span class="hljs-attr">backoff</span>: &#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;fixed&#x27;</span>, <span class="hljs-attr">delay</span>: <span class="hljs-number">3000</span> &#125;, <span class="hljs-comment">// 3s</span>
+      &#125;,
+    );
+    <span class="hljs-keyword">return</span> jobInfo.<span class="hljs-property">id</span>;
+  &#125;</code></pre>
+
+<p>log 작업 대기열에 send 작업을 추가합니다<br>작업을 추가할 때 작업 큐 생성 시 설정한 데이터를 오버라이드 할 수 있습니다<br>작업이 성공하면 스토리지에서 삭제, 실패할 경우 최근 30개는 삭제하지 않도록 했고<br>실패했을 때 3초 간격으로 5회 다시 시도하도록 설정했습니다</p>
+<blockquote>
+<p>재시도 설정 <a target="_blank" rel="noopener" href="https://docs.bullmq.io/guide/retrying-failing-jobs">https://docs.bullmq.io/guide/retrying-failing-jobs</a></p>
+</blockquote>
+<h3 id="log-processor-소비자-생성"><a href="#log-processor-소비자-생성" class="headerlink" title="log.processor 소비자 생성"></a>log.processor 소비자 생성</h3><p>작업을 처리하는 서비스를 구현합니다</p>
+<pre><code class="hljs jsx">@<span class="hljs-title class_">Processor</span>(<span class="hljs-string">&#x27;log&#x27;</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogConsumer</span> &#123;
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">private httpService: HttpService, private configService: ConfigService</span>) &#123;&#125;
+
+  @<span class="hljs-title class_">Process</span>(<span class="hljs-string">&#x27;send&#x27;</span>)
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">sendError</span>(<span class="hljs-params">job</span>) &#123;
+    <span class="hljs-comment">// 작업 데이터 로드</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ERROR_DATA</span> = job?.<span class="hljs-property">data</span>?.<span class="hljs-property">data</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">MESSAGE</span>: object = &#123;
+      <span class="hljs-attr">blocks</span>: [
+        &#123;
+          <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;header&#x27;</span>,
+          <span class="hljs-attr">text</span>: &#123;
+            <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;plain_text&#x27;</span>,
+            <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;에러 이벤트 발생&#x27;</span>,
+            <span class="hljs-attr">emoji</span>: <span class="hljs-literal">true</span>,
+          &#125;,
+        &#125;,
+        &#123;
+...;
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">WEB_HOOK_URL</span>: string | <span class="hljs-literal">undefined</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">configService</span>.<span class="hljs-property">get</span>&lt;string&gt;(<span class="hljs-string">&#x27;ERROR_SLACK_WEBHOOK_URL&#x27;</span>, <span class="hljs-literal">undefined</span>);
+
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">if</span> (!!<span class="hljs-variable constant_">WEB_HOOK_URL</span>) &#123;
+        <span class="hljs-keyword">await</span> <span class="hljs-title function_">firstValueFrom</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">httpService</span>.<span class="hljs-title function_">post</span>(<span class="hljs-variable constant_">WEB_HOOK_URL</span>, <span class="hljs-variable constant_">MESSAGE</span>));
+      &#125;
+      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;ok&#x27;</span>;
+    &#125; <span class="hljs-keyword">catch</span> (error) &#123;
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;log.send job fail&#x27;</span>);
+    &#125;
+  &#125;
+&#125;</code></pre>
+
+<p>log 작업 대기열의 send 작업을 처리하는 소비자를 생성했습니다<br>인수로 전달받는 job 객체는 작업 생산자가 전달한 데이터와 작업의 상태를 관리하는 여러 메서드가 있습니다</p>
+<h3 id="ExceptionFilter에-DI하기"><a href="#ExceptionFilter에-DI하기" class="headerlink" title="ExceptionFilter에 DI하기"></a>ExceptionFilter에 DI하기</h3><pre><code class="hljs jsx"><span class="hljs-comment">// ExceptionFilter</span>
+<span class="hljs-keyword">const</span> taskManagerService = app.<span class="hljs-property">get</span> &lt; <span class="hljs-title class_">TaskManagerService</span> &gt; <span class="hljs-title class_">TaskManagerService</span>;
+app.<span class="hljs-title function_">useGlobalFilters</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpExceptionFilter</span>(taskManagerService));</code></pre>
+
+<p>이전 에러 처리 리팩터링 때 추가한 개발자 코멘트 객체를 웹훅에 전달하기위해서<br>글로벌 익셉션 필터에서 taskManagerService(작업 생산자 서비스)를 DI 했습니다.</p>
+<h3 id="ExceptionFilter에서-작업-생성하기"><a href="#ExceptionFilter에서-작업-생성하기" class="headerlink" title="ExceptionFilter에서 작업 생성하기"></a>ExceptionFilter에서 작업 생성하기</h3><pre><code class="hljs typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HttpExceptionFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ExceptionFilter</span> &#123;
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> taskManagerService: TaskManagerService</span>) &#123;&#125;
+...
+<span class="hljs-comment">// Task-Manager-Service</span>
+    <span class="hljs-comment">// 전체 에러에 대한 로깅</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">taskManagerService</span>.<span class="hljs-title function_">sendError</span>(&#123;
+      <span class="hljs-attr">location</span>: requestLocation,
+      <span class="hljs-attr">developerComment</span>: devDescription,
+      <span class="hljs-attr">errorCode</span>: status,
+      <span class="hljs-attr">errorObjectCode</span>: errorObjectCode,
+      <span class="hljs-attr">message</span>: message,
+    &#125;);</code></pre>
+
+<p>ExceptionFilter에서 오류가 생성될 때 마다 log 의 send 작업을 생성하게 작성했습니다</p>
+<h1 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/193415934-b67e0237-1b18-4c3e-8e10-9c9f78d87ae1.png" alt="image"></p>
+<p>급격한 로깅 증가에도 <code>Slack WebHook lateLimit</code>에 맞춰 메시지를 받을 수 있게되었습니다</p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

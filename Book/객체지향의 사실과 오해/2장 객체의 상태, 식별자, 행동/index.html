@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 2장 객체의 상태, 식별자, 행동">
+    <meta property="og:description" content="객체를 발견하고 창조하는 것은 지식과 행동을 구조화 하는 것이다">
+    <meta property="og:image" content="/feed-thumbnail/object22.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Book/객체지향의 사실과 오해/2장 객체의 상태, 식별자, 행동/">
+    <meta property="og:site_name" content="Argon.Blog - 2장 객체의 상태, 식별자, 행동">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 2장 객체의 상태, 식별자, 행동</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 2장 객체의 상태, 식별자, 행동">
+    <link rel="canonical" href="https://argon1025.github.io/Book/객체지향의 사실과 오해/2장 객체의 상태, 식별자, 행동/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="객체를 발견하고 창조하는 것은 지식과 행동을 구조화 하는 것이다" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>GitBook</title><path d="M10.802 17.77a.703.703 0 11-.002 1.406.703.703 0 01.002-1.406m11.024-4.347a.703.703 0 11.001-1.406.703.703 0 01-.001 1.406m0-2.876a2.176 2.176 0 00-2.174 2.174c0 .233.039.465.115.691l-7.181 3.823a2.165 2.165 0 00-1.784-.937c-.829 0-1.584.475-1.95 1.216l-6.451-3.402c-.682-.358-1.192-1.48-1.138-2.502.028-.533.212-.947.493-1.107.178-.1.392-.092.62.027l.042.023c1.71.9 7.304 3.847 7.54 3.956.363.169.565.237 1.185-.057l11.564-6.014c.17-.064.368-.227.368-.474 0-.342-.354-.477-.355-.477-.658-.315-1.669-.788-2.655-1.25-2.108-.987-4.497-2.105-5.546-2.655-.906-.474-1.635-.074-1.765.006l-.252.125C7.78 6.048 1.46 9.178 1.1 9.397.457 9.789.058 10.57.006 11.539c-.08 1.537.703 3.14 1.824 3.727l6.822 3.518a2.175 2.175 0 002.15 1.862 2.177 2.177 0 002.173-2.14l7.514-4.073c.38.298.853.461 1.337.461A2.176 2.176 0 0024 12.72a2.176 2.176 0 00-2.174-2.174"/></svg></div>
+              <span class="text-gray-400">객체지향의 사실과 오해</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">2장 객체의 상태, 식별자, 행동</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">객체를 발견하고 창조하는 것은 지식과 행동을 구조화 하는 것이다</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#책</p>
+            
+            <p class="text-[#53C1F8]">#객체지향</p>
+            
+            <p class="text-[#53C1F8]">#객체지향의사실과오해</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 04월 07일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object22.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.yes24.com/Product/Goods/18249021">객체지향의 사실과 오해</a>를 읽고 개인적으로 정리한 내용입니다</p>
+</blockquote>
+<p>객체를 발견하고 창조하는 것은 지식과 행동을 구조화 하는 것이다</p>
+<h1 id="인간이-생각하는-객체"><a href="#인간이-생각하는-객체" class="headerlink" title="인간이 생각하는 객체"></a>인간이 생각하는 객체</h1><hr>
+<p>인간은 개념적으로 경계 지을 수 있는 추상적인 사물까지도 객체로 인식할 수 있다<br>이런 능력은 세상의 복잡성을 극복하기 위한 인간의 노력이다<br>즉 객체란 인간이 분명하게 인지하고 구별할 수 있는 물리적, 개념적 경계를 지닌 무언가다</p>
+<h1 id="객체지향에서의-객체"><a href="#객체지향에서의-객체" class="headerlink" title="객체지향에서의 객체"></a>객체지향에서의 객체</h1><hr>
+<p>하나의 개별적인 실체로 식별 가능한 경계를 지닌 무언가는 객체지향에서 객체가 될 수 있으며<br>객체는 다음으로 구성된다</p>
+<ul>
+<li>상태 (state)</li>
+<li>행동 (behavior)</li>
+<li>식별자 (identity)</li>
+</ul>
+<h2 id="1-상태-State"><a href="#1-상태-State" class="headerlink" title="1.상태 ( State )"></a>1.상태 ( State )</h2><h3 id="상태는-무엇인가"><a href="#상태는-무엇인가" class="headerlink" title="상태는 무엇인가?"></a>상태는 무엇인가?</h3><p>상태는 특정 객체가 가지고 있는 정보의 집합으로 객체의 구조적 특징을 표현한다<br>객체의 상태는 정적인 프로퍼티(변하지 않는), 동적인 프로퍼티(변하는)로 구성된다</p>
+<h3 id="왜-상태가-필요한가"><a href="#왜-상태가-필요한가" class="headerlink" title="왜 상태가 필요한가?"></a>왜 상태가 필요한가?</h3><p>과거에 발생한 행동의 이력을 통해 결과를 판단하는 것은 복잡하다<br>상태를 사용하면 행동 이력을 고려하지 않고도 결과를 쉽게 예측할 수 있다</p>
+<h2 id="2-행동-Behavior"><a href="#2-행동-Behavior" class="headerlink" title="2.행동 ( Behavior )"></a>2.행동 ( Behavior )</h2><h3 id="행동은-무엇인가"><a href="#행동은-무엇인가" class="headerlink" title="행동은 무엇인가?"></a>행동은 무엇인가?</h3><p>행동이란 외부의 요청, 수신된 메시지에 응답하기 위해 동작하는 활동이다<br>행동으로 자신의 상태를 변경하거나 다른 객체에 메시지를 전달할 수 있다</p>
+<h3 id="상태와-행동의-관계"><a href="#상태와-행동의-관계" class="headerlink" title="상태와 행동의 관계"></a>상태와 행동의 관계</h3><p>객체는 다른 객체의 상태에 직접적으로 접근할 수도, 상태를 변경할 수도 없다<br>객체는 <strong>자신의 행동</strong>에 의해서만 상태가 변경되며 이것을 통해 객체의 <strong>자율성</strong>을 유지한다<br>따라서 상태와 행동에는 다음과 같은 관계가 있다</p>
+<ul>
+<li>객체의 행동은 자신의 상태에 영향을 받는다</li>
+<li>객체의 행동은 자신의 상태를 변경시킨다</li>
+</ul>
+<h3 id="협력과-행동-그리고-캡슐화"><a href="#협력과-행동-그리고-캡슐화" class="headerlink" title="협력과 행동 그리고 캡슐화"></a>협력과 행동 그리고 캡슐화</h3><p>객체는 큰 협력관계 속에서 수신된 메시지에 따라 행동으로 협력에 참여하고 그 결과로 자신의 상태를 변경한다<br>이 과정에서 상태를 변경하는 것(어떤 방식으로 동작할 것인지)은 해당 객체가 주도권을 가지며 이것이 <strong>캡슐화</strong>이다<br>캡슐화된 객체의 상태에 접근하는 방법은 <strong>행동</strong>이 유일하다<br>결과적으로 <strong>상태를 행동 뒤로 캡슐화</strong>하는 것은 객체의 자율성을 높이고 협력을 단순하고 유연하게 만든다</p>
+<h2 id="3-식별자-Identity"><a href="#3-식별자-Identity" class="headerlink" title="3.식별자 ( Identity )"></a>3.식별자 ( Identity )</h2><h3 id="식별자란-무엇인가"><a href="#식별자란-무엇인가" class="headerlink" title="식별자란 무엇인가?"></a>식별자란 무엇인가?</h3><p>모든 객체는 식별자를 가지며 식별자를 이용해서 객체를 구별할 수 있다</p>
+<h3 id="값-value-과-객체의-차이"><a href="#값-value-과-객체의-차이" class="headerlink" title="값(value)과 객체의 차이"></a>값(value)과 객체의 차이</h3><p>값과 객체의 차이점은 식별자의 존재 여부다<br>값은 숫자, 문자, 날짜와 같은 수치를 표현하며 값의 경우 두 인스턴스의 <strong>수치가 같다</strong>면 두 인스턴스는 같은 것으로 판단한다<br>하지만 객체는 두 인스턴스의 상태가 <strong>완전히 똑같더라도 독립적인 객체</strong>로 다뤄야 한다</p>
+<ul>
+<li>값은 상태를 이용한 동등 검사를 통해 서로 같은지 판단한다</li>
+<li>객체는 식별자를 이용한 동등 검사를 통해 서로 같은지 판단한다</li>
+</ul>
+<h1 id="상태를-먼저-정하지-마라"><a href="#상태를-먼저-정하지-마라" class="headerlink" title="상태를 먼저 정하지 마라"></a>상태를 먼저 정하지 마라</h1><hr>
+<p>협력에 참여하는 객체를 만들기 위해서는 <strong>상태</strong>가 아닌 <strong>행동</strong>에 초점을 맞춰야 한다<br>협력안에서 객체의 행동은 결국 협력에 참여하면서 완수해야 하는 <strong>책임</strong>을 의미하며 이 행동을 결정한 후에야<br>비로소 <strong>행동</strong>에 필요한 <strong>상태</strong>가 무엇인지를 고려해야 한다<br>따라서 어떤 책임이 필요한가를 결정하는 과정이 전체 설계를 주도해야한다 (책임 주도 설계 RDD)</p>
+<h1 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h1><hr>
+<ul>
+<li>객체는 상태, 행동, 식별자를 가진다</li>
+<li>상태는 행동으로만 변경할 수 있다<ul>
+<li>행동의 결과는 상태에 의존적이다</li>
+<li>행동의 순서가 실행 결과에 영향을 미친다</li>
+</ul>
+</li>
+<li>객체는 식별자를 통해 유일한 존재로 식별할 수 있다</li>
+</ul>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

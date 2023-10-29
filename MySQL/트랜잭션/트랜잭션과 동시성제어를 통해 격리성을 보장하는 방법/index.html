@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 트랜잭션과 동시성제어에 대해">
+    <meta property="og:description" content="트랜잭션과 동시성제어를 통해 격리성을 보장하는 방법">
+    <meta property="og:image" content="/feed-thumbnail/object7.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/MySQL/트랜잭션/트랜잭션과 동시성제어를 통해 격리성을 보장하는 방법/">
+    <meta property="og:site_name" content="Argon.Blog - 트랜잭션과 동시성제어에 대해">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 트랜잭션과 동시성제어에 대해</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 트랜잭션과 동시성제어에 대해">
+    <link rel="canonical" href="https://argon1025.github.io/MySQL/트랜잭션/트랜잭션과 동시성제어를 통해 격리성을 보장하는 방법/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="트랜잭션과 동시성제어를 통해 격리성을 보장하는 방법" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>MySQL</title><path d="M16.405 5.501c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153zM5.77 18.695h-.927a50.854 50.854 0 00-.27-4.41h-.008l-1.41 4.41H2.45l-1.4-4.41h-.01a72.892 72.892 0 00-.195 4.41H0c.055-1.966.192-3.81.41-5.53h1.15l1.335 4.064h.008l1.347-4.064h1.095c.242 2.015.384 3.86.428 5.53zm4.017-4.08c-.378 2.045-.876 3.533-1.492 4.46-.482.716-1.01 1.073-1.583 1.073-.153 0-.34-.046-.566-.138v-.494c.11.017.24.026.386.026.268 0 .483-.075.647-.222.197-.18.295-.382.295-.605 0-.155-.077-.47-.23-.944L6.23 14.615h.91l.727 2.36c.164.536.233.91.205 1.123.4-1.064.678-2.227.835-3.483zm12.325 4.08h-2.63v-5.53h.885v4.85h1.745zm-3.32.135l-1.016-.5c.09-.076.177-.158.255-.25.433-.506.648-1.258.648-2.253 0-1.83-.718-2.746-2.155-2.746-.704 0-1.254.232-1.65.697-.43.508-.646 1.256-.646 2.245 0 .972.19 1.686.574 2.14.35.41.877.615 1.583.615.264 0 .506-.033.725-.098l1.325.772.36-.622zM15.5 17.588c-.225-.36-.337-.94-.337-1.736 0-1.393.424-2.09 1.27-2.09.443 0 .77.167.977.5.224.362.336.936.336 1.723 0 1.404-.424 2.108-1.27 2.108-.445 0-.77-.167-.978-.5zm-1.658-.425c0 .47-.172.856-.516 1.156-.344.3-.803.45-1.384.45-.543 0-1.064-.172-1.573-.515l.237-.476c.438.22.833.328 1.19.328.332 0 .593-.073.783-.22a.754.754 0 00.3-.615c0-.33-.23-.61-.648-.845-.388-.213-1.163-.657-1.163-.657-.422-.307-.632-.636-.632-1.177 0-.45.157-.81.47-1.085.315-.278.72-.415 1.22-.415.512 0 .98.136 1.4.41l-.213.476a2.726 2.726 0 00-1.064-.23c-.283 0-.502.068-.654.206a.685.685 0 00-.248.524c0 .328.234.61.666.85.393.215 1.187.67 1.187.67.433.305.648.63.648 1.168zm9.382-5.852c-.535-.014-.95.04-1.297.188-.1.04-.26.04-.274.167.055.053.063.14.11.214.08.134.218.313.346.407.14.11.28.216.427.31.26.16.555.255.81.416.145.094.293.213.44.313.073.05.12.14.214.172v-.02c-.046-.06-.06-.147-.105-.214-.067-.067-.134-.127-.2-.193a3.223 3.223 0 00-.695-.675c-.214-.146-.682-.35-.77-.595l-.013-.014c.146-.013.32-.066.46-.106.227-.06.435-.047.67-.106.106-.027.213-.06.32-.094v-.06c-.12-.12-.21-.283-.334-.395a8.867 8.867 0 00-1.104-.823c-.21-.134-.476-.22-.697-.334-.08-.04-.214-.06-.26-.127-.12-.146-.19-.34-.275-.514a17.69 17.69 0 01-.547-1.163c-.12-.262-.193-.523-.34-.763-.69-1.137-1.437-1.826-2.586-2.5-.247-.14-.543-.2-.856-.274-.167-.008-.334-.02-.5-.027-.11-.047-.216-.174-.31-.235-.38-.24-1.364-.76-1.644-.072-.18.434.267.862.422 1.082.115.153.26.328.34.5.047.116.06.235.107.356.106.294.207.622.347.897.073.14.153.287.247.413.054.073.146.107.167.227-.094.136-.1.334-.154.5-.24.757-.146 1.693.194 2.25.107.166.362.534.703.393.3-.12.234-.5.32-.835.02-.08.007-.133.048-.187v.015c.094.188.188.367.274.555.206.328.566.668.867.895.16.12.287.328.487.402v-.02h-.015c-.043-.058-.1-.086-.154-.133a3.445 3.445 0 01-.35-.4 8.76 8.76 0 01-.747-1.218c-.11-.21-.202-.436-.29-.643-.04-.08-.04-.2-.107-.24-.1.146-.247.273-.32.453-.127.288-.14.642-.188 1.01-.027.007-.014 0-.027.014-.214-.052-.287-.274-.367-.46-.2-.475-.233-1.238-.06-1.785.047-.14.247-.582.167-.716-.042-.127-.174-.2-.247-.303a2.478 2.478 0 01-.24-.427c-.16-.374-.24-.788-.414-1.162-.08-.173-.22-.354-.334-.513-.127-.18-.267-.307-.368-.52-.033-.073-.08-.194-.027-.274.014-.054.042-.075.094-.09.088-.072.335.022.422.062.247.1.455.194.662.334.094.066.195.193.315.226h.14c.214.047.455.014.655.073.355.114.675.28.962.46a5.953 5.953 0 012.085 2.286c.08.154.115.295.188.455.14.33.313.663.455.982.14.315.275.636.476.897.1.14.502.213.682.286.133.06.34.115.46.188.23.14.454.3.67.454.11.076.443.243.463.378z"/></svg></div>
+              <span class="text-gray-400">MySQL 트랜잭션</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">트랜잭션과 동시성제어에 대해</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">트랜잭션과 동시성제어를 통해 격리성을 보장하는 방법</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#MySQL</p>
+            
+            <p class="text-[#53C1F8]">#DataBase</p>
+            
+            <p class="text-[#53C1F8]">#Transaction</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2021년 12월 02일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object9.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>프로젝트에서 좋아요, 조회수 기능을 구현하기 위해<br>트랜잭션을 공부하고 구현했던 것을 기록했습니다</p>
+<h1 id="트랜잭션이란"><a href="#트랜잭션이란" class="headerlink" title="트랜잭션이란"></a>트랜잭션이란</h1><hr>
+<p>트랜잭션(Transaction)은 DBMS에서 하나의 단위로 수행되길 바라는 작업의 단위입니다.</p>
+<h1 id="어떤-문제를-해결하는가"><a href="#어떤-문제를-해결하는가" class="headerlink" title="어떤 문제를 해결하는가?"></a>어떤 문제를 해결하는가?</h1><hr>
+<p>DBMS에서 지원하는 트랜잭션은 데이터의 무결성(데이터의 정확성, 일관성, 유효성)을 지키기 위해<br>아래와 같은 특성(원자성, 일관성, 지속성, 고립성)을 가지고 있고<br>DBMS는 이 성질을 유지할 수 있도록 지원하고 있습니다.</p>
+<h1 id="트랜잭션의-특성-ACID"><a href="#트랜잭션의-특성-ACID" class="headerlink" title="트랜잭션의 특성 ACID"></a>트랜잭션의 특성 ACID</h1><hr>
+<p>트랜잭션에서 보장되어야 하는 특성입니다<br>DBMS에서는 다양한 기능으로 해당 특성이 지켜질 수 있도록 지원합니다</p>
+<h2 id="원자성-Atomicity"><a href="#원자성-Atomicity" class="headerlink" title="원자성 Atomicity"></a>원자성 Atomicity</h2><p>트랜잭션에 포함된 작업은 전부 수행되거나 전부 수행되지 않아야 합니다<br>DBMS에서는 START TRANSACTION, COMMIT, ROLLBACK, SAVE와 같은 형태로 지원하고 있습니다</p>
+<h2 id="일관성-Consistency"><a href="#일관성-Consistency" class="headerlink" title="일관성 Consistency"></a>일관성 Consistency</h2><p>트랜잭션은 데이터베이스의 일관성을 유지해야 합니다<br>일관성은 테이블을 생성할 때 DBMS에서 제공하는 CREATE, ALTER 문의 무결성 제약 조건을 통해 명시됩니다<br>하지만 트랜잭션 도중에는 일시적으로 일관성을 유지하지 못하는 상태가 될 수 있으나<br>트랜잭션이 종료된 후에는 반드시 일관성이 지켜져야 합니다</p>
+<h2 id="지속성-Durability"><a href="#지속성-Durability" class="headerlink" title="지속성 Durability"></a>지속성 Durability</h2><p>트랜잭션이 완료 혹은 부분 완료한 데이터는 데이터베이스에 기록되어야 합니다<br>시스템이 멈추어도 트랜잭션 수행으로 변경된 내용은 디스크에 기록되고<br>DBMS 복구 시스템이 작업한 내용을 반영하거나, 취소합니다</p>
+<h2 id="고립성-Isolation"><a href="#고립성-Isolation" class="headerlink" title="고립성 Isolation"></a>고립성 Isolation</h2><p>데이터베이스에서는 많은 커넥션에서 여러 트랜잭션이 동시에 수행됩니다<br>이때 각 트랜잭션 간 상호 간섭이나 데이터 충돌이 일어나지 않도록 해야 합니다<br>DBMS에서는 동시성 제어를 통해 고립성을 제어할 수 있도록 지원합니다<br>많은 요청 데이터를 고립성을 지키면서 업데이트하기 위해<br>DBMS가 고립성을 제어할 수 있도록 지원하는 기능에 대해서 조금 더 자세히 알아보겠습니다.</p>
+<h1 id="동시성-제어란"><a href="#동시성-제어란" class="headerlink" title="동시성 제어란?"></a>동시성 제어란?</h1><hr>
+<p>각각의 트랜잭션은 서로 같은 데이터를 공유하고 있다는 사실을 인지하지 못하기 때문에<br>데이터의 일관성, 고립성이 훼손될 수 있으므로 DBMS에서는 동시성 제어라는 기능을 통해<br>데이터의 일관성, 고립성이 훼손되지 않도록 제어합니다<br>동시성 제어는 <code>트랜잭션 고립 수준</code>, <code>락</code> 두 가지 기능으로 나뉘고<br>동시에 두 개 이상의 트랜잭션이 하나의 데이터에 접근할 때의 상황과<br>동시성 제어를 하지 않으면 발생하는 문제는 다음과 같습니다</p>
+<h3 id="상황-1-→-트랜잭션1-단순-읽기-x2F-트랜잭션2-단순-읽기"><a href="#상황-1-→-트랜잭션1-단순-읽기-x2F-트랜잭션2-단순-읽기" class="headerlink" title="상황 1 → 트랜잭션1[단순 읽기] &#x2F; 트랜잭션2[단순 읽기]"></a>상황 1 → 트랜잭션1[단순 읽기] &#x2F; 트랜잭션2[단순 읽기]</h3><ul>
+<li>단순 읽기에는 문제가 발생하지 않습니다</li>
+</ul>
+<h3 id="상황-2-→-트랜잭션1-단순-읽기-x2F-트랜잭션2-쓰기"><a href="#상황-2-→-트랜잭션1-단순-읽기-x2F-트랜잭션2-쓰기" class="headerlink" title="상황 2 → 트랜잭션1[단순 읽기] &#x2F; 트랜잭션2[쓰기]"></a>상황 2 → 트랜잭션1[단순 읽기] &#x2F; 트랜잭션2[쓰기]</h3><ul>
+<li>오손읽기(<strong>Dirty Read</strong>)<ul>
+<li>다른 트랜잭션이 특정 데이터를 변경했고 커밋하지 않은 상태이지만<br>해당 데이터를 다른 트랜잭션에서 읽을 수 있는 문제</li>
+</ul>
+</li>
+<li>반복불가능 읽기 (<strong>Non-Repeatable Read</strong>)<ul>
+<li>트랜잭션에서 데이터를 읽어와서 작업을 처리하고 있을 때<br>다른 트랜잭션에서 값을 수정 또는 삭제해서 데이터의 일관성이 깨지는 문제</li>
+</ul>
+</li>
+<li>유령데이터 읽기 (<strong>Phantom Read</strong>)<ul>
+<li>트랜잭션에서 일정 범위의 레코드를 2번 차례대로 조회할 때<br>다른 트랜잭션에서 수정, 삽입, 삭제 하면 첫 번째 조회에는 없었던 레코드가 보이거나, 없어지는 문제</li>
+</ul>
+</li>
+</ul>
+<h3 id="상황-3-→-트랜잭션1-쓰기-x2F-트랜잭션2-쓰기"><a href="#상황-3-→-트랜잭션1-쓰기-x2F-트랜잭션2-쓰기" class="headerlink" title="상황 3 → 트랜잭션1[쓰기] &#x2F; 트랜잭션2[쓰기]"></a>상황 3 → 트랜잭션1[쓰기] &#x2F; 트랜잭션2[쓰기]</h3><ul>
+<li>갱신손실<ul>
+<li>이전 트랜잭션의 변경 사항이 나중에 접근한 트랜잭션의 변경 사항으로 덮어써지는 문제</li>
+</ul>
+</li>
+</ul>
+<p>각 상황을 해결하기 위해서는 트랜잭션 고립 수준과 락을 적절하게 사용해야 합니다.</p>
+<h1 id="동시성-제어를-위한-락"><a href="#동시성-제어를-위한-락" class="headerlink" title="동시성 제어를 위한 락"></a>동시성 제어를 위한 락</h1><hr>
+<p>락은 트랜잭션이 데이터를 읽거나 수정할 때 데이터에 표시하는 일종의 자물쇠입니다<br>여러 트랜잭션에서 동일한 데이터를 편집하기 위해 접근할 때<br>요청 순서대로 하나의 트랜잭션만 접근하도록 합니다</p>
+<p>락을 사용하면 앞서 언급한 모든 동시성 문제를 해결할 수 있습니다<br>MySQL에서 락은 두 가지로 나뉩니다</p>
+<ul>
+<li>공유 락 ( LOCK IN SHARE MODE )<ul>
+<li>트랜잭션이 끝날 때 까지 다른 트랜잭션이 조회만 가능한 잠금상태입니다</li>
+<li>사용<ul>
+<li>특정 레코드(A)를 읽어 다른 테이블(B)에 데이터를 추가해야 하는 경우 레코드(A)가 변조 또는 삭제되는 것을 막고자 사용</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>배타 락 ( FOR UPDATE )<ul>
+<li>트랜잭션이 끝날 때까지 다른 트랜잭션의 조회 수정 삭제 등의 모든 접근을 차단합니다<ul>
+<li>사용<ul>
+<li>특정 레코드(A)를 읽어서 해당 레코드(A)의 데이터를 수정해야 할 경우</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="동시성-제어를-위한-트랜잭션-고립-수준"><a href="#동시성-제어를-위한-트랜잭션-고립-수준" class="headerlink" title="동시성 제어를 위한 트랜잭션 고립 수준"></a>동시성 제어를 위한 트랜잭션 고립 수준</h1><hr>
+<p>락을 사용하면 모든 문제를 해결할 수 있지만 락이 풀릴 때까지 다른 트랜잭션이 계속 대기해야 하기 때문에<br>처리 속도가 상당히 제한됩니다.<br>트랜잭션을 동시에 실행시키면서 락보다 조금 완화된 방법으로 문제를 해결하는 방법을<br>트랜잭션 고립 수준이라고 하며 트랜잭션 내 작업 내용을 어디까지 공유하고 차단할 것인지 결정할 수 있습니다</p>
+<ul>
+<li><p><strong>Read Uncommitted</strong></p>
+<ul>
+<li>SELECT→락 걸지 않음</li>
+<li>UPDATE→배타락</li>
+<li>다른 트랜잭션이 변경 중인 내용에 접근할 수 있습니다.</li>
+<li>오손 읽기, 반복불가능 읽기, 유령데이터 읽기 문제가 모두 발생하는 레벨입니다</li>
+</ul>
+</li>
+<li><p><strong>Read Committed</strong></p>
+<ul>
+<li>SELECT→공유락, 수행후 바로 해제</li>
+<li>UPDATE→배타락</li>
+<li>오라클 DBMS에서 주로 사용됩니다</li>
+<li>트랜잭션이 커밋된 상황에서 다른 트랜잭션이 변경한 내용에 접근할 수 있습니다.</li>
+<li>반복불가능 읽기, 유령데이터 읽기 문제가 발생합니다</li>
+</ul>
+</li>
+<li><p><strong>Repeatable Read</strong></p>
+<ul>
+<li>SELECT→공유락 트랜잭션 끝까지 유지</li>
+<li>UPDATE→배타락</li>
+<li>MySQL InnoDB에서 기본적으로 사용됩니다</li>
+<li>현재 시점의 스냅샷을 조회해 동일 트랜잭션에서 일관성을 보장합니다</li>
+<li>상위 트랜잭션 스냅샷 데이터에는 접근할 수 없습니다</li>
+<li>유령데이터 읽기 문제가 발생합니다 (INSERT에 대해서)</li>
+</ul>
+</li>
+<li><p><strong>Serializable</strong></p>
+<ul>
+<li>가장 엄격한 격리 수준입니다</li>
+<li>한 트랜잭션에서 읽고 쓰는 레코드에 다른 트랜잭션이 접근할 수 없습니다</li>
+</ul>
+</li>
+</ul>
+<h1 id="적용하기"><a href="#적용하기" class="headerlink" title="적용하기"></a>적용하기</h1><hr>
+<p>앞선 개념을 바탕으로 NestJS + TypeORM에서 실제로 적용한 코드입니다<br>특정 게시글에 좋아요를 설정할 때를 예시로 들어보겠습니다</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">setPostToLike</span>(<span class="hljs-attr">requestData</span>: <span class="hljs-title class_">SetPostToLikeDto</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">SetPostToLikeResponseDto</span>&gt; &#123;
+    <span class="hljs-comment">// 쿼리러너 객체 생성</span>
+    <span class="hljs-keyword">const</span> queryRunner = <span class="hljs-variable language_">this</span>.<span class="hljs-property">connection</span>.<span class="hljs-title function_">createQueryRunner</span>();
+
+    <span class="hljs-comment">// 데이터 베이스 연결</span>
+    <span class="hljs-keyword">await</span> queryRunner.<span class="hljs-title function_">connect</span>();
+
+    <span class="hljs-comment">// 트랜잭션 시작</span>
+    <span class="hljs-keyword">await</span> queryRunner.<span class="hljs-title function_">startTransaction</span>();
+
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-comment">// PostLike 테이블에 기록이 있는지 확인합니다.</span>
+      <span class="hljs-keyword">const</span> getPostLikeQuery = queryRunner.<span class="hljs-property">manager</span>
+        .<span class="hljs-title function_">createQueryBuilder</span>()
+        .<span class="hljs-title function_">select</span>(<span class="hljs-string">&#x27;*&#x27;</span>)
+        .<span class="hljs-title function_">from</span>(<span class="hljs-title class_">PostLike</span>, <span class="hljs-string">&#x27;postLike&#x27;</span>)
+        .<span class="hljs-title function_">where</span>(<span class="hljs-string">&#x27;postLike.usersId = :userID&#x27;</span>, &#123; <span class="hljs-attr">userID</span>: requestData.<span class="hljs-property">usersId</span> &#125;)
+        .<span class="hljs-title function_">andWhere</span>(<span class="hljs-string">&#x27;postLike.postsId = :postID&#x27;</span>, &#123; <span class="hljs-attr">postID</span>: requestData.<span class="hljs-property">postsId</span> &#125;)
+        .<span class="hljs-title function_">maxExecutionTime</span>(<span class="hljs-number">1000</span>);
+
+      <span class="hljs-comment">/**</span>
+<span class="hljs-comment">       * <span class="hljs-doctag">@returns</span> undefined | TextRow&#123;&#125;</span>
+<span class="hljs-comment">       */</span>
+      <span class="hljs-keyword">const</span> getPostLikeResult = <span class="hljs-keyword">await</span> getPostLikeQuery.<span class="hljs-title function_">getRawOne</span>();
+
+      <span class="hljs-comment">// 유저가 해당 포스트에 &#x27;좋아요&#x27;를 설정한 기록이 있을경우 에러를 리턴합니다</span>
+      <span class="hljs-keyword">if</span> (!!getPostLikeResult) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;ALREADY_SET_LIKE&#x27;</span>);
+      &#125;
+      <span class="hljs-comment">// Post 테이블의 현재 Like 카운트를 구하고 배타락을 설정합니다</span>
+      <span class="hljs-keyword">const</span> getPostQuery = queryRunner.<span class="hljs-property">manager</span>
+        .<span class="hljs-title function_">createQueryBuilder</span>()
+        .<span class="hljs-title function_">select</span>(<span class="hljs-string">&#x27;post.likes&#x27;</span>)
+        .<span class="hljs-title function_">from</span>(<span class="hljs-title class_">Posts</span>, <span class="hljs-string">&#x27;post&#x27;</span>)
+        .<span class="hljs-title function_">where</span>(<span class="hljs-string">&#x27;post.id = :postID&#x27;</span>, &#123; <span class="hljs-attr">postID</span>: requestData.<span class="hljs-property">postsId</span> &#125;)
+        <span class="hljs-comment">// 비밀 게시글인 경우 좋아요 기능을 비활성화 합니다.</span>
+        .<span class="hljs-title function_">andWhere</span>(<span class="hljs-string">&#x27;post.private = 0&#x27;</span>)
+        <span class="hljs-comment">// 삭제된 게시글인 경우 좋아요를 등록할 수 없습니다</span>
+        .<span class="hljs-title function_">andWhere</span>(<span class="hljs-string">&#x27;post.deletedAt IS NULL&#x27;</span>)
+        .<span class="hljs-title function_">setLock</span>(<span class="hljs-string">&#x27;pessimistic_write&#x27;</span>)
+        .<span class="hljs-title function_">maxExecutionTime</span>(<span class="hljs-number">1000</span>);
+
+      <span class="hljs-comment">/**</span>
+<span class="hljs-comment">       * <span class="hljs-doctag">@returns</span> TextRow &#123; post_likes: 0 &#125;</span>
+<span class="hljs-comment">       */</span>
+      <span class="hljs-keyword">const</span> getPostQueryResult = <span class="hljs-keyword">await</span> getPostQuery.<span class="hljs-title function_">getRawOne</span>();
+
+      <span class="hljs-comment">// 만족하는 포스트를 찾을 수 없을 경우 에러를 리턴합니다</span>
+      <span class="hljs-keyword">if</span> (!getPostQueryResult) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;POST_NOT_FOUND&#x27;</span>);
+      &#125;
+
+      <span class="hljs-comment">// 갱신할 카운트를 설정합니다.</span>
+      <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">LIKE_COUNT</span> = getPostQueryResult.<span class="hljs-property">post_likes</span> + <span class="hljs-number">1</span>;
+
+      <span class="hljs-comment">// Post 테이블의 Like 카운트를 업데이트 합니다.</span>
+      <span class="hljs-keyword">const</span> setPostQuery = queryRunner.<span class="hljs-property">manager</span>
+        .<span class="hljs-title function_">createQueryBuilder</span>()
+        .<span class="hljs-title function_">update</span>(<span class="hljs-title class_">Posts</span>)
+        .<span class="hljs-title function_">set</span>(&#123; <span class="hljs-attr">likes</span>: <span class="hljs-variable constant_">LIKE_COUNT</span> &#125;)
+        .<span class="hljs-title function_">where</span>(<span class="hljs-string">&#x27;id = :postID&#x27;</span>, &#123; <span class="hljs-attr">postID</span>: requestData.<span class="hljs-property">postsId</span> &#125;)
+        .<span class="hljs-title function_">updateEntity</span>(<span class="hljs-literal">false</span>);
+
+      <span class="hljs-comment">/**</span>
+<span class="hljs-comment">       * <span class="hljs-doctag">@Returns</span> UpdateResult &#123; generatedMaps: [], raw: [], affected: 1 &#125;</span>
+<span class="hljs-comment">       */</span>
+      <span class="hljs-keyword">const</span> <span class="hljs-title class_">PostUpdateResult</span> = <span class="hljs-keyword">await</span> setPostQuery.<span class="hljs-title function_">execute</span>();
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">PostUpdateResult</span>);
+      <span class="hljs-comment">// 테이블 업데이트가 반영되었는지 확인합니다</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">PostUpdateResult</span>.<span class="hljs-property">affected</span> === <span class="hljs-number">0</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;PostUpdateResult_AFFECTED_IS_0&#x27;</span>);
+      &#125;
+
+      <span class="hljs-comment">// PostLike 테이블에 &#x27;좋아요&#x27; 기록을 저장합니다.</span>
+      <span class="hljs-keyword">const</span> setPostLikeQuery = queryRunner.<span class="hljs-property">manager</span>
+        .<span class="hljs-title function_">createQueryBuilder</span>()
+        .<span class="hljs-title function_">insert</span>()
+        .<span class="hljs-title function_">into</span>(<span class="hljs-title class_">PostLike</span>)
+        .<span class="hljs-title function_">values</span>(&#123; <span class="hljs-attr">usersId</span>: requestData.<span class="hljs-property">usersId</span>, <span class="hljs-attr">postsId</span>: requestData.<span class="hljs-property">postsId</span>, <span class="hljs-attr">likedAt</span>: <span class="hljs-title class_">Time</span>.<span class="hljs-title function_">nowDate</span>() &#125;);
+
+      <span class="hljs-keyword">const</span> setPostLikeQueryResult = <span class="hljs-keyword">await</span> setPostLikeQuery.<span class="hljs-title function_">execute</span>();
+      <span class="hljs-comment">// 테이블 업데이트가 반영되었는지 확인합니다</span>
+      <span class="hljs-keyword">if</span> (setPostLikeQueryResult.<span class="hljs-property">raw</span>.<span class="hljs-property">affectedRows</span> === <span class="hljs-number">0</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;setPostLikeQuery_AFFECTED_IS_0&#x27;</span>);
+      &#125;
+
+      <span class="hljs-comment">// DTO Mapping</span>
+      <span class="hljs-keyword">let</span> response = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SetPostToLikeResponseDto</span>();
+      response.<span class="hljs-property">likes</span> = <span class="hljs-variable constant_">LIKE_COUNT</span>;
+
+      <span class="hljs-comment">// 트랜잭션 커밋</span>
+      <span class="hljs-keyword">await</span> queryRunner.<span class="hljs-title function_">commitTransaction</span>();
+
+      <span class="hljs-comment">// 응답 리턴</span>
+      <span class="hljs-keyword">return</span> response;
+    &#125; <span class="hljs-keyword">catch</span> (error) &#123;
+      <span class="hljs-comment">// 롤백, 오류 리턴</span>
+      <span class="hljs-keyword">await</span> queryRunner.<span class="hljs-title function_">rollbackTransaction</span>();
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SetPostToLikeFail</span>(<span class="hljs-string">`posts.service.setPostToLike <span class="hljs-subst">$&#123;!!error.message ? error.message : <span class="hljs-string">&#x27;Unknown_Error&#x27;</span>&#125;</span>`</span>);
+    &#125; <span class="hljs-keyword">finally</span> &#123;
+      <span class="hljs-comment">// 커넥션 해제</span>
+      <span class="hljs-keyword">await</span> queryRunner.<span class="hljs-title function_">release</span>();
+    &#125;
+  &#125;</code></pre>
+
+<p>로직은 다음과 같이 진행됩니다</p>
+<ul>
+<li>트랜잭션을 시작합니다</li>
+<li>SELECT → 좋아요 기록이 있는지 확인합니다<ul>
+<li>MySQL 기본고립 수준 설정으로 공유락이 설정됩니다</li>
+</ul>
+</li>
+<li>SELECT [배타락] → 포스트 테이블 좋아요 카운트를 가져옵니다<ul>
+<li>갱신손실을 막기위해 락을 설정합니다</li>
+</ul>
+</li>
+<li>UPDATE → 카운트를 업데이트합니다</li>
+<li>UPDATE → 좋아요 기록을 저장합니다</li>
+<li>트랜잭션을 커밋합니다<ul>
+<li>모든 락을 해제합니다</li>
+</ul>
+</li>
+</ul>
+<p>트랜잭션, 동시성 제어를 통해서 레이스 컨디션으로 인한 좋아요 카운트 갱신 손실을 방지할 수 있게 되었습니다</p>
+<h1 id="단순-조회문에-트랜잭션이-필요한-이유"><a href="#단순-조회문에-트랜잭션이-필요한-이유" class="headerlink" title="+ 단순 조회문에 트랜잭션이 필요한 이유"></a>+ 단순 조회문에 트랜잭션이 필요한 이유</h1><hr>
+<p>MySQL은 <strong>Repeatable Read</strong> 가 기본 격리 수준으로 SELECT를 할 때 트랜잭션이 끝날 때까지<br>공유락을 유지합니다. 만약 조회 시간이 길거나 조회 범위가 클경우 락쿼리가 발생할 수 있습니다<br>단순 조회 쿼리일 경우엔 격리 수준을 낮춰서 질의해야 합니다.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p>MySQL Lock 메뉴얼<br><a target="_blank" rel="noopener" href="http://www.mysqlkorea.com/ex/mysql_reference.html?mcode=develop&scode=01&m_no=21883&cat1=14&cat2=422&cat3=444&lang=">http://www.mysqlkorea.com/ex/mysql_reference.html?mcode&#x3D;develop&amp;scode&#x3D;01&amp;m_no&#x3D;21883&amp;cat1&#x3D;14&amp;cat2&#x3D;422&amp;cat3&#x3D;444&amp;lang&#x3D;</a></p>
+<p>MySQL 공유락 배타락 무엇이 다른가?<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/32827650/mysql-innodb-difference-between-for-update-and-lock-in-share-mode">https://stackoverflow.com/questions/32827650/mysql-innodb-difference-between-for-update-and-lock-in-share-mode</a></p>
+<p>MySQL 트랜잭션 고립 수준과 발생가능한 문제에 대해<br><a target="_blank" rel="noopener" href="https://devlog-wjdrbs96.tistory.com/334">https://devlog-wjdrbs96.tistory.com/334</a></p>
+<p>TypeORM 트랜잭션 가이드 문서<br><a target="_blank" rel="noopener" href="https://orkhan.gitbook.io/typeorm/docs/transactions?q=pessimistic_write">https://orkhan.gitbook.io/typeorm/docs/transactions?q=pessimistic_write</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

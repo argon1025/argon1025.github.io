@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - NodeJS 패키지 매니저에 대해">
+    <meta property="og:description" content="NPM 과 Yarn에 대해">
+    <meta property="og:image" content="/feed-thumbnail/object10.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/NodeJS/NodeJS 사용하기/NodeJS NPM Yarn 고찰/">
+    <meta property="og:site_name" content="Argon.Blog - NodeJS 패키지 매니저에 대해">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - NodeJS 패키지 매니저에 대해</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - NodeJS 패키지 매니저에 대해">
+    <link rel="canonical" href="https://argon1025.github.io/NodeJS/NodeJS 사용하기/NodeJS NPM Yarn 고찰/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="NPM 과 Yarn에 대해" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Node.js</title><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg></div>
+              <span class="text-gray-400">NodeJS 사용하기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">NodeJS 패키지 매니저에 대해</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">NPM 과 Yarn에 대해</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#NodeJS</p>
+            
+            <p class="text-[#53C1F8]">#NPM</p>
+            
+            <p class="text-[#53C1F8]">#Yarn</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 04월 05일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object12.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>어떤 패키지 매니저를 사용할지 NPM과 Yarn의 차이점에 대해서 알아보고<br>처음 패키지가 설치될 때 어떤 버전이 설치되는지,</p>
+<p>모든 팀원이 언제든지 같은 환경에서 개발할 수 있도록<br>패키지 매니저에서 어떤 식으로 동작하는지를 알아보겠습니다</p>
+<h1 id="NPM-vs-Yarn"><a href="#NPM-vs-Yarn" class="headerlink" title="NPM vs Yarn"></a>NPM vs Yarn</h1><hr>
+<blockquote>
+<p>항상 우리가 마주하는 고민</p>
+</blockquote>
+<p>NodeJS 진영의 대표적인 패키지 매니저로서 NPM, Yarn 두 가지가 존재하고 항상 무엇을 사용할지 고민합니다<br>2022년 시점으로 NPM과 Yarn을 있는 그대로 사용할 때 큰 차이는 없습니다<br>같은 기능은 간단히 정리하고 Yarn에서 제공하는 특별한 기능에 관해서 알아보겠습니다</p>
+<h2 id="NPM-Yarn-동일한-기능들"><a href="#NPM-Yarn-동일한-기능들" class="headerlink" title="NPM Yarn, 동일한 기능들"></a>NPM Yarn, 동일한 기능들</h2><h3 id="보안"><a href="#보안" class="headerlink" title="보안"></a>보안</h3><ul>
+<li>NPM : 버전 6 부터 보안 검사를 수행하고 SHA-512으로 패키지를 검증합니다</li>
+<li>Yarn : 라이센스 정보를 통해 종속성 충돌을 예방하고 체크섬을 사용해 패키지를 검증합니다</li>
+</ul>
+<h3 id="종속성-트리"><a href="#종속성-트리" class="headerlink" title="종속성 트리"></a>종속성 트리</h3><ul>
+<li>NPM : package-lock.json 파일을 생성해서 종속성 버전을 명시하고 동일한 환경을 보장합니다<ul>
+<li>npm-shrinkwrap을 통해서 모든 사용자가 동일한 버전의 버전을 설치하도록 고정합니다</li>
+</ul>
+</li>
+<li>Yarn : yarn.lock 파일을 생성해서 종속성 버전을 명시하고 동일한 환경을 보장합니다</li>
+</ul>
+<h2 id="NPM-대비-Yarn의-장점"><a href="#NPM-대비-Yarn의-장점" class="headerlink" title="NPM 대비 Yarn의 장점"></a>NPM 대비 Yarn의 장점</h2><h3 id="속도"><a href="#속도" class="headerlink" title="속도"></a>속도</h3><p>Yarn은 패키지를 병렬로 설치하기 때문에 NPM보다 속도가 빠릅니다<br>하지만 Yarn 도큐먼트에 의하면 그것은 상대적이며 일시적인 현상으로<br>프로젝트가 추구하는 목표가 아니라고 언급합니다</p>
+<pre><code class="hljs jsx"><span class="hljs-title class_">Speed</span> is relative and a temporary state. <span class="hljs-title class_">Processes</span>, roadmaps and core values are what stick.
+
+속도는 상대적이며 일시적입니다, 프로젝트 로드맵 및 핵심가치에따라 얼마든지 바뀔 수 있습니다</code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://yarnpkg.com/getting-started/qa/#is-yarn-faster-than-other-package-managers">https://yarnpkg.com/getting-started/qa/#is-yarn-faster-than-other-package-managers</a></p>
+<h3 id="PnP-새로운-방식의-의존성-관리"><a href="#PnP-새로운-방식의-의존성-관리" class="headerlink" title="PnP, 새로운 방식의 의존성 관리"></a>PnP, 새로운 방식의 의존성 관리</h3><p>NPM, yarn_v1 은 node_modules 이라는 파일 트리를 사용해 의존성을 관리합니다<br>이때 공간을 아끼기 위해서 중복되는 의존성 파일을 끌어 올리는 호이스팅(Hoisting) 기법을 사용하는데<br>직접적인 의존성이 없음에도 불구하고 사용이 가능한 유령 의존성 문제(Phantom Dependency)가 발생합니다<br>이후 패키지를 업데이트, 삭제할 때 어떤 사이드 이펙트가 발생할지 몰라서 라이브러리가 필요 없음에도<br>쉽게 삭제하지 못하는 상황이 발생합니다<br>Yarn은 PnP 라는 개념을 통해 새롭게 이 문제를 해결합니다</p>
+<p>해당 기능에 대해서 정리한 좋은 글이 있습니다</p>
+<p><a target="_blank" rel="noopener" href="https://toss.tech/article/node-modules-and-yarn-berry">node_modules로부터 우리를 구원해 줄 Yarn Berry</a></p>
+<h1 id="언제-어디서든지-동일한-환경에서-개발하기"><a href="#언제-어디서든지-동일한-환경에서-개발하기" class="headerlink" title="언제 어디서든지 동일한 환경에서 개발하기"></a>언제 어디서든지 동일한 환경에서 개발하기</h1><hr>
+<blockquote>
+<p>버전관리 제대로 알기</p>
+</blockquote>
+<p>이전 섹션에서 지금 시점에서 Yarn을 사용하는 이유에 대해서 알아보았다면<br>패키지 매니저가 패키지 버전을 어떤 식으로 명시하고 관리하는지 알아보고<br>더 나아가 다른 컴퓨터에서 동일한 환경을 어떻게 보장하는지를 알아보겠습니다</p>
+<h2 id="Package-json에서-패키지-버전을-명시하는-방법"><a href="#Package-json에서-패키지-버전을-명시하는-방법" class="headerlink" title="Package.json에서 패키지 버전을 명시하는 방법"></a>Package.json에서 패키지 버전을 명시하는 방법</h2><p>Package.json에서는 프로젝트에 관련된 각종 메타 데이터가 저장됩니다<br><code>npm install</code> <code>yarn install</code> 을 처음 할 때 패키지 매니저가 Package.json 파일을 참고해서 어떤 패키지 버전을 설치할지 결정합니다</p>
+<p>이때 어떤 규칙을 바탕으로 패키지 버전이 명시되어있고 우리가 패키지를 설치할 때 어떤 버전이 설치되는지를 간단히 알아보겠습니다</p>
+<h3 id="유의적-버전-Semantic-Versioning-과-노드의-패키지-관리"><a href="#유의적-버전-Semantic-Versioning-과-노드의-패키지-관리" class="headerlink" title="유의적 버전 ( Semantic Versioning )과 노드의 패키지 관리"></a>유의적 버전 ( Semantic Versioning )과 노드의 패키지 관리</h3><p>유의적 버전이란 버전 번호를 어떻게 정하고 올려야 하는지를 명시하는 규칙과 요구사항을 말합니다<br>버전을 명시하는 방법은 다음과 같습니다</p>
+<pre><code class="hljs jsx">X.<span class="hljs-property">Y</span>.<span class="hljs-property">Z</span>
+
+X -&gt; 메이저 업데이트 : 하위 호환성을 보장하지 않는 변경
+Y -&gt; 마이너 업데이트 : 하위 버전에 대해서 호환성을 보장하는 변경
+Z -&gt; 패치 : <span class="hljs-variable constant_">API</span>에 영향이 없는 단순 수정
+
+기존 버전과 호환되지 않게 <span class="hljs-variable constant_">API</span>가 바뀌면 “주(X) 버전”을 올리고,
+기존 버전과 호환되면서 새로운 기능을 추가할 때는 “부(Y) 버전”을 올리고,
+기존 버전과 호환되면서 버그를 수정한 것이라면 “수(Z) 버전”을 올린다.</code></pre>
+
+<p>버전을 올리는 규칙에 대해서는 <a target="_blank" rel="noopener" href="https://semver.org/lang/ko/">공식문서</a>에서 자세히 다루고 있습니다<br>현재 말하고자 하는 주제에 벗어나기 때문에 자세한 내용은 위 공식문서를 참고해 주세요</p>
+<h3 id="패키지-설치-범위를-결정하는-틸드-캐럿-알기"><a href="#패키지-설치-범위를-결정하는-틸드-캐럿-알기" class="headerlink" title="패키지 설치 범위를 결정하는 틸드~, 캐럿^ 알기"></a>패키지 설치 범위를 결정하는 틸드~, 캐럿^ 알기</h3><p>NPM과 Yarn에서는 NodeJS 패키지가 유의적 버전 ( Semantic Versioning )<br>규칙을 충실히 따른다는것을 가정합니다</p>
+<p>이 가정을 통해서 “어떤 버전 이상의 패키지를 사용할 것이다”를 Package.json에 명시하게 되는데<br>이것이 버전 앞에 붙는 틸드<code>~</code> 캐럿<code>^</code> 입니다</p>
+<p><code>~</code> 틸드</p>
+<pre><code class="hljs jsx"><span class="hljs-string">&quot;dependencies&quot;</span>: &#123;
+    <span class="hljs-string">&quot;testPackage&quot;</span>: <span class="hljs-string">&quot;~1.1.0&quot;</span>,
+&#125;</code></pre>
+
+<p>X.Y.Z 버전 중 Z에 해당하는 ‘패치’ 버전에 대해서만 설치를 허용합니다<br>위 testPackage의 경우 1.1.0 ~ 1.1.9까지의 버전이 설치되는 것을 허용합니다</p>
+<p><code>^</code> 캐럿</p>
+<pre><code class="hljs jsx"><span class="hljs-string">&quot;dependencies&quot;</span>: &#123;
+    <span class="hljs-string">&quot;testPackage&quot;</span>: <span class="hljs-string">&quot;^1.1.0&quot;</span>,
+&#125;</code></pre>
+
+<p>X.Y.Z 중 Y.Z에 해당하는 마이너 업데이트에 대한 설치를 허용합니다<br>위 testPackage의 경우 1.1.0 ~ 1.9.9까지의 설치를 허용합니다</p>
+<h2 id="처음-생성되는-package-lock-yarn-lock-파일에-대해-알기"><a href="#처음-생성되는-package-lock-yarn-lock-파일에-대해-알기" class="headerlink" title="처음 생성되는 package-lock, yarn.lock 파일에 대해 알기"></a>처음 생성되는 package-lock, yarn.lock 파일에 대해 알기</h2><p>npm과 Yarn은 <code>package.json</code>에 정의된 버전 범위에 따라 패키지를 설치합니다<br>하지만 이는 install을 하는 시점, 환경 마다 설치되는 패키지의 버전이 달라질 수 있습니다</p>
+<p>npm과 yarn은 이 문제를 해결하기 위해 모든 패키지 설치가 성공한 시점에<br>설치된 패키지의 버전과 의존성 트리를 그대로 다른 환경에서 재현할 수 있도록<br><code>package-lock.json</code> <code>yarn.lock</code> 파일을 프로젝트 폴더에 생성하고<br>이후 install시 해당 파일이 있을 경우 <code>package.json</code>보다 우선적으로 <code>lock</code> 파일을 참고해서 패키지를 설치합니다</p>
+<p>이때 생성되는 lock 파일에 대해서는 지켜야 하는 중요한 규칙이 두 가지 있습니다.</p>
+<ul>
+<li>해당 파일은 Git 저장소를 통해 공유되어야 합니다</li>
+<li>절대로 직접 수정되어선 안 되며 패키지 매니저 명령어를 통해서 수정되어야 합니다</li>
+</ul>
+<h2 id="패키지-매니저를-통해서-패키지-관리하기"><a href="#패키지-매니저를-통해서-패키지-관리하기" class="headerlink" title="패키지 매니저를 통해서 패키지 관리하기"></a>패키지 매니저를 통해서 패키지 관리하기</h2><p>각 파일의 역할과 중요성을 알았으니 패키지 매니저를 통해서 패키지를 관리할 차례입니다<br>Yarn을 기준으로 설명하겠습니다</p>
+<h3 id="모든-의존성-패키지-설치하기"><a href="#모든-의존성-패키지-설치하기" class="headerlink" title="모든 의존성 패키지 설치하기"></a>모든 의존성 패키지 설치하기</h3><pre><code class="hljs awk">yarn install <span class="hljs-regexp">//</span> NODE_ENV 환경에 따라 개발 의존성 패키지를 설치할지 결정합니다
+yarn install —production=true <span class="hljs-regexp">//</span> devDependencies 미설치
+yarn install —production=false <span class="hljs-regexp">//</span> devDependencies 설치</code></pre>
+
+<p>모든 의존성 패키지를 설치합니다</p>
+<h3 id="프로젝트에-패키지-추가하기"><a href="#프로젝트에-패키지-추가하기" class="headerlink" title="프로젝트에 패키지 추가하기"></a>프로젝트에 패키지 추가하기</h3><pre><code class="hljs bash">yarn add &lt;package-name&gt; // 가장 최신 패키지를 설치합니다
+yarn add &lt;package-name&gt;@^4.0.0 // 버전 범위를 지정합니다
+yarn add &lt;package-name&gt;@^4.0.0 --dev // devDependencies에 등록되며 프로덕션에서 설치되지 않습니다</code></pre>
+
+<h3 id="패키지-업데이트"><a href="#패키지-업데이트" class="headerlink" title="패키지 업데이트"></a>패키지 업데이트</h3><pre><code class="hljs bash">// 허용 버전 범위 내에서 업데이트
+yarn upgrade // 전체 패키지 업데이트
+yarn upgrade &lt;package-name&gt; // 특정 패키지 업데이트
+
+// 최신버전으로 업데이트
+yarn upgrade --latest // 전체 패키지 최신버전으로 업데이트
+yarn upgrade &lt;package-name&gt; --latest // 특정 패키지 최신버전으로 업데이트
+
+// CLI 대화형 패키지 업데이트
+yarn upgrade-interactive
+yarn upgrade-interactive --latest</code></pre>
+
+<p>yarn upgrade로 package.json에서 정의된 버전 범위 (~, ^)범위 내에서 업데이트하고 lock 파일에 기록합니다<br>이때 package.json은 변경되지 않습니다</p>
+<p><code>—latest</code> 태그를 사용하면 package.json에서 정의된 버전 범위를 무시하고 최신버전으로 업데이트합니다<br>package.json, lock 파일 전부 변경됩니다</p>
+<p>대화형 패키지 업데이트 매니저는 콘솔에서 GUI로 쉽게 업데이트할 수 있는 기능을 제공합니다<br>NPM에선 <code>npm-check</code> 패키지를 통해 제공하고 yarn에선 <code>yarn upgrade-interactive</code> 명령어를 통해서 제공됩니다</p>
+<h1 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h1><hr>
+<p>모른다는 이유만으로 warn 출력되는 의존성 경고를 무시하고 install만을 외쳤던 과거의 나를 되돌아보는 시간이 되었습니다<br>여러분도 과거 자신의 패키지 관리에 대해서 돌아볼 수 있는 시간이 되었으면 합니다</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/npm-check">https://www.npmjs.com/package/npm-check</a></p>
+<p><a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/en/docs/cli/upgrade-interactive/">https://classic.yarnpkg.com/en/docs/cli/upgrade-interactive/</a></p>
+<p><a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/en/">https://classic.yarnpkg.com/en/</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json">https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json</a></p>
+<p><a target="_blank" rel="noopener" href="https://yarnpkg.com/features/pnp">https://yarnpkg.com/features/pnp</a></p>
+<p><a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/en/docs/cli/">https://classic.yarnpkg.com/en/docs/cli/</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>

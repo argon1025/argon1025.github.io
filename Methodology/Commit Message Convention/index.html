@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - Commit Message Convention">
+    <meta property="og:description" content="사람과 기계가 모두 식별할 수 있는 커밋 메시지">
+    <meta property="og:image" content="/feed-thumbnail/object4.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Methodology/Commit Message Convention/">
+    <meta property="og:site_name" content="Argon.Blog - Commit Message Convention">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - Commit Message Convention</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - Commit Message Convention">
+    <link rel="canonical" href="https://argon1025.github.io/Methodology/Commit Message Convention/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="사람과 기계가 모두 식별할 수 있는 커밋 메시지" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Git</title><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg></div>
+              <span class="text-gray-400">개발방법론</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">Commit Message Convention</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">사람과 기계가 모두 식별할 수 있는 커밋 메시지</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#Git</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2022년 03월 01일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object28.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <h1 id="Commit-Message를-작성하는-이유"><a href="#Commit-Message를-작성하는-이유" class="headerlink" title="Commit Message를 작성하는 이유"></a>Commit Message를 작성하는 이유</h1><hr>
+<p>우리는 기능 구현을 위해서 브랜치를 만들고<br>브랜치 안에서 작은 단위의 코드 블록을 작성하고 Commit을 하게 됩니다<br>Commit Message는 이후 해당 코드블럭에 대해 이해를 돕는 시야와<br>당시의 설계 의도 ( 마인드셋 )을 파악하는 중요한 정보를 제공하는 역할을 하게 됩니다.</p>
+<h1 id="Conventional-Commits이란-무엇인가"><a href="#Conventional-Commits이란-무엇인가" class="headerlink" title="Conventional Commits이란 무엇인가"></a>Conventional Commits이란 무엇인가</h1><hr>
+<p>Commit Message 컨벤션 중 하나로 명확한 커밋 히스토리를 작성하기 위한 규칙을 정의합니다<br>통일된 컨벤션을 통해서 서로가 작성한 커밋의 의도를 명확하게 파악할 수 있게 됩니다.</p>
+<h2 id="Commit-Message-구조"><a href="#Commit-Message-구조" class="headerlink" title="Commit Message 구조"></a>Commit Message 구조</h2><pre><code class="hljs gcode">&lt;타입&gt;[적용 범위<span class="hljs-comment">(선택 사항)</span>]: &lt;설명&gt;
+
+[본문<span class="hljs-comment">(선택 사항)</span>]
+
+[꼬리말<span class="hljs-comment">(선택 사항)</span>]</code></pre>
+
+<h2 id="Commit-Message-타입"><a href="#Commit-Message-타입" class="headerlink" title="Commit Message 타입"></a>Commit Message 타입</h2><p><code>fix</code> → 코드 베이스 버그 패치<br><code>feat</code> → 코드 베이스 기능 추가<br><code>BREAKING CHANGE</code> → 메이저 업데이트, 이전 API와 호환되지 않을 경우<br><code>style</code> → 코드 베이스 스타일 변경<br><code>docs</code> → 문서 변경</p>
+<p>기타</p>
+<pre><code class="hljs subunit">build: 시스템 또는 외부 종속성에 영향을 미치는 변경사항 (npm, gulp, yarn 레벨)
+ci: ci구성파일 및 스크립트 변경
+chore: 패키지 매니저 설정할 경우, 코드 수정 없이 설정을 변경
+perf: 성능 개선
+refactor: 버그를 수정하거나 기능을 추가하지 않는 코드 변경, 리팩토링
+<span class="hljs-keyword">test: </span>누락된 테스트 추가 또는 기존 테스트 수정
+revert: 작업 되돌리기</code></pre>
+
+<h1 id="Conventional-Commits-적용하자"><a href="#Conventional-Commits-적용하자" class="headerlink" title="Conventional Commits 적용하자"></a>Conventional Commits 적용하자</h1><hr>
+<p><img src="https://user-images.githubusercontent.com/55491354/207640134-c436ac42-9a6d-4bc4-a6c8-b260fad0bbf9.png" alt="image"></p>
+<p>이전 커밋 메시지에 대해서 문제점을 파악하고<br>다음과 같은 목표를 설정하고 커밋 메시지 컨벤션을 통일했습니다</p>
+<ul>
+<li>하나의 커밋은 하나의 기능에 대응한다</li>
+<li>커밋은 누가 보더라도 이해하기 쉽게, 아토믹(Atomic) 해야한다</li>
+<li>커밋 메시지는 다른 사람이 보더라도 해당 작업내용을 파악할 수 있게 작성한다</li>
+<li>Conventional Commits 을 지킨다.</li>
+</ul>
+<h1 id="나는-저자고-미래의-나와-팀원은-독자다"><a href="#나는-저자고-미래의-나와-팀원은-독자다" class="headerlink" title="나는 저자고 미래의 나와 팀원은 독자다"></a>나는 저자고 미래의 나와 팀원은 독자다</h1><hr>
+<p>클린코드 첫 장에서 <code>우리는 코드를 적는 저자</code>라고 소개합니다<br>그리고 저자는 독자와 잘 소통할 책임을 진다는 것을 기억해야 한다 말합니다.</p>
+<p>우리가 코드를 읽는 과정에서 들이는 시간과 노력을 조금이라도 덜기 위해서<br>이런 세세한 부분에서 복잡도를 줄이고 지속해서 개선해 나가야 한다고 생각합니다</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.conventionalcommits.org/ko/v1.0.0/">https://www.conventionalcommits.org/ko/v1.0.0/</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/hdackorea/commit-history%EB%A5%BC-%ED%9A%A8%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EA%B7%9C%EC%95%BD-conventional-commits-67b2114ac8e4">https://medium.com/hdackorea/commit-history를-효과적으로-관리하기-위한-규약-conventional-commits-67b2114ac8e4</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
