@@ -3,11 +3,11 @@ title: CircleCI로 ECR, ECS연동
 subTitle: CircleCI 파이프라인에 ECS연결하고 지속적 배포 하기
 tech: CircleCI
 category: AWS ECS 배포기
-tags: 
-	- CircleCI
-	- CI/CD
-	- AWS ECR
-	- AWS ECS
+tags:
+  - CircleCI
+  - CI/CD
+  - ECR
+  - ECS
 date: 2022-01-18
 ---
 

@@ -4,9 +4,8 @@ subTitle: AWS S3와 서비스 DB 사이 정합성에 대해
 tech: NestJS
 category: NestJS 사용하기
 tags:
-	- NestJS
-	- AWS
-	- AWS S3
+  - NestJS
+  - S3
 date: 2021-12-02
 ---
 

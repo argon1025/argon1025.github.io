@@ -4,7 +4,7 @@ subTitle: 사람과 기계가 모두 식별할 수 있는 커밋 메시지
 tech: Git
 category: 개발방법론
 tags:
-	- Git
+  - Git
 date: 2022-03-01
 ---
 

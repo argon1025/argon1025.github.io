@@ -4,7 +4,7 @@ subTitle: 체계적이고 빠르게 개발하는 방법에 대해
 tech: Git
 category: 개발방법론
 tags:
-	- Git
+  - Git
 date: 2022-04-06
 ---
 

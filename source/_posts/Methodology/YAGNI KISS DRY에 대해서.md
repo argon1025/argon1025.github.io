@@ -4,9 +4,10 @@ subTitle: 소프트웨어 개발 철학 YAGNI KISS DRY에 대해서
 tech: Book
 category: 개발방법론
 tags:
-	- YAGNI
-	- KISS
-	- DRY
+  - 개발방법론
+  - YAGNI
+  - KISS
+  - DRY
 date: 2022-03-01
 ---
 

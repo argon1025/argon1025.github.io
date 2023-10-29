@@ -1,10 +1,10 @@
 ---
-title: 자주 사용하는 Docker 명령어들 
+title: 자주 사용하는 Docker 명령어들
 subTitle: 📜 Docker CLI 정리
 tech: Docker
 category: Docker 사용하기
 tags:
-	- Docker
+  - Docker
 date: 2021-02-02
 ---
 

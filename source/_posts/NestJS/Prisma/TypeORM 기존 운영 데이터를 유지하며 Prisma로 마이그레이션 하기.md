@@ -4,10 +4,9 @@ subTitle: Prisma를 서비스 도중에 적용하는 방법
 tech: Prisma
 category: 마이그레이션 가이드
 tags:
-	- NestJS
-	- TypeORM
-	- Prisma
-	- Migration
+  - NestJS
+  - Prisma
+  - TypeORM
 date: 2022-04-05
 ---
 

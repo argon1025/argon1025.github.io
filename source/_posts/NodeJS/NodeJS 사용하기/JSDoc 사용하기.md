@@ -4,9 +4,8 @@ subTitle: JSDoc 알고쓰자
 tech: NodeJS
 category: NodeJS 사용하기
 tags:
-	- NodeJS
-	- JSDoc
-	- JavaScript
+  - JsDoC
+  - 개발방법론
 date: 2022-02-01
 ---
 

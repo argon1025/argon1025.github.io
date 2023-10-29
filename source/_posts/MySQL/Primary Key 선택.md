@@ -3,9 +3,9 @@ title: Primary Key 선택요령
 subTitle: MySQL PK로 INT, UUID 선택 가이드
 tech: MySQL
 category: MySQL 사용하기
-tags: 
-	- MySQL
-	- Database
+tags:
+  - MySQL
+  - DataBase
 date: 2022-02-03
 ---
 

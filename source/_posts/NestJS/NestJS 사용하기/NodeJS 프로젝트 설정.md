@@ -4,8 +4,8 @@ subTitle: NestJS에서 더 나은 개발 환경 구성하기
 tech: NestJS
 category: NestJS 사용하기
 tags:
-	- NestJS
-	- TypeScript
+  - NestJS
+  - TypeScript
 date: 2021-12-02
 ---
 

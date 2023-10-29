@@ -4,9 +4,9 @@ subTitle: Redis로 NestJS에서 Queue 구현하기
 tech: Redis
 category: Redis 사용하기
 tags:
-	- Redis
-	- NestJS
-	- Queue
+  - Redis
+  - NestJS
+  - Queue
 date: 2022-01-05
 ---
 

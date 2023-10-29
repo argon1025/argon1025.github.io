@@ -4,8 +4,7 @@ subTitle: 대표적인 Merge 관리 전략에 대해
 tech: Git
 category: 개발방법론
 tags:
-	- Git
-	- Merge
+  - Git
 date: 2022-03-01
 ---
 

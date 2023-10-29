@@ -4,9 +4,9 @@ subTitle: NPM 과 Yarn에 대해
 tech: NodeJS
 category: NodeJS 사용하기
 tags:
-	- NodeJS
-	- NPM
-	- Yarn
+  - NodeJS
+  - NPM
+  - Yarn
 date: 2022-04-05
 ---
 

@@ -4,9 +4,9 @@ subTitle: NGINX로 nodeJS 로드밸런싱 구성하기
 tech: NGINX
 category: NGINX 사용하기
 tags:
-	- NGINX
-	- Docker
-	- NodeJS
+  - NGINX
+  - Docker
+  - NodeJS
 date: 2021-08-06
 ---
 

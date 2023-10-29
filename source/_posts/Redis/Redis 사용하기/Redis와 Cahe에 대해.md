@@ -4,9 +4,9 @@ subTitle: Redis로 NestJS에서 Database Cahe 적용하기
 tech: Redis
 category: Redis 사용하기
 tags:
-	- Redis
-	- NestJS
-	- Cache
+  - NestJS
+  - Redis
+  - Cache
 date: 2022-01-02
 ---
 

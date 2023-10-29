@@ -3,9 +3,9 @@ title: AWS ECS로 서비스 배포하기
 subTitle: AWS 컨테이너 오케스트레이션 서비스 알아보기
 tech: AWS
 category: AWS ECS 배포기
-tags: 
-	- AWS
-	- AWS ECS
+tags:
+  - AWS
+  - ECS
 date: 2022-01-13
 ---
 

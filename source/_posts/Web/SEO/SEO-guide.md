@@ -4,7 +4,7 @@ subTitle: 2023년 SEO 구성 가이드
 tech: Book
 category: SEO
 tags:
-	- SEO
+  - SEO
 date: 2023-06-10
 ---
 

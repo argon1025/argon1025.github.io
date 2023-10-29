@@ -4,8 +4,8 @@ subTitle: 베이스 이미지 환경변수 설정
 tech: Docker
 category: Docker와 인프라, 미로 탐험기
 tags:
-	- Docker
-	- MySQL
+  - Docker
+  - MySQL
 date: 2021-03-01
 ---
 

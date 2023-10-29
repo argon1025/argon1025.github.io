@@ -3,9 +3,9 @@ title: AWS Multi AZ VPC 네트워크 구성
 subTitle: AWS VPC로 가용성이 보장된 안전한 네트워크 환경 구축
 tech: AWS
 category: AWS ECS 배포기
-tags: 
-	- AWS
-	- AWS VPC
+tags:
+  - AWS
+  - VPC
 date: 2022-01-06
 ---
 
