@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 성능테스트란 무엇이며 어떻게 할까요?">
+    <meta property="og:description" content="Artillery를 사용한 부하 테스트 진행하기">
+    <meta property="og:image" content="/feed-thumbnail/object20.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/NodeJS/Test/Artillery를 사용한 성능 테스트/">
+    <meta property="og:site_name" content="Argon.Blog - 성능테스트란 무엇이며 어떻게 할까요?">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 성능테스트란 무엇이며 어떻게 할까요?</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 성능테스트란 무엇이며 어떻게 할까요?">
+    <link rel="canonical" href="https://argon1025.github.io/NodeJS/Test/Artillery를 사용한 성능 테스트/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="Artillery를 사용한 부하 테스트 진행하기" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Node.js</title><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg></div>
+              <span class="text-gray-400">부하테스트</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">성능테스트란 무엇이며 어떻게 할까요?</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">Artillery를 사용한 부하 테스트 진행하기</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#부하테스트</p>
+            
+            <p class="text-[#53C1F8]">#Artillery</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2023년 11월 30일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object18.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>기존 서비스에서는 개인화 메시지라는 기능을 제공하고 있었습니다.<br>주문, 배송, 회선, 고객 정보를 활용해서 회원에게 맞는 메시지를 생성해 주는 API 인데요.<br>거의 모든 도메인 서비스를 전부 조회하기 때문에 부하가 심했고<br>트래픽이 증가하면 서비스가 다운되는 상황이 발생했어요. </p>
+<p>저희는 원인이 되는 로직을 비활성화하고 해당 서비스로직 개선을 진행했고<br>개선 후 운영배포에 앞서 성능을 측정하고자 성능 테스트를 도입하게 되면서<br>공부한 내용에 대해 간단히 공유해 드리고자 합니다.</p>
+<h1 id="성능-테스트란"><a href="#성능-테스트란" class="headerlink" title="성능 테스트란?"></a>성능 테스트란?</h1><hr>
+<p>성능 테스트란 서비스의 속도, 반응성, 안정성을 측정하고 평가하는 과정입니다.<br>시스템의 어떤 측면을 테스트하느냐에 따라 다양한 부하 조건에서 테스트를 진행하게 되는데요.<br>많은 테스트 유형이 있지만 주로 사용되는 성능 테스트 유형에 대해 알아보겠습니다.</p>
+<h2 id="성능-테스트-유형"><a href="#성능-테스트-유형" class="headerlink" title="성능 테스트 유형"></a>성능 테스트 유형</h2><p><img src="https://github.com/HotteokGroup/PPOTTO_USER/assets/55491354/db3e7d08-2be8-4648-be4b-f5a86fdfa2ce" alt="image"><br><a target="_blank" rel="noopener" href="https://medium.com/singapore-gds/web-performance-testing-dcubes-practices-fbbc20606000">출처</a></p>
+<h3 id="Load-Test"><a href="#Load-Test" class="headerlink" title="Load Test"></a>Load Test</h3><p>정해진 부하를 처리할 수 있는지 검증하는 테스트입니다.</p>
+<ul>
+<li>부하 수준 : 피크 시간대 유저 수</li>
+<li>부하 지속 시간 : 통상 한 시간</li>
+</ul>
+<h3 id="Stress-Test"><a href="#Stress-Test" class="headerlink" title="Stress Test"></a>Stress Test</h3><p>매우 높은 부하를 처리할 수 있는지 검증하는 테스트입니다.<br>시스템을 사용할 수 있는지 부하가 줄었을 때 정상적으로 시스템이 복구되는지 확인합니다.</p>
+<ul>
+<li>부하 수준 : 피크 시간대 유저 수의 두 배</li>
+<li>부하 지속 시간 : 통상 한 시간</li>
+</ul>
+<h3 id="Endurance-Test"><a href="#Endurance-Test" class="headerlink" title="Endurance Test"></a>Endurance Test</h3><p>장시간에 걸쳐 시스템 안정성을 검증하는 테스트입니다.</p>
+<ul>
+<li>부하 수준 : 통상 시간대 유저 수</li>
+<li>부하 지속 시간 : 8시간 이상</li>
+</ul>
+<h3 id="Spike-Test"><a href="#Spike-Test" class="headerlink" title="Spike Test"></a>Spike Test</h3><p>사용량이 급격히 증가하는 시나리오를 상정하고 시스템의 안정성을 확인하는 테스트입니다.</p>
+<ul>
+<li>부하 수준 : 통상 시간대 유저 수 ~ 피크 시간대 유저 수의 두배</li>
+<li>부하 지속 시간 : 통상 한 시간</li>
+</ul>
+<h3 id="Breakpoint-Test"><a href="#Breakpoint-Test" class="headerlink" title="Breakpoint Test"></a>Breakpoint Test</h3><p>동시 사용자 수를 점진적으로 증가시켜 시스템 장애 지점을 확인하는 테스트입니다.</p>
+<ul>
+<li>부하 수준 : 부하가 발생할 때까지 점진적으로 증가</li>
+<li>부하 지속 시간 : 장애 발생 지점 까지</li>
+</ul>
+<h2 id="부하-수준을-설정할-때-고려해야-하는-것"><a href="#부하-수준을-설정할-때-고려해야-하는-것" class="headerlink" title="부하 수준을 설정할 때 고려해야 하는 것"></a>부하 수준을 설정할 때 고려해야 하는 것</h2><p>서비스의 성장률과 중요도에 따라 부하 수준을 다르게 설정하는 것이 좋습니다.</p>
+<ul>
+<li>성장률 : 예상 성장률을 부하 수준에 반영</li>
+<li>중요도 : 중요도가 높은 서비스라면 더 높은 부하 수준 반영</li>
+</ul>
+<h2 id="테스트-통과-기준을-정할-때-고려해야-하는-것"><a href="#테스트-통과-기준을-정할-때-고려해야-하는-것" class="headerlink" title="테스트 통과 기준을 정할 때 고려해야 하는 것"></a>테스트 통과 기준을 정할 때 고려해야 하는 것</h2><ul>
+<li>중요도가 높은 서비스인 경우 응답 성공률도 기준에 포함하는 것이 좋습니다.</li>
+<li>응답 여부가 통과 기준이 아닌 응답 시간을 염두 해야합니다.<blockquote>
+<p>웹서비스가 1초 느려지면 매출이 3% 떨어진다는 통계가 있습니다.</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="Artillery로-성능-테스트하기"><a href="#Artillery로-성능-테스트하기" class="headerlink" title="Artillery로 성능 테스트하기"></a>Artillery로 성능 테스트하기</h1><hr>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.artillery.io/docs/get-started/get-artillery">공식문서 링크</a></p>
+</blockquote>
+<p>Artillery는 HTTP, <a target="_blank" rel="noopener" href="http://socket.io/">Socket.io</a>, WebSockets, gRPC, Kafka등 다양한 프로토콜을 지원하며 플러그인을 통해 모든 종류의 시스템을 테스트할 수 있도록 설계된 부하테스트 도구입니다.</p>
+<h2 id="테스트-시나리오-구성하기"><a href="#테스트-시나리오-구성하기" class="headerlink" title="테스트 시나리오 구성하기"></a>테스트 시나리오 구성하기</h2><p>저희는 먼저 개선한 기능에 대해 얼마만큼 사용자를 감당할 수 있는지 확인하기 위해<br>Breakpoint Test를 진행하기로 했고 API요청 시나리오는 다음과 같습니다.</p>
+<ol>
+<li>서비스에 로그인합니다.</li>
+<li>개인화 메시지 기능을 호출합니다.</li>
+</ol>
+<h2 id="테스트-스크립트-작성하기"><a href="#테스트-스크립트-작성하기" class="headerlink" title="테스트 스크립트 작성하기"></a>테스트 스크립트 작성하기</h2><p>시나리오 요구사항을 반영한 스크립트는 다음과 같습니다.</p>
+<pre><code class="hljs yaml"><span class="hljs-attr">config:</span>
+  <span class="hljs-attr">target:</span> <span class="hljs-string">&quot;타깃 주소&quot;</span>
+  <span class="hljs-attr">phases:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">duration:</span> <span class="hljs-string">30m</span> <span class="hljs-comment"># 30분간 테스트</span>
+      <span class="hljs-attr">arrivalRate:</span> <span class="hljs-number">1</span> <span class="hljs-comment"># 시작할 유저 수</span>
+      <span class="hljs-attr">rampTo:</span> <span class="hljs-number">100</span> <span class="hljs-comment"># 30분 동안 늘릴 최대 사용자 수, 마지막엔 초당 100명의 사용자가 요청</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">break</span> <span class="hljs-string">point</span>
+
+<span class="hljs-attr">before:</span>
+  <span class="hljs-attr">flow:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">log:</span> <span class="hljs-string">&quot;Get Auth Token&quot;</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">post:</span>
+        <span class="hljs-attr">url:</span> <span class="hljs-string">&quot;/auth/login/email&quot;</span>
+        <span class="hljs-attr">json:</span>
+          <span class="hljs-attr">email:</span> <span class="hljs-string">&quot;test@test.com&quot;</span>
+          <span class="hljs-attr">password:</span> <span class="hljs-string">&quot;1234qwer&quot;</span>
+          <span class="hljs-attr">isAppLogin:</span> <span class="hljs-literal">false</span>
+        <span class="hljs-attr">capture:</span>
+          <span class="hljs-attr">json:</span> <span class="hljs-string">&quot;$.accessToken&quot;</span>
+          <span class="hljs-attr">as:</span> <span class="hljs-string">&quot;accessToken&quot;</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">log:</span> <span class="hljs-string">&quot;Get Auth Token: <span class="hljs-template-variable">&#123;&#123; accessToken &#125;&#125;</span>&quot;</span>
+
+<span class="hljs-attr">scenarios:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;개인화 메시지 테스트&quot;</span>
+    <span class="hljs-attr">flow:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">get:</span>
+          <span class="hljs-attr">url:</span> <span class="hljs-string">&quot;/mvno/personalMessage&quot;</span>
+          <span class="hljs-attr">cookie:</span>
+            <span class="hljs-attr">PDS_ACTK:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">&#123;&#123; accessToken &#125;&#125;</span>&quot;</span></code></pre>
+<p>테스트 파일은 기본적으로 <code>config</code> <code>before</code> <code>after</code> <code>scenarios</code> 로 구성되어 있습니다.</p>
+<ul>
+<li><code>config</code> : 테스트 대상 호스트 설정 및 테스트 요청을 어떤 식으로 보낼지 정의합니다.</li>
+<li><code>before</code> &#x2F; <code>after</code> : <code>scenarios</code>가 호출되기 전, 후에 한 번 실행되는 섹션입니다.</li>
+<li><code>scenarios</code> : 어떤 방식으로 요청할지 시퀀스를 정의합니다.</li>
+</ul>
+<blockquote>
+<p>구문에 대한 설명은 <a target="_blank" rel="noopener" href="https://www.artillery.io/docs/reference/test-script">공식문서</a> 를 참고해 주세요.</p>
+</blockquote>
+<h2 id="테스트-시작하기"><a href="#테스트-시작하기" class="headerlink" title="테스트 시작하기"></a>테스트 시작하기</h2><pre><code class="hljs bash">artillery run get-personal-message.artillery.yaml -o ./result.json</code></pre>
+
+<p>다음 명령어를 통해 테스트를 시작할 수 있습니다.</p>
+<ul>
+<li><code>run &lt;fileName&gt;</code> : 테스트를 실행합니다. </li>
+<li><code>-o &lt;fileName&gt;</code> : 결과를 저장합니다.</li>
+</ul>
+<h2 id="테스트-리포트-생성"><a href="#테스트-리포트-생성" class="headerlink" title="테스트 리포트 생성"></a>테스트 리포트 생성</h2><p><img src="https://github.com/HotteokGroup/PPOTTO_SOCIAL/assets/55491354/9b1f29a9-d215-45e0-baf2-d508442c1ddd" alt="image"></p>
+<pre><code class="hljs yaml"><span class="hljs-string">artillery</span> <span class="hljs-string">report</span> <span class="hljs-string">result.json</span></code></pre>
+
+<p>다음 명령어를 통해 결과를 시각적으로도 확인 할 수 있는 옵션을 제공했습니다.<br><code>Breakpoint Test</code> 특성상 요청 수가 선형적으로 증가한 것을 확인할 수 있었습니다.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://medium.com/singapore-gds/web-performance-testing-dcubes-practices-fbbc20606000">https://medium.com/singapore-gds/web-performance-testing-dcubes-practices-fbbc20606000</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.artillery.io/">https://www.artillery.io</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
