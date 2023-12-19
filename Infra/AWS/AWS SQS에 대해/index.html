@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - AWS SQS 수명주기와 대기열의 종류">
+    <meta property="og:description" content="SQS를 사용하기 전에 알고 가면 좋은 메시지 처리 방식에 관한 이야기">
+    <meta property="og:image" content="/feed-thumbnail/object9.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Infra/AWS/AWS SQS에 대해/">
+    <meta property="og:site_name" content="Argon.Blog - AWS SQS 수명주기와 대기열의 종류">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - AWS SQS 수명주기와 대기열의 종류</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - AWS SQS 수명주기와 대기열의 종류">
+    <link rel="canonical" href="https://argon1025.github.io/Infra/AWS/AWS SQS에 대해/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="SQS를 사용하기 전에 알고 가면 좋은 메시지 처리 방식에 관한 이야기" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Amazon AWS</title><path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/></svg></div>
+              <span class="text-gray-400">SQS</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">AWS SQS 수명주기와 대기열의 종류</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">SQS를 사용하기 전에 알고 가면 좋은 메시지 처리 방식에 관한 이야기</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#AWS</p>
+            
+            <p class="text-[#53C1F8]">#SQS</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2023년 12월 10일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <!-- 썸네일 기능 비활성화
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object31.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    -->
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2 pt-5">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>큐(대기열)를 사용할 경우 Consumer가 처리할 수 있는<br>작업량만큼만 처리할 수 있다는 장점이 있는데요<br>저희 서비스에서는 AWS의 SNS, SQS를 사용하여 이벤트를 처리하고 있습니다.</p>
+<p>SQS에 대해 명확하게 되짚고 가고자<br>최신 공식문서를 기반으로 정리하고 팀에 공유했었던 내용을 공유드리고자 합니다.</p>
+<h1 id="SQS의-기본-메시지-수명-주기"><a href="#SQS의-기본-메시지-수명-주기" class="headerlink" title="SQS의 기본 메시지 수명 주기"></a>SQS의 기본 메시지 수명 주기</h1><hr>
+<p>SQS는 AWS에서 지원하는 분산 메시징 시스템입니다.<br>SQS는 기본적으로 메시지를 <code>생성</code>, <code>수신</code>, <code>삭제</code> 하는 라이프 사이클이 존재합니다.</p>
+<h2 id="1-메시지-생성"><a href="#1-메시지-생성" class="headerlink" title="1. 메시지 생성"></a>1. 메시지 생성</h2><p><img src="https://github.com/argon1025/hexo-theme-argon/assets/55491354/f95e4f6a-8c87-4b6d-bb8b-6b285599e2ae" alt="image"><br><code>Component1</code> 이 A라는 메시지를 SQS 대기열에 전송하면 AWS SQS 서버에 중복으로 저장됩니다.</p>
+<h2 id="2-메시지-수신"><a href="#2-메시지-수신" class="headerlink" title="2. 메시지 수신"></a>2. 메시지 수신</h2><p><img src="https://github.com/argon1025/hexo-theme-argon/assets/55491354/70785af9-a4f1-4450-a90b-6091eb818938" alt="image"><br><code>Component2</code>가 메시지를 요청할 경우 <code>A</code>메시지가 반환됩니다.<br>메시지를 처리 완료 후 SQS에 삭제 요청을 주기 전 까지는 메시지가 남아 있게 됩니다.</p>
+<blockquote>
+<p>요청 즉시 메시지는 일종의 점유 상태가 되어 표시제한 시간(Visibility timeout)이 만료되기 전 까지는<br>다른 <code>Component</code>가 메시지 요청을 하더라도 <code>A</code>메시지는 반환되지 않습니다.</p>
+<p>기본 표시제한 시간은 30초이며 0~12시간 까지 설정할 수 있습니다.<br>메시지는 한번 요청으로 최대 10개씩 받아올 수 있습니다.</p>
+</blockquote>
+<h2 id="3-메시지-삭제"><a href="#3-메시지-삭제" class="headerlink" title="3. 메시지 삭제"></a>3. 메시지 삭제</h2><p><img src="https://github.com/argon1025/hexo-theme-argon/assets/55491354/08c5517c-010f-41fe-8fb0-61c1e524a23b" alt="image"><br>작업이 완료되었을 경우 <code>A</code>메시지를 SQS에서 삭제 요청합니다.</p>
+<blockquote>
+<p>표시제한 시간(Visibility timeout)이 삭제 시간보다 짧게 설정되어 있을 경우 다른 요청자에게 메시지 <code>A</code>가 수신되고 처리될 수 있습니다.</p>
+</blockquote>
+<h1 id="SQS-At-least-once"><a href="#SQS-At-least-once" class="headerlink" title="SQS At-least-once"></a>SQS At-least-once</h1><hr>
+<p>수명주기 잠깐 다루었듯이 SQS는 동일한 메시지가 수신되는 현상이 발생할 수 있는데요<br>이것을 AWS에서는 최소 한번 이상 전달(At-least-once)라고 정의하고 있습니다<br>이런 현상이 발생할 수 있는 경우를 정리하자면 다음과 같습니다.</p>
+<ul>
+<li>네트워크 오류<ul>
+<li>메시지 삭제 요청이 제대로 전달되지 않은 경우</li>
+</ul>
+</li>
+<li>표시제한 시간 초과<ul>
+<li>메시지 삭제 요청을 전달하기 전에 표시제한 시간이 초과된 경우</li>
+</ul>
+</li>
+<li>메시지를 삭제하지 않음<ul>
+<li>로직 오류로 메시지를 삭제해주지 않은 경우</li>
+</ul>
+</li>
+</ul>
+<p>이런 경우를 대비해서 애플리케이션에서 메시지 처리에 멱등성을 보장해 주는 것이 중요합니다.</p>
+<h1 id="표준-대기열과-FIFO-대기열-아키텍처에-대해"><a href="#표준-대기열과-FIFO-대기열-아키텍처에-대해" class="headerlink" title="표준 대기열과 FIFO 대기열 아키텍처에 대해"></a>표준 대기열과 FIFO 대기열 아키텍처에 대해</h1><hr>
+<p>AWS SQS는 기본 수명주기 아키텍처를 바탕으로 표준 대기열, FIFO 대기열 옵션을 제공하는데요<br>각 대기열의 특징에 대해서 정리해 보겠습니다.</p>
+<h2 id="표준-대기열-아키텍처에-대해"><a href="#표준-대기열-아키텍처에-대해" class="headerlink" title="표준 대기열 아키텍처에 대해"></a>표준 대기열 아키텍처에 대해</h2><p>AWS SQS에서 표준으로 제공하는 아키텍처로 특징은 다음과 같습니다.</p>
+<ul>
+<li>최소 한번 이상 전달(At-least-once)<ul>
+<li>메시지가 누락 없이 한번 이상 전달됨을 보장합니다.</li>
+</ul>
+</li>
+<li>메시지 순서를 보장하지 않음<ul>
+<li>메시지는 순서 없이 소비자에게 전달될 수 있습니다.</li>
+</ul>
+</li>
+<li>대기열 지연 지원<ul>
+<li>메시지를 생성하면 최대 15분까지 메시지가 전달되지 않도록 설정할 수 있습니다.</li>
+</ul>
+</li>
+<li>롱 폴링 지원<ul>
+<li>새로운 메시지가 올 때까지 최대 20초간 응답을 지연시킬 수 있습니다.</li>
+<li>API 호출 비용을 절감할 수 있습니다.</li>
+</ul>
+</li>
+<li>무제한으로 메시지 저장<ul>
+<li>SQS에는 무제한으로 메시지를 저장할 수 있습니다.</li>
+</ul>
+</li>
+<li>표시 제한 단계 메시지 허용량 존재<ul>
+<li>표시 제한(대기열에 수신했지만 아직 삭제되지 않은 메시지) 중인 메시지가 약 120,000건 이상일 경우<br>오류 메시지를 반환합니다.</li>
+</ul>
+</li>
+</ul>
+<h2 id="FIFO-대기열-아키텍처에-대해"><a href="#FIFO-대기열-아키텍처에-대해" class="headerlink" title="FIFO 대기열 아키텍처에 대해"></a>FIFO 대기열 아키텍처에 대해</h2><p>AWS SQS에서 두 번째로 제공하는 아키텍처로 특징은 다음과 같습니다.</p>
+<ul>
+<li>최소 한번 이상 전달(At-least-once)<ul>
+<li>메시지가 누락 없이 한번 이상 전달됨을 보장합니다.</li>
+</ul>
+</li>
+<li>선입선출<ul>
+<li>메시지 생성 전 메시지 별 그룹 ID를 지정해야 하며 그룹 ID 별로 메시지 순서가 관리됩니다.</li>
+<li>메시지 그룹은 제한 없이 생성할 수 있습니다.</li>
+</ul>
+</li>
+<li>메시지 중복 방지<ul>
+<li>자동 생성 및 지정할 수 있는 중복 제거 ID로 중복 메시지를 제거합니다.</li>
+</ul>
+</li>
+<li>롱 폴링 지원<ul>
+<li>새로운 메시지가 올 때까지 최대 20초간 응답을 지연시킬 수 있습니다.</li>
+<li>API 호출 비용을 절감할 수 있습니다.</li>
+</ul>
+</li>
+<li>무제한으로 메시지 저장<ul>
+<li>SQS에는 무제한으로 메시지를 저장할 수 있습니다.</li>
+</ul>
+</li>
+<li>표시 제한 단계 메시지 허용량 존재<ul>
+<li>표시 제한(대기열에 수신했지만 아직 삭제되지 않은 메시지) 중인 메시지가 약 20,000건 이상일 경우<br>오류 메시지를 반환합니다.</li>
+</ul>
+</li>
+<li>그룹별로 초당 3000개의 메시지를 처리<ul>
+<li>더 높은 처리량을 가지는 High Throughput 모드가 존재합니다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h1><hr>
+<p>SQS는 사용하기 편하고 접근성이 높아 쉽게 사용할 수 있지만</p>
+<p>메시지 수명 주기에 대해 자세히 알지 못하면 개발 과정 중에 잘못된 선택을 할 수 있음으로 주의해야 합니다.<br><em>실제로 저희도 메시지를 받음과 동시에 삭제 요청을 보내는..</em> 선택을 하기도 했었습니다.</p>
+<p>SQS 사용 중이거나 사용 예정이신 분에게 도움이 되셨으면 좋겠습니다!</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
