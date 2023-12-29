@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://argon1025.github.io/Book/Celan%20Architecture/4%EC%9E%A5%20%20SOLID%20%EC%84%A4%EA%B3%84%EC%9B%90%EC%B9%99/</loc>
+    
+    <lastmod>2023-12-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://argon1025.github.io/%ED%9A%8C%EA%B3%A0/2022%20%EC%A4%91%EA%B0%84%ED%9A%8C%EA%B3%A0/</loc>
     
     <lastmod>2023-12-29</lastmod>
