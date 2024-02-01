@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - NestJS + Prisma + Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기">
+    <meta property="og:description" content="이제 NestJS & Prisma & Jest & Docker & Github Actions 를 곁들인">
+    <meta property="og:image" content="/feed-thumbnail/object11.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/NestJS/Test/NestJS Prisma Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기/">
+    <meta property="og:site_name" content="Argon.Blog - NestJS + Prisma + Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - NestJS + Prisma + Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - NestJS + Prisma + Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기">
+    <link rel="canonical" href="https://argon1025.github.io/NestJS/Test/NestJS Prisma Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="이제 NestJS & Prisma & Jest & Docker & Github Actions 를 곁들인" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>NestJS</title><path d="M14.131.047c-.173 0-.334.037-.483.087.316.21.49.49.576.806.007.043.019.074.025.117a.681.681 0 0 1 .013.112c.024.545-.143.614-.26.936-.18.415-.13.861.086 1.22a.74.74 0 0 0 .074.137c-.235-1.568 1.073-1.803 1.314-2.293.019-.428-.334-.713-.613-.911a1.37 1.37 0 0 0-.732-.21zM16.102.4c-.024.143-.006.106-.012.18-.006.05-.006.112-.012.161-.013.05-.025.1-.044.149-.012.05-.03.1-.05.149l-.067.142c-.02.025-.031.05-.05.075l-.037.055a2.152 2.152 0 0 1-.093.124c-.037.038-.068.081-.112.112v.006c-.037.031-.074.068-.118.1-.13.099-.278.173-.415.266-.043.03-.087.056-.124.093a.906.906 0 0 0-.118.099c-.043.037-.074.074-.111.118-.031.037-.068.08-.093.124a1.582 1.582 0 0 0-.087.13c-.025.05-.043.093-.068.142-.019.05-.037.093-.05.143a2.007 2.007 0 0 0-.043.155c-.006.025-.006.056-.012.08-.007.025-.007.05-.013.075 0 .05-.006.105-.006.155 0 .037 0 .074.006.111 0 .05.006.1.019.155.006.05.018.1.03.15.02.049.032.098.05.148.013.03.031.062.044.087l-1.426-.552c-.241-.068-.477-.13-.719-.186l-.39-.093c-.372-.074-.75-.13-1.128-.167-.013 0-.019-.006-.031-.006A11.082 11.082 0 0 0 8.9 2.855c-.378.025-.756.074-1.134.136a12.45 12.45 0 0 0-.837.174l-.279.074c-.092.037-.18.08-.266.118l-.205.093c-.012.006-.024.006-.03.012-.063.031-.118.056-.174.087a2.738 2.738 0 0 0-.236.118c-.043.018-.086.043-.124.062a.559.559 0 0 1-.055.03c-.056.032-.112.063-.162.094a1.56 1.56 0 0 0-.148.093c-.044.03-.087.055-.124.086-.006.007-.013.007-.019.013-.037.025-.08.056-.118.087l-.012.012-.093.074c-.012.007-.025.019-.037.025-.031.025-.062.056-.093.08-.006.013-.019.02-.025.025-.037.038-.074.069-.111.106-.007 0-.007.006-.013.012a1.742 1.742 0 0 0-.111.106c-.007.006-.007.012-.013.012a1.454 1.454 0 0 0-.093.1c-.012.012-.03.024-.043.036a1.374 1.374 0 0 1-.106.112c-.006.012-.018.019-.024.03-.05.05-.093.1-.143.15l-.018.018c-.1.106-.205.211-.317.304-.111.1-.229.192-.347.273a3.777 3.777 0 0 1-.762.421c-.13.056-.267.106-.403.149-.26.056-.527.161-.756.18-.05 0-.105.012-.155.018l-.155.037-.149.056c-.05.019-.099.044-.148.068-.044.031-.093.056-.137.087a1.011 1.011 0 0 0-.124.106c-.043.03-.087.074-.124.111-.037.043-.074.08-.105.124-.031.05-.068.093-.093.143a1.092 1.092 0 0 0-.087.142c-.025.056-.05.106-.068.161-.019.05-.037.106-.056.161-.012.05-.025.1-.03.15 0 .005-.007.012-.007.018-.012.056-.012.13-.019.167C.006 7.95 0 7.986 0 8.03a.657.657 0 0 0 .074.31v.006c.019.037.044.075.069.112.024.037.05.074.08.111.031.031.068.069.106.1a.906.906 0 0 0 .117.099c.149.13.186.173.378.272.031.019.062.031.1.05.006 0 .012.006.018.006 0 .013 0 .019.006.031a1.272 1.272 0 0 0 .08.298c.02.037.032.074.05.111.007.013.013.025.02.031.024.05.049.093.073.137l.093.13c.031.037.069.08.106.118.037.037.074.068.118.105 0 0 .006.006.012.006.037.031.074.062.112.087a.986.986 0 0 0 .136.08c.043.025.093.05.142.069a.73.73 0 0 0 .124.043c.007.006.013.006.025.012.025.007.056.013.08.019-.018.335-.024.65.026.762.055.124.328-.254.6-.688-.036.428-.061.93 0 1.079.069.155.44-.329.763-.862 4.395-1.016 8.405 2.02 8.826 6.31-.08-.67-.905-1.041-1.283-.948-.186.458-.502 1.047-1.01 1.413.043-.41.025-.83-.062-1.24a4.009 4.009 0 0 1-.769 1.562c-.588.043-1.177-.242-1.487-.67-.025-.018-.031-.055-.05-.08-.018-.043-.037-.087-.05-.13a.515.515 0 0 1-.037-.13c-.006-.044-.006-.087-.006-.137v-.093a.992.992 0 0 1 .031-.13c.013-.043.025-.086.044-.13.024-.043.043-.087.074-.13.105-.298.105-.54-.087-.682a.706.706 0 0 0-.118-.062c-.024-.006-.055-.018-.08-.025l-.05-.018a.847.847 0 0 0-.13-.031.472.472 0 0 0-.13-.019 1.01 1.01 0 0 0-.136-.012c-.031 0-.062.006-.093.006a.484.484 0 0 0-.137.019c-.043.006-.086.012-.13.024a1.068 1.068 0 0 0-.13.044c-.043.018-.08.037-.124.056-.037.018-.074.043-.118.062-1.444.942-.582 3.148.403 3.787-.372.068-.75.148-.855.229l-.013.012c.267.161.546.298.837.416.397.13.818.247 1.004.297v.006a5.996 5.996 0 0 0 1.562.112c2.746-.192 4.996-2.281 5.405-5.033l.037.161c.019.112.043.23.056.347v.006c.012.056.018.112.025.162v.024c.006.056.012.112.012.162.006.068.012.136.012.204v.1c0 .03.007.067.007.098 0 .038-.007.075-.007.112v.087c0 .043-.006.08-.006.124 0 .025 0 .05-.006.08 0 .044-.006.087-.006.137-.006.018-.006.037-.006.055l-.02.143c0 .019 0 .037-.005.056-.007.062-.019.118-.025.18v.012l-.037.174v.018l-.037.167c0 .007-.007.02-.007.025a1.663 1.663 0 0 1-.043.168v.018c-.019.062-.037.118-.05.174-.006.006-.006.012-.006.012l-.056.186c-.024.062-.043.118-.068.18-.025.062-.043.124-.068.18-.025.062-.05.117-.074.18h-.007c-.024.055-.05.117-.08.173a.302.302 0 0 1-.019.043c-.006.006-.006.013-.012.019a5.867 5.867 0 0 1-1.742 2.082c-.05.031-.099.069-.149.106-.012.012-.03.018-.043.03a2.603 2.603 0 0 1-.136.094l.018.037h.007l.26-.037h.006c.161-.025.322-.056.483-.087.044-.006.093-.019.137-.031l.087-.019c.043-.006.086-.018.13-.024.037-.013.074-.02.111-.031.62-.15 1.221-.354 1.798-.595a9.926 9.926 0 0 1-3.85 3.142c.714-.05 1.426-.167 2.114-.366a9.903 9.903 0 0 0 5.857-4.68 9.893 9.893 0 0 1-1.667 3.986 9.758 9.758 0 0 0 1.655-1.376 9.824 9.824 0 0 0 2.61-5.268c.21.98.272 1.99.18 2.987 4.474-6.241.371-12.712-1.346-14.416-.006-.013-.012-.019-.012-.031-.006.006-.006.006-.006.012 0-.006 0-.006-.007-.012 0 .074-.006.148-.012.223a8.34 8.34 0 0 1-.062.415c-.03.136-.068.273-.105.41-.044.13-.093.266-.15.396a5.322 5.322 0 0 1-.185.378 4.735 4.735 0 0 1-.477.688c-.093.111-.192.21-.292.31a3.994 3.994 0 0 1-.18.155l-.142.124a3.459 3.459 0 0 1-.347.241 4.295 4.295 0 0 1-.366.211c-.13.062-.26.118-.39.174a4.364 4.364 0 0 1-.818.223c-.143.025-.285.037-.422.05a4.914 4.914 0 0 1-.297.012 4.66 4.66 0 0 1-.422-.025 3.137 3.137 0 0 1-.421-.062 3.136 3.136 0 0 1-.415-.105h-.007c.137-.013.273-.025.41-.05a4.493 4.493 0 0 0 .818-.223c.136-.05.266-.112.39-.174.13-.062.248-.13.372-.204.118-.08.235-.161.347-.248.112-.087.217-.18.316-.279.105-.093.198-.198.291-.304.093-.111.18-.223.26-.334.013-.019.026-.044.038-.062.062-.1.124-.199.18-.298a4.272 4.272 0 0 0 .334-.775c.044-.13.075-.266.106-.403.025-.142.05-.278.062-.415.012-.142.025-.285.025-.421 0-.1-.007-.199-.013-.298a6.726 6.726 0 0 0-.05-.415 4.493 4.493 0 0 0-.092-.415c-.044-.13-.087-.267-.137-.397-.05-.13-.111-.26-.173-.384-.069-.124-.137-.248-.211-.366a6.843 6.843 0 0 0-.248-.34c-.093-.106-.186-.212-.285-.317a3.878 3.878 0 0 0-.161-.155c-.28-.217-.57-.421-.862-.607a1.154 1.154 0 0 0-.124-.062 2.415 2.415 0 0 0-.589-.26Z"/></svg></div>
+              <span class="text-gray-400">테스트</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">NestJS + Prisma + Jest 환경에서 Test DB를 구성하여 테스트 및 자동화 하기</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">이제 NestJS & Prisma & Jest & Docker & Github Actions 를 곁들인</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#GithubActions</p>
+            
+            <p class="text-[#53C1F8]">#NestJS</p>
+            
+            <p class="text-[#53C1F8]">#테스트</p>
+            
+            <p class="text-[#53C1F8]">#TDD</p>
+            
+            <p class="text-[#53C1F8]">#Jest</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2024년 01월 30일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <!-- 썸네일 기능 비활성화
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object10.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    -->
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2 pt-5">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>기존에는 유닛 테스트를 적용하면서 각 테스트의 의존성 중<br>공유 의존성 들에 대해서는 MockClass를 만들어서 테스트 더블을 진행했는데요</p>
+<p>대표적인 공유 객체 중 하나인 데이터베이스의 경우<br>비즈니스 요구사항이 복잡해지자 MockClass도 함께 복잡성이 증가되어<br>MockClass를 유지하는 데에도 비용이 많이 발생하게 되었고<br>실제 시스템의 동작을 잘 반영하지 못하는 경우 유의미한 테스트를 진행할 수 없는 경우가 있었습니다.</p>
+<p>그러므로  <code>NestJS</code> <code>Prisma</code> <code>Jest</code> 환경에서 <code>Docker</code>를 사용해서 테스트 DB를 구성하여<br>테스트 환경을 구축하고 추가로 자동화까지 진행한 내용을 소개해 드리고자 합니다.</p>
+<h1 id="테스트-DB-amp-Prisma를-사용하는-테스트-코드-작성하기"><a href="#테스트-DB-amp-Prisma를-사용하는-테스트-코드-작성하기" class="headerlink" title="테스트 DB &amp; Prisma를 사용하는 테스트 코드 작성하기"></a>테스트 DB &amp; Prisma를 사용하는 테스트 코드 작성하기</h1><hr>
+<h2 id="1-Docker-compose-로-테스트-DB-구성"><a href="#1-Docker-compose-로-테스트-DB-구성" class="headerlink" title="1. Docker-compose 로 테스트 DB 구성"></a>1. Docker-compose 로 테스트 DB 구성</h2><pre><code class="hljs yml"><span class="hljs-comment"># docker-compose.yml</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">muzi-db:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">postgres:16</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">POSTGRES_USER:</span> <span class="hljs-string">muzi</span>
+      <span class="hljs-attr">POSTGRES_PASSWORD:</span> <span class="hljs-string">muzi</span>
+      <span class="hljs-attr">POSTGRES_DB:</span> <span class="hljs-string">Muzi</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">5432</span><span class="hljs-string">:5432</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./environments/docker/postgres/data:/var/lib/postgresql/data</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">muzi</span>
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">muzi:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">muziNetwork</span>
+    <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span></code></pre>
+
+<p>프로젝트 루트에 docker-compose 파일을 생성합니다.<br>저는 postgres 16 버전을 사용했습니다.</p>
+<h2 id="2-Script-추가"><a href="#2-Script-추가" class="headerlink" title="2. Script 추가"></a>2. Script 추가</h2><pre><code class="hljs json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span>
+  <span class="hljs-attr">&quot;docker:up&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;docker-compose up -d&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;docker:down&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;docker-compose down&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;prisma:migrate:local&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dotenv -e environments/.env.local -- pnpm exec prisma migrate dev&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;test:local&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pnpm docker:up &amp;&amp; pnpm prisma:migrate:local &amp;&amp; dotenv -e environments/.env.local -- jest --passWithNoTests &amp;&amp; pnpm docker:down&quot;</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">&#125;</span></code></pre>
+
+<p>테스트 구동을 위한 스크립트를 추가합니다.<br>각 스크립트는 다음과 같은 역할을 합니다.</p>
+<h3 id="docker-up"><a href="#docker-up" class="headerlink" title="docker:up"></a>docker:up</h3><p><code>docker-compose up -d</code> 를 실행하여 Docker-compose에 정의된 컨테이너를 백그라운드 모드로 실행합니다.</p>
+<h3 id="docker-down"><a href="#docker-down" class="headerlink" title="docker:down"></a>docker:down</h3><p>Docker-compose에 정의된 서비스를 중지하고 컨테이너를 삭제합니다.</p>
+<h3 id="prisma-migrate-local"><a href="#prisma-migrate-local" class="headerlink" title="prisma:migrate:local"></a>prisma:migrate:local</h3><p>명령어를 실행하기 전 <code>dotenv -e environments/.env.local</code> 환경변수를 로드하고<br><code>prisma migrate dev</code> 명령어를 통해 테스트 DB와 Prisma 스키마 간에 동기화 합니다.</p>
+<h3 id="test-local"><a href="#test-local" class="headerlink" title="test:local"></a>test:local</h3><p>위 명령어를 조합하여 아래 순서대로 테스트를 시작합니다.</p>
+<ol>
+<li><code>docker:up</code> : 테스트 DB를 실행합니다.</li>
+<li><code>prisma:migrate:local</code>: 테스트 DB와 Prisma 스키마 간에 동기화합니다.</li>
+<li><code>dotenv -e environments/.env.local</code> Jest 테스트 전 환경변수를 로드합니다.</li>
+<li><code>jest --passWithNoTests</code> 테스트를 시작합니다.</li>
+<li><code>docker:down</code> 테스트 DB를 중지하고 정리합니다.</li>
+</ol>
+<h2 id="3-테스트-코드-작성하기"><a href="#3-테스트-코드-작성하기" class="headerlink" title="3. 테스트 코드 작성하기"></a>3. 테스트 코드 작성하기</h2><p>테스트 DB를 연결한 테스트 코드를 작성해 보겠습니다.<br><code>PrismaService</code>의 경우 dotenv 명령어로 로드한 환경변수 파일의 <code>DATABASE_URL</code>를 통해 데이터베이스에 연결합니다.</p>
+<pre><code class="hljs TypeScript"><span class="hljs-comment">// campaign.service.spec.ts</span>
+
+<span class="hljs-title function_">describe</span>(<span class="hljs-string">&#x27;CampaignService&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">campaignService</span>: <span class="hljs-title class_">CampaignService</span>;
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">prismaService</span>: <span class="hljs-title class_">PrismaService</span>;
+
+  <span class="hljs-comment">// 테스트 시작 전 한 번 실행됩니다.</span>
+  <span class="hljs-title function_">beforeAll</span>(<span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-comment">// NestJS에서 제공하는 createTestingModule을 사용해 의존성을 DI합니다.</span>
+    <span class="hljs-comment">// 이경우 CampaignRepository 가 PrismaService를 의존합니다.</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">module</span>: <span class="hljs-title class_">TestingModule</span> = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Test</span>.<span class="hljs-title function_">createTestingModule</span>(&#123;
+    <span class="hljs-attr">providers</span>: [
+      <span class="hljs-title class_">CampaignService</span>,
+      &#123; <span class="hljs-attr">provide</span>: <span class="hljs-variable constant_">CAMPAIGN_REPOSITORY</span>, <span class="hljs-attr">useClass</span>: <span class="hljs-title class_">CampaignRepository</span> &#125;,
+      <span class="hljs-title class_">PrismaService</span>,
+      ],
+    &#125;).<span class="hljs-title function_">compile</span>();
+  
+    campaignService = <span class="hljs-variable language_">module</span>.<span class="hljs-property">get</span>&lt;<span class="hljs-title class_">CampaignService</span>&gt;(<span class="hljs-title class_">CampaignService</span>);
+    prismaService = <span class="hljs-variable language_">module</span>.<span class="hljs-property">get</span>&lt;<span class="hljs-title class_">PrismaService</span>&gt;(<span class="hljs-title class_">PrismaService</span>);
+  
+  &#125;);
+
+  <span class="hljs-comment">// 각각의 테스트가 종료될 때마다 실행됩니다.</span>
+  <span class="hljs-title function_">afterEach</span>(<span class="hljs-keyword">async</span> () =&gt; &#123;
+  <span class="hljs-comment">// 테스트 DB의 정보를 초기화합니다.</span>
+  <span class="hljs-keyword">await</span> prismaService.$transaction([prismaService.<span class="hljs-property">userCampaign</span>.<span class="hljs-title function_">deleteMany</span>(), prismaService.<span class="hljs-property">campaign</span>.<span class="hljs-title function_">deleteMany</span>(), prismaService.<span class="hljs-property">user</span>.<span class="hljs-title function_">deleteMany</span>()]);
+  <span class="hljs-comment">// jest mock을 초기화 합니다.</span>
+  jest.<span class="hljs-title function_">clearAllMocks</span>();
+  &#125;);
+
+  <span class="hljs-comment">// 모든 테스트 종료 후 한 번 실행됩니다.</span>
+  <span class="hljs-title function_">afterAll</span>(<span class="hljs-keyword">async</span> () =&gt; &#123;
+  <span class="hljs-comment">// 테스트 DB 연결을 종료합니다.</span>
+    <span class="hljs-keyword">await</span> prismaService.$disconnect();
+  &#125;);
+
+&#125;);
+</code></pre>
+
+<p>위처럼 구성할 경우 다음과 같은 수명주기를 따르게 됩니다.</p>
+<ul>
+<li>테스트가 실행될 때마다 DB에 연결됩니다.</li>
+<li>각각의 테스트 케이스가 종료되면 지정된 DB 테이블도 초기화됩니다.</li>
+<li>모든 테스트가 종료되면 DB연결을 종료합니다.</li>
+</ul>
+<h2 id="4-테스트-케이스-추가하기"><a href="#4-테스트-케이스-추가하기" class="headerlink" title="4. 테스트 케이스 추가하기"></a>4. 테스트 케이스 추가하기</h2><pre><code class="hljs TypeScript"><span class="hljs-comment">// campaign.service.spec.ts</span>
+
+<span class="hljs-title function_">describe</span>(<span class="hljs-string">&#x27;CampaignService&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;
+  <span class="hljs-comment">// ...위와 동일</span>
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&#x27;findMany&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&#x27;삭제된 캠페인은 목록에서 제외한다&#x27;</span>, <span class="hljs-keyword">async</span> () =&gt; &#123;
+      <span class="hljs-comment">// given</span>
+      <span class="hljs-comment">// 삭제된 캠페인 데이터 1건 등록</span>
+      <span class="hljs-keyword">const</span> campaignList = [&#123;
+        <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;title1&#x27;</span>,
+        <span class="hljs-attr">deletedAt</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(),
+        <span class="hljs-attr">updatedAt</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(),
+        <span class="hljs-attr">createdAt</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(),
+      &#125;];
+      <span class="hljs-keyword">await</span> prismaService.<span class="hljs-property">campaign</span>.<span class="hljs-title function_">create</span>(campaignList);
+      
+      <span class="hljs-comment">// when</span>
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> campaignService.<span class="hljs-title function_">findMany</span>(&#123; <span class="hljs-attr">size</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">page</span>: <span class="hljs-number">1</span> &#125;);
+      <span class="hljs-comment">// then</span>
+      <span class="hljs-title function_">expect</span>(result).<span class="hljs-title function_">toEqual</span>(&#123; <span class="hljs-attr">list</span>: [], <span class="hljs-attr">total</span>: <span class="hljs-number">0</span> &#125;);
+    &#125;);
+  &#125;);
+
+&#125;);
+</code></pre>
+
+<p><code>findMany</code> 에 대한 테스트 케이스 하나를 Given-When-Then 패턴으로 작성했습니다.</p>
+<ul>
+<li>Given(상태) : 삭제된 캠페인이 한 건 등록되어 있다.</li>
+<li>When(행동) : 캠페인 리스트를 조회했다.</li>
+<li>Then(예상되는 결과) : 빈 리스트를 반환한다.</li>
+</ul>
+<h2 id="5-테스트-코드-실행하기"><a href="#5-테스트-코드-실행하기" class="headerlink" title="5. 테스트 코드 실행하기"></a>5. 테스트 코드 실행하기</h2><p><img src="https://github.com/argon1025/muzi-backend/assets/55491354/88900d84-1ef6-4f10-815a-7549c6340a72" alt="image"></p>
+<p><code>pnpm test:local</code> 명령어를 통해 테스트를 실행한 결과<br>테스트 DB를 구성하고 테스트를 진행한 후 테스트 DB 컨테이너를 삭제하는 것까지 확인할 수 있었습니다.</p>
+<p>이로써 복잡한 MockClass를 대신해서 테스트 DB로 테스트를 진행할 수 있게 되었습니다.</p>
+<h1 id="Github-Actions를-사용해-PR시-테스트-및-리포트-작성하기"><a href="#Github-Actions를-사용해-PR시-테스트-및-리포트-작성하기" class="headerlink" title="Github Actions를 사용해 PR시 테스트 및 리포트 작성하기"></a>Github Actions를 사용해 PR시 테스트 및 리포트 작성하기</h1><hr>
+<p>현재 프로젝트에서는 기능별 브랜치를 나누어 개발한 뒤<br>PR을 통해서 메인 브랜치에 병합하는 프로세스로 개발을 진행하고 있습니다.<br>PR을 등록하게 되면 자동으로 코드 테스트 및 테스트 리포트를 작성하도록 구성해 보겠습니다.</p>
+<h2 id="1-Jest-junit-설치"><a href="#1-Jest-junit-설치" class="headerlink" title="1. Jest-junit 설치"></a>1. Jest-junit 설치</h2><pre><code class="hljs bash">pnpm i jest-junit -D</code></pre>
+
+<p>Github Actions 의 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/test-reporter">Test-reporter</a> 를 사용해서 리포트를 작성하려고 합니다.<br>해당 액션의 경우 JUnit을 통해서 리포트를 생성하기 때문에<br>Jest에서 JUnit 리포트를 생성할 수 있도록 해당 의존성을 설치합니다.</p>
+<h2 id="2-Script-추가-1"><a href="#2-Script-추가-1" class="headerlink" title="2. Script 추가"></a>2. Script 추가</h2><pre><code class="hljs json"><span class="hljs-comment">// package.json</span>
+<span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span>
+  <span class="hljs-attr">&quot;test:ci&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pnpm docker:up &amp;&amp; pnpm prisma:migrate:test &amp;&amp; dotenv -e environments/.env.local -- jest --passWithNoTests --ci --reporters=default --reporters=jest-junit &amp;&amp; pnpm docker:down&quot;</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">&#125;</span></code></pre>
+
+<p><code>test:ci</code> 명령어의 경우 위 섹션에서 추가했던 <code>test:local</code> 와 플로우 상 동일하며<br>테스트 후 Junit 리포트를 작성하도록 Jest 파라미터를 추가했습니다.</p>
+<p><img src="https://github.com/argon1025/muzi-backend/assets/55491354/505f481e-0418-48d2-a833-c7892ba81630" alt="image"><br>해당 명령어를 실행하면 프로젝트 루트에 <code>junit.xml</code>이 생성되는것을 확인할 수 있었습니다.</p>
+<h2 id="3-Github-Action-YML-생성"><a href="#3-Github-Action-YML-생성" class="headerlink" title="3. Github Action YML 생성"></a>3. Github Action YML 생성</h2><pre><code class="hljs yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">pull_request_test</span>
+
+<span class="hljs-comment"># Pull Request가 생성될 경우 실행됩니다.</span>
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">pull_request:</span>
+    <span class="hljs-attr">branches:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&#x27;**&#x27;</span>
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">testAndReport:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    <span class="hljs-attr">steps:</span>
+      <span class="hljs-comment"># 코드에 접근합니다.</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name :</span> <span class="hljs-string">Checkout</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>
+
+      <span class="hljs-comment"># pnpm 패키지 매니저 설치</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">PNPM</span> <span class="hljs-string">사용</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">pnpm/action-setup@v2</span>
+        <span class="hljs-attr">with:</span>
+        <span class="hljs-attr">version:</span> <span class="hljs-string">latest</span>
+
+      <span class="hljs-comment"># NodeJS 설치, 프로젝트 루트 .nvmrc 정보를 참조하여 버전을 선택</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">NodeJS</span> <span class="hljs-string">설정</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v4</span>
+        <span class="hljs-attr">with:</span>
+        <span class="hljs-attr">node-version-file:</span> <span class="hljs-string">&#x27;.nvmrc&#x27;</span>
+        <span class="hljs-attr">cache:</span> <span class="hljs-string">&#x27;pnpm&#x27;</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">의존성</span> <span class="hljs-string">설치</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">pnpm</span> <span class="hljs-string">i</span>
+
+      <span class="hljs-comment"># 위에서 정의한 테스트 스크립트 실행</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">테스트</span> <span class="hljs-string">및</span> <span class="hljs-string">결과</span> <span class="hljs-string">저장</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">pnpm</span> <span class="hljs-string">test:ci</span>
+
+      <span class="hljs-comment"># 테스트 후 생성된 junit.xml를 기반으로 리포트 생성</span>
+      <span class="hljs-comment"># secrets.GITHUB_TOKEN 는 액션 시작 시 자동 할당</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">리포트</span> <span class="hljs-string">생성</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">dorny/test-reporter@v1</span>
+        <span class="hljs-attr">if:</span> <span class="hljs-string">success()</span> <span class="hljs-string">||</span> <span class="hljs-string">failure()</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;테스트 결과 리포트&quot;</span>
+          <span class="hljs-attr">token:</span> <span class="hljs-string">$&#123;&#123;</span> <span class="hljs-string">secrets.GITHUB_TOKEN</span> <span class="hljs-string">&#125;&#125;</span>
+          <span class="hljs-attr">path:</span> <span class="hljs-string">junit.xml</span>
+          <span class="hljs-attr">reporter:</span> <span class="hljs-string">jest-junit</span>
+          <span class="hljs-attr">fail-on-error:</span> <span class="hljs-string">&#x27;true&#x27;</span></code></pre>
+
+<p>다음과 같이 액션을 정의하게 되면 PR에서 리포트를 확인하실 수 있게 됩니다.</p>
+<p><img src="https://github.com/argon1025/muzi-backend/assets/55491354/c069753d-33c2-4674-bed3-914e68163057" alt="image"><br><img src="https://github.com/argon1025/muzi-backend/assets/55491354/88602c7a-d807-47de-9c66-fb01a1bb786d" alt="image"></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><hr>
+<p><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-client/testing/integration-testing">https://www.prisma.io/docs/orm/prisma-client/testing/integration-testing</a><br><a target="_blank" rel="noopener" href="https://www.prisma.io/docs/orm/prisma-client/testing/unit-testing">https://www.prisma.io/docs/orm/prisma-client/testing/unit-testing</a><br><a target="_blank" rel="noopener" href="https://jojoldu.tistory.com/602">https://jojoldu.tistory.com/602</a></p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
