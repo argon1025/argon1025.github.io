@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0a0908">
+<title>2026 Tokyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Mona+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+:root{
+  --accent-blue:#0099ff;--accent-blue-ring:rgba(0,153,255,.15);
+  --gradient-violet:#7c5cff;--gradient-magenta:#e0399b;--gradient-orange:#ff7a3d;--gradient-coral:#ff5a6e;
+  --brand-coral:var(--gradient-coral);--brand-purple:var(--gradient-violet);
+  --canvas:#0a0908;--surface:#181818;--surface-2:#242424;--surface-soft:#121110;
+  --hairline:rgba(255,255,255,.10);--hairline-soft:rgba(255,255,255,.06);
+  --ink:#fff;--ink-strong:#fff;--ink-muted:#999;--primary:#fff;
+  --charcoal:#999;--slate:#999;--steel:#999;--stone:#6b6b6b;--on-primary:#0a0908;
+  --r-md:8px;--r-lg:12px;--r-xl:16px;--r-xxl:20px;--r-xxxl:24px;--r-hero:32px;--r-full:9999px;
+  --s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:20px;--s-xl:24px;--s-xxl:32px;--s-xxxl:40px;
+  --s-section:64px;--s-hero:96px;
+  --shadow-2:rgba(255,255,255,.10) 0px .5px 0px 0px inset,rgba(0,0,0,.25) 0px 10px 30px 0px;
+  --shadow-4:rgba(255,255,255,.10) 0px .5px 0px 0px inset,rgba(0,0,0,.35) 0px 12px 30px -4px;
+  --font:"Inter",system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-display:"Mona Sans","Inter",system-ui,"Helvetica Neue",Arial,sans-serif;
+  --nav-h:66px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);font-size:16px;line-height:1.5;color:var(--ink);background:var(--canvas);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"cv01","cv05","cv09","cv11","ss03","ss07","dlig";
+  font-variant-ligatures:discretionary-ligatures}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--s-md)}
+.t-hero{font:500 80px/0.95 var(--font-display);letter-spacing:-4px}
+.t-heading-lg{font:500 40px/1.1 var(--font-display);letter-spacing:-1.8px}
+.t-heading-md{font:500 32px/1.13 var(--font-display);letter-spacing:-1px}
+.t-heading-sm{font:500 24px/1.2 var(--font-display);letter-spacing:-.6px}
+.t-card-title{font:600 20px/1.3 var(--font);letter-spacing:-.5px}
+.t-subtitle{font:400 18px/1.3 var(--font);letter-spacing:-.18px}
+.t-body-md{font:400 16px/1.4 var(--font);letter-spacing:-.16px}
+.t-body-sm{font:400 14px/1.4 var(--font);letter-spacing:-.14px}
+.t-micro{font:400 12px/1.3 var(--font);letter-spacing:-.12px}
+.leaflet-div-icon.marker-pin{background:transparent;border:none}
+/* Leaflet 다크 팝업 */
+.leaflet-popup-content-wrapper{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-2)}
+.leaflet-popup-tip{background:var(--surface)}
+.leaflet-popup-content a{color:var(--accent-blue)}
+.leaflet-container a.leaflet-popup-close-button{color:var(--ink-muted)}
+.leaflet-control-attribution{background:rgba(10,9,8,.7);color:var(--ink-muted)}
+.leaflet-control-attribution a{color:var(--ink-muted)}
+
+/* 히어로 — gradient spotlight 카드(DESIGN 시그너처): 다크 캔버스 위 violet→magenta→coral 발광 */
+.hero{margin:var(--s-xl) 0 var(--s-lg);}
+.hero-card{position:relative;overflow:hidden;color:#fff;border-radius:var(--r-hero);
+  padding:var(--s-hero) var(--s-xl);text-align:center;
+  background:radial-gradient(120% 120% at 20% 0%,var(--gradient-violet) 0%,var(--gradient-magenta) 55%,var(--gradient-coral) 115%)}
+.hero-card::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(100% 70% at 80% 110%,rgba(255,122,61,.4),transparent 60%)}
+.hero-card h1{margin:0;color:#fff;position:relative}
+.hero-tag{margin-top:var(--s-md);opacity:.92;position:relative}
+
+/* 선택 네비 (sticky) — 레퍼런스 날짜 헤더 톤. 가로 스크롤. */
+.trip-nav{position:sticky;top:0;z-index:30;display:flex;gap:var(--s-xs);align-items:stretch;
+  background:rgba(10,9,8,.8);backdrop-filter:saturate(140%) blur(8px);
+  padding:var(--s-sm) 2px;margin-bottom:var(--s-md);border-bottom:1px solid var(--hairline-soft);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.nav-item{flex:0 0 auto;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+  min-width:64px;background:transparent;border:none;border-radius:var(--r-md);
+  padding:6px 12px 8px;font-family:var(--font);color:var(--stone);position:relative}
+.nav-item .nav-kicker{font:600 11px var(--font);letter-spacing:.3px;text-transform:uppercase;color:var(--stone)}
+.nav-item .nav-label{font:600 15px/1.2 var(--font);color:var(--steel);white-space:nowrap;max-width:160px;
+  overflow:hidden;text-overflow:ellipsis}
+.nav-item[aria-selected="true"] .nav-kicker{color:var(--accent-blue)}
+.nav-item[aria-selected="true"] .nav-label{color:var(--ink)}
+.nav-item[aria-selected="true"]::after{content:"";position:absolute;left:50%;transform:translateX(-50%);
+  bottom:-1px;width:22px;height:3px;border-radius:var(--r-full);background:var(--accent-blue)}
+.nav-item:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.view[hidden]{display:none}
+
+/* 카드 공통 */
+.card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-xl);
+  padding:var(--s-xl);margin-bottom:var(--s-md)}
+
+/* 체크리스트 */
+.topic-title{margin:0 0 var(--s-sm)}
+.check-row{display:flex;align-items:center;gap:var(--s-sm);min-height:44px;padding:2px 0;cursor:pointer}
+.check-row input{width:20px;height:20px;flex:0 0 auto;accent-color:var(--accent-blue)}
+.check-row.done span{color:var(--stone);text-decoration:line-through}
+
+/* 일정 인트로 */
+.itin-intro{margin:var(--s-md) 0 var(--s-lg)}
+.itin-intro .it-title{margin:0;color:var(--ink)}
+.itin-intro .it-sub{color:var(--slate);margin-top:4px}
+.itin-intro .it-desc{color:var(--charcoal);margin-top:var(--s-sm);white-space:pre-wrap}
+
+/* 일정 view 레이아웃: 기본(모바일)=세로(지도 상단), 데스크톱=좌 일정 / 우 지도 */
+.itin-cols{display:flex;flex-direction:column}
+.itin-cols .map-sticky{order:-1}
+.itin-main{min-width:0}
+
+/* 지도 (보조) — sticky: 네비 바로 아래 고정 */
+.map-sticky{position:sticky;top:var(--nav-h);z-index:5;padding-top:2px;padding-bottom:var(--s-sm);
+  background:var(--canvas)}
+.itin-map{height:38vh;min-height:240px;border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid var(--hairline);box-shadow:var(--shadow-2)}
+.map-hint{color:var(--steel);font-size:12px;text-align:center;padding:6px 0 2px}
+.no-map{color:var(--steel);padding:var(--s-md);text-align:center}
+
+/* 세로 타임라인 (메인) */
+.timeline{padding-top:var(--s-sm)}
+.tl-item{position:relative;display:flex;gap:var(--s-md);padding-bottom:var(--s-md)}
+.tl-rail{flex:0 0 22px;position:relative;display:flex;justify-content:center}
+/* 연결선: 노드 중심(top 13px)부터 다음 아이템까지. 마지막 아이템은 트림. */
+.tl-rail::before{content:"";position:absolute;top:0;bottom:calc(-1 * var(--s-md));left:50%;
+  transform:translateX(-50%);width:2px;background:var(--hairline)}
+.tl-item:first-child .tl-rail::before{top:13px}
+.tl-item:last-child .tl-rail::before{display:none}
+.tl-node{position:relative;z-index:1;margin-top:7px;width:13px;height:13px;border-radius:var(--r-full);
+  background:var(--surface-2);border:3px solid var(--ink-muted)}
+/* 카드: surface-1 + hairline(DESIGN card 기본). 좌측 액센트만 강조색. */
+.tl-card{flex:1;min-width:0;border-radius:var(--r-lg);background:var(--surface);
+  border:1px solid var(--hairline);padding:var(--s-md) var(--s-lg);text-align:left;font-family:var(--font);
+  border-left:3px solid var(--ink-muted)}
+button.tl-card{cursor:pointer;width:100%;transition:box-shadow .16s ease}
+button.tl-card:hover{box-shadow:var(--shadow-2)}
+button.tl-card:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tl-card.note{background:var(--surface-soft);border-style:dashed;border-left-style:solid}
+.tl-head{display:flex;align-items:center;gap:var(--s-xs)}
+.num{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;
+  padding:0 7px;border-radius:var(--r-full);background:var(--primary);color:var(--on-primary);font:600 12px var(--font)}
+.num.opt{background:var(--gradient-violet);color:#fff}
+.emoji{flex:0 0 auto;font-size:18px}
+.tl-title{flex:1;min-width:0;font:600 14px/1.4 var(--font);color:var(--ink)}
+.tl-card.note .tl-title{font-weight:500;color:var(--slate)}
+.locate{flex:0 0 auto;color:var(--steel);font-size:16px}
+.chip{flex:0 0 auto;font:600 12px var(--font);color:var(--slate);background:var(--surface);
+  border:1px solid var(--hairline);border-radius:var(--r-full);padding:2px 8px}
+.chip.dur{color:var(--charcoal);background:var(--surface-soft)}
+.badge-approx{flex:0 0 auto;font:500 12px var(--font);color:var(--ink-muted);background:var(--surface-2);
+  border-radius:var(--r-full);padding:1px 8px}
+.tl-detail{margin-top:var(--s-xs)}
+.memo{color:var(--charcoal);font-size:14px;margin-top:4px;white-space:pre-wrap}
+.tags{color:var(--slate);font-size:12px;margin-top:4px}
+.meta{color:var(--slate);font-size:13px;margin-top:4px}
+.cand{border-top:1px solid var(--hairline-soft);padding-top:var(--s-xs);margin-top:var(--s-xs)}
+.cand-title{font:600 14px var(--font);color:var(--ink)}
+
+/* 구글맵 버튼 — 지도 팝업 전용. charcoal pill(DESIGN secondary), 컴팩트 */
+.gmap-btn{display:inline-flex;align-items:center;gap:5px;margin-top:var(--s-sm);
+  background:var(--surface-2);color:var(--ink);border:1px solid transparent;text-decoration:none;
+  border-radius:var(--r-full);padding:6px 14px;font:600 13px/1.3 var(--font)}
+.gmap-btn.sm{padding:5px 12px;font-size:12px}
+
+footer{color:var(--ink-muted);text-align:center;padding:var(--s-section) 0 var(--s-xxl)}
+
+@media (max-width:767px){
+  .wrap{padding:0 var(--s-sm)}
+  .t-hero{font-size:40px;letter-spacing:-1px}
+  .t-heading-lg{font-size:28px}
+  .t-heading-md{font-size:24px}
+  .hero-card{padding:var(--s-section) var(--s-md)}
+  .itin-map{height:34vh;min-height:220px}
+  .nav-item{min-width:56px;padding:6px 10px 8px}
+  .nav-item .nav-label{font-size:14px;max-width:120px}
+  .tl-rail{flex:0 0 18px}
+  .tl-card{padding:var(--s-sm)}
+  .check-row input{width:24px;height:24px}
+}
+
+/* 데스크톱: 일정 = 좌(타임라인) / 우(지도) 2단, 지도는 우측에서 뷰포트 높이로 sticky */
+@media (min-width:880px){
+  .itin-cols{flex-direction:row;align-items:flex-start;gap:var(--s-xl)}
+  .itin-main{flex:0 0 350px;width:350px;min-width:0}
+  .itin-cols .map-sticky{order:0;flex:1;min-width:0;padding-bottom:0}
+  .itin-cols .itin-map{height:calc(100vh - var(--nav-h) - var(--s-xl));min-height:480px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script id="itin-data" type="application/json">{"name":"2026 Tokyo","checklists":[{"id":"RgyMcqmuNUsTDXVYX3U4e","title":"공항에서 같이해요","items":[{"id":"rJcTm3_W0dAjvyPqA-kxl","text":"여행자 보험","done":false},{"id":"UPhBNpmZc6tXj0I8df70p","text":"eSIM 등록","done":false},{"id":"_MMr-6LH5jpd6kAsZN7fs","text":"Visit Japan Web","done":false},{"id":"wbVpwfumCkK2IzchZaI7Z","text":"교통카드 세팅","done":false}]},{"id":"yxfm-yYAxsC1FUQBErkTw","title":"꼭 챙겨요","items":[{"id":"kyxhJMDu85whaNlY-g4bI","text":"충전기","done":false},{"id":"79gmXzOPgp-zUzbZmVLvA","text":"보조배터리 (용량 큰거는 못들고가요)","done":false},{"id":"o7qTVJC4JH-_nn4d05r6H","text":"접이식 우산 or 양산 (더워요)","done":false},{"id":"cp81XdsfSYui84UdUG5FN","text":"여권","done":false},{"id":"qa5oLin6pBemExx2cxLzi","text":"이어폰","done":false},{"id":"ji5ZVC41EVNRme2vE9YoD","text":"걷기 편한 운동화","done":false}]}],"itineraries":[{"id":"gqaE2DLCQPEnaJtPVz341","title":"5/28 목","subtitle":"출발 전날","description":"대구에서 서울로","blocks":[{"blockId":"8YYGArSQVTOlcmvkryaU2","kind":"stop","number":1,"emoji":"🚆","title":"수서역","memo":"18:11 도착","tags":[],"mode":"","durationMin":0,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%88%98%EC%84%9C%EC%97%AD/data=!4m2!3m1!1s0x357ca5c3b1e6e449:0x20e5a572b4d48567","approx":false,"hasPoint":true,"flyTo":[37.4874685,127.1013245]},{"blockId":"v0bSHnZoh8_lreOS9E1N5","kind":"note","number":null,"emoji":"🚕","title":"택시","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[37.490834652406974,127.11206361718752]},{"blockId":"7yaUNFdYkkn4H7i0zVGY4","kind":"stop","number":2,"emoji":"🏨","title":"문정 파크하비오","memo":"체크인","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[37.49420080481394,127.12280273437501]},{"blockId":"ZhGPT4OBKMIAAmprkb_qS","kind":"note","number":null,"emoji":"🚶","title":"지하철 or 택시","memo":"","tags":[],"mode":"기차","durationMin":20,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[37.501537788993446,127.09295511245729]},{"blockId":"c1H6dtiZHSgr2QgPIzjfh","kind":"stop","number":3,"emoji":"🛍️","title":"삼성역 자라홈","memo":"환불,,","tags":[],"mode":"","durationMin":30,"optionLabel":"","candidates":[],"url":"https://naver.me/F2Zuqiqk","approx":false,"hasPoint":true,"flyTo":[37.508874773172955,127.06310749053956]},{"blockId":"f9nhE_aXCYly83Vb6pt2L","kind":"note","number":null,"emoji":"🚇","title":"지하철","memo":"","tags":[],"mode":"지하철","durationMin":20,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[37.51066943658648,127.08282524526979]},{"blockId":"CXn0r5LPcIPsSJCDm9hSD","kind":"stop","number":4,"emoji":"🛍️","title":"롯데월드타워","memo":"잠실 구경, 식사","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%A1%AF%EB%8D%B0%EC%9B%94%EB%93%9C%ED%83%80%EC%9B%8C/data=!4m2!3m1!1s0x357ca50a915f665b:0xabeb10cd5efdfce2","approx":false,"hasPoint":true,"flyTo":[37.5124641,127.102543]}],"markers":[{"blockId":"8YYGArSQVTOlcmvkryaU2","lat":37.4874685,"lng":127.1013245,"icon":"stop","number":1,"emoji":"🚆","popup":{"kind":"stop","title":"수서역","approx":false,"memo":"18:11 도착","tags":[],"url":"https://www.google.com/maps/place/%EC%88%98%EC%84%9C%EC%97%AD/data=!4m2!3m1!1s0x357ca5c3b1e6e449:0x20e5a572b4d48567","durationMin":0}},{"blockId":"v0bSHnZoh8_lreOS9E1N5","lat":37.490834652406974,"lng":127.11206361718752,"icon":"note","number":null,"emoji":"🚕","popup":{"kind":"note","emoji":"🚕","text":"택시","mode":"","durationMin":null}},{"blockId":"7yaUNFdYkkn4H7i0zVGY4","lat":37.49420080481394,"lng":127.12280273437501,"icon":"stop","number":2,"emoji":"🏨","popup":{"kind":"stop","title":"문정 파크하비오","approx":false,"memo":"체크인","tags":[],"url":"","durationMin":null}},{"blockId":"ZhGPT4OBKMIAAmprkb_qS","lat":37.501537788993446,"lng":127.09295511245729,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"지하철 or 택시","mode":"기차","durationMin":20}},{"blockId":"c1H6dtiZHSgr2QgPIzjfh","lat":37.508874773172955,"lng":127.06310749053956,"icon":"stop","number":3,"emoji":"🛍️","popup":{"kind":"stop","title":"삼성역 자라홈","approx":false,"memo":"환불,,","tags":[],"url":"https://naver.me/F2Zuqiqk","durationMin":30}},{"blockId":"f9nhE_aXCYly83Vb6pt2L","lat":37.51066943658648,"lng":127.08282524526979,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"지하철","mode":"지하철","durationMin":20}},{"blockId":"CXn0r5LPcIPsSJCDm9hSD","lat":37.5124641,"lng":127.102543,"icon":"stop","number":4,"emoji":"🛍️","popup":{"kind":"stop","title":"롯데월드타워","approx":false,"memo":"잠실 구경, 식사","tags":[],"url":"https://www.google.com/maps/place/%EB%A1%AF%EB%8D%B0%EC%9B%94%EB%93%9C%ED%83%80%EC%9B%8C/data=!4m2!3m1!1s0x357ca50a915f665b:0xabeb10cd5efdfce2","durationMin":null}}],"optionConnectors":[],"segments":[{"a":[37.4874685,127.1013245],"b":[37.490834652406974,127.11206361718752],"dashed":true},{"a":[37.490834652406974,127.11206361718752],"b":[37.49420080481394,127.12280273437501],"dashed":true},{"a":[37.49420080481394,127.12280273437501],"b":[37.501537788993446,127.09295511245729],"dashed":true},{"a":[37.501537788993446,127.09295511245729],"b":[37.508874773172955,127.06310749053956],"dashed":true},{"a":[37.508874773172955,127.06310749053956],"b":[37.51066943658648,127.08282524526979],"dashed":true},{"a":[37.51066943658648,127.08282524526979],"b":[37.5124641,127.102543],"dashed":true}],"bounds":[[37.4874685,127.1013245],[37.490834652406974,127.11206361718752],[37.49420080481394,127.12280273437501],[37.501537788993446,127.09295511245729],[37.508874773172955,127.06310749053956],[37.51066943658648,127.08282524526979],[37.5124641,127.102543]]},{"id":"zFv7FDj5qHS-XKa7yhqQY","title":"5/29 금 (출국 전)","subtitle":"출국 당일","description":"","blocks":[{"blockId":"zYQ3wACTLDeIwxPb-agOw","kind":"stop","number":1,"emoji":"🏬","title":"지연이집","memo":"4:10 탑승","tags":[],"mode":"","durationMin":0,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[37.479166360074586,127.10746049880983]},{"blockId":"XpYJCrwLf3IBy38T5q3GC","kind":"note","number":null,"emoji":"🚕","title":"중간 픽업","memo":"","tags":[],"mode":"택시","durationMin":15,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[37.494350356580554,127.10806131362916]},{"blockId":"fA3mpn830vSap4lTe01_2","kind":"stop","number":2,"emoji":"🏨","title":"아로와 웨스트 송리단길","memo":"4:30 탑승","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://naver.me/5wNUDvRf","approx":false,"hasPoint":true,"flyTo":[37.50953435308653,127.1086621284485]},{"blockId":"rjr8-PtF9gcaxvmYbD4Pf","kind":"note","number":null,"emoji":"🚕","title":"택시","memo":"","tags":[],"mode":"택시","durationMin":70,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[37.484100176543265,126.77531501422425]},{"blockId":"PDZHaMRq4ic3Ay37sGC--","kind":"stop","number":3,"emoji":"✈️","title":"인천국제공항","memo":"1터미널 5:40 도착","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x357b9a833a5efa59:0x8d4ba096cb5cbed4","approx":false,"hasPoint":true,"flyTo":[37.458666,126.4419679]}],"markers":[{"blockId":"zYQ3wACTLDeIwxPb-agOw","lat":37.479166360074586,"lng":127.10746049880983,"icon":"stop","number":1,"emoji":"🏬","popup":{"kind":"stop","title":"지연이집","approx":false,"memo":"4:10 탑승","tags":[],"url":"","durationMin":0}},{"blockId":"XpYJCrwLf3IBy38T5q3GC","lat":37.494350356580554,"lng":127.10806131362916,"icon":"note","number":null,"emoji":"🚕","popup":{"kind":"note","emoji":"🚕","text":"중간 픽업","mode":"택시","durationMin":15}},{"blockId":"fA3mpn830vSap4lTe01_2","lat":37.50953435308653,"lng":127.1086621284485,"icon":"stop","number":2,"emoji":"🏨","popup":{"kind":"stop","title":"아로와 웨스트 송리단길","approx":false,"memo":"4:30 탑승","tags":[],"url":"https://naver.me/5wNUDvRf","durationMin":null}},{"blockId":"rjr8-PtF9gcaxvmYbD4Pf","lat":37.484100176543265,"lng":126.77531501422425,"icon":"note","number":null,"emoji":"🚕","popup":{"kind":"note","emoji":"🚕","text":"택시","mode":"택시","durationMin":70}},{"blockId":"PDZHaMRq4ic3Ay37sGC--","lat":37.458666,"lng":126.4419679,"icon":"stop","number":3,"emoji":"✈️","popup":{"kind":"stop","title":"인천국제공항","approx":false,"memo":"1터미널 5:40 도착","tags":[],"url":"https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x357b9a833a5efa59:0x8d4ba096cb5cbed4","durationMin":null}}],"optionConnectors":[],"segments":[{"a":[37.479166360074586,127.10746049880983],"b":[37.494350356580554,127.10806131362916],"dashed":true},{"a":[37.494350356580554,127.10806131362916],"b":[37.50953435308653,127.1086621284485],"dashed":true},{"a":[37.50953435308653,127.1086621284485],"b":[37.484100176543265,126.77531501422425],"dashed":true},{"a":[37.484100176543265,126.77531501422425],"b":[37.458666,126.4419679],"dashed":true}],"bounds":[[37.479166360074586,127.10746049880983],[37.494350356580554,127.10806131362916],[37.50953435308653,127.1086621284485],[37.484100176543265,126.77531501422425],[37.458666,126.4419679]]},{"id":"l5Pr_VeMV9LheegDQUFw4","title":"5/29 (도착)","subtitle":"일본 도착!","description":"도착 후 짐 풀고 생필품 쇼핑","blocks":[{"blockId":"GS_K0s3e89v5_CYEUowrC","kind":"stop","number":1,"emoji":"✈️","title":"나리타 국제 공항","memo":"[10:30 도착] 3터미널","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%82%98%EB%A6%AC%ED%83%80+%EA%B5%AD%EC%A0%9C+%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x6022f379d1bd3757:0xd56e29a162771aa1","approx":false,"hasPoint":true,"flyTo":[35.770178,140.3843215]},{"blockId":"2eijWNxCbIE7W_seMSU2s","kind":"note","number":null,"emoji":"🚆","title":"[11:49 출발] 스카이라이너","memo":"","tags":[],"mode":"기차","durationMin":60,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.7415750653724,140.0802762752457]},{"blockId":"VuMSo4Kd1hYXfwEs-i53l","kind":"stop","number":2,"emoji":"🚆","title":"우에노역","memo":"[12:49 도착] 코인 락커 짐 보관","tags":[],"mode":"","durationMin":30,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.7129721307448,139.77623105049136]},{"blockId":"EbC8hdbH-0rSrUHSlH4om","kind":"note","number":null,"emoji":"🚇","title":"[13:00 출발]전철","memo":"","tags":[],"mode":"","durationMin":20,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.6975028153724,139.77244297524567]},{"blockId":"N8snBnSJc0IGGk3lF6iik","kind":"stop","number":3,"emoji":"🛍️","title":"도쿄 캐릭터스트리트","memo":"[14:00]도쿄역 지하에서 밥","tags":[],"mode":"","durationMin":60,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EC%BF%84+%EC%BA%90%EB%A6%AD%ED%84%B0%EC%8A%A4%ED%8A%B8%EB%A6%AC%ED%8A%B8/data=!4m2!3m1!1s0x60188bf95f25e619:0x103bd7d05407fec7","approx":false,"hasPoint":true,"flyTo":[35.6820335,139.7686549]},{"blockId":"zSkC1aypaDvs4T_3Sydc1","kind":"stop","number":4,"emoji":"🛍️","title":"나카가와 마사시치상점 도쿄본점","memo":"[14:30]쇼핑","tags":["킷테"],"mode":"","durationMin":30,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%82%98%EC%B9%B4%EA%B0%80%EC%99%80+%EB%A7%88%EC%82%AC%EC%8B%9C%EC%B9%98%EC%83%81%EC%A0%90+%EB%8F%84%EC%BF%84%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188bfa4cd2ded1:0x59ee6a0ea6aa3675","approx":false,"hasPoint":true,"flyTo":[35.6794891,139.7652099]},{"blockId":"r0l09SpaHNedIxKmjuv39","kind":"option","number":5,"emoji":"🔀","title":"[15:00] 카페에서 쉬어가기","memo":"","tags":[],"mode":"","durationMin":30,"optionLabel":"[15:00] 카페에서 쉬어가기","candidates":[{"title":"미쓰비시1호관미술관","emoji":"🍰","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EB%AF%B8%EC%93%B0%EB%B9%84%EC%8B%9C1%ED%98%B8%EA%B4%80%EB%AF%B8%EC%88%A0%EA%B4%80/data=!4m2!3m1!1s0x60188bfa653e26bb:0xf45c085d037d8411"},{"title":"에쉬레 메종 뒤 부르","emoji":"🍰","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%97%90%EC%89%AC%EB%A0%88+%EB%A9%94%EC%A2%85+%EB%92%A4+%EB%B6%80%EB%A5%B4/data=!4m2!3m1!1s0x60188bfa0d273fe9:0xc0aab5e8979d0d8"}],"url":"","approx":false,"hasPoint":true,"flyTo":[35.67854945,139.7629336]},{"blockId":"5iw9HIuu0_76GkurYzdxA","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":10,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.676511925,139.76296865]},{"blockId":"7mjdedKDIBdoIsHDqf3ob","kind":"stop","number":6,"emoji":"🍰","title":"쿠냐네노 미세","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%BF%A0%EB%83%90%EB%84%A4%EB%85%B8+%EB%AF%B8%EC%84%B8/data=!4m2!3m1!1s0x60188b4df86c0d47:0xcd81ce78148cdcf4","approx":false,"hasPoint":true,"flyTo":[35.6744744,139.7630037]},{"blockId":"nbD0FCPCmI_PnSMVYg5WS","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":11,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67244825,139.76188825000003]},{"blockId":"Y6xkbVt75-L_MLaFbVBJE","kind":"stop","number":7,"emoji":"🍰","title":"웨스트 긴자본점","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%9B%A8%EC%8A%A4%ED%8A%B8+%EA%B8%B4%EC%9E%90%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188bef2e27b899:0x27dc0c57eaef8dba","approx":false,"hasPoint":true,"flyTo":[35.6704221,139.7607728]},{"blockId":"-JSammzvX9uKtjiUXI3Ta","kind":"stop","number":8,"emoji":"🛍️","title":"도버 스트리트 마켓 긴자","memo":"[15:30 도착]","tags":[],"mode":"","durationMin":30,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EB%B2%84+%EC%8A%A4%ED%8A%B8%EB%A6%AC%ED%8A%B8+%EB%A7%88%EC%BC%93+%EA%B8%B4%EC%9E%90/data=!4m2!3m1!1s0x60188be61af12a0b:0x1511045c266c6525","approx":false,"hasPoint":true,"flyTo":[35.6704316,139.763143]},{"blockId":"hL9O8mqFYp-JaO4-1CU25","kind":"stop","number":9,"emoji":"🍰","title":"긴자 마네켄 (와플)","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.67135177787268,139.76455807685855]},{"blockId":"Wf6Ff601Z8pj2sAdXZRe_","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":5,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67256979797189,139.76577043533328]},{"blockId":"_ka5lfccK5Ri6u0BC5Gxx","kind":"stop","number":10,"emoji":"🛍️","title":"이토야 긴자","memo":"[15:40]","tags":[],"mode":"","durationMin":20,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/bV2hE31T1o1MnA9q8","approx":false,"hasPoint":true,"flyTo":[35.67378781807109,139.766982793808]},{"blockId":"zQKirBSJYi0FnLOZfMbI4","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":5,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67399699130665,139.76664483547214]},{"blockId":"4cPBkW80Os_W32baMF2ii","kind":"stop","number":11,"emoji":"🛍️","title":"긴자 로프트 젤리캣","memo":"[16:30]","tags":[],"mode":"","durationMin":30,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/9zT4kG9YfEt1cjS96","approx":false,"hasPoint":true,"flyTo":[35.67420616454221,139.76630687713626]},{"blockId":"8TMFe798Igmk7hIyuZfRG","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":5,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67484239306101,139.76503014564517]},{"blockId":"Oc-8p0Nz4g0Erjp0NvwaU","kind":"stop","number":12,"emoji":"🚇","title":"유라쿠초역","memo":"[17:00 출발]","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.67547862157982,139.76375341415408]},{"blockId":"A3xZaa6RFXoH0yUfxdmJf","kind":"stop","number":13,"emoji":"🚆","title":"우에노역","memo":"[17:15 도착] 짐찾기","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.7129721307448,139.77623105049136]},{"blockId":"dRHZnf5dEineeEcc1yr7z","kind":"note","number":null,"emoji":"🚆","title":"메모","memo":"","tags":[],"mode":"지하철","durationMin":5,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.71217503943261,139.77957308292392]},{"blockId":"UezkAsOyCUoBveq7-Obsa","kind":"stop","number":14,"emoji":"🚆","title":"이나리초역","memo":"[17:20 도착] ","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/AHUvgLALpviFi6cg8","approx":false,"hasPoint":true,"flyTo":[35.711377948120415,139.78291511535647]},{"blockId":"cCRqSFRVkk2djBiQuVIIB","kind":"note","number":null,"emoji":"🚶","title":"걷기","memo":"","tags":[],"mode":"도보","durationMin":10,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.70975267406021,139.78469575767824]},{"blockId":"R7-eURZF9XFW9qqRhRaoi","kind":"stop","number":15,"emoji":"🏨","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","memo":"[17:30 도착] ","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","approx":false,"hasPoint":true,"flyTo":[35.7081274,139.7864764]},{"blockId":"D-iDbE4IdZMFQlkK1g8uX","kind":"note","number":null,"emoji":"♨️","title":"쉬기","memo":"","tags":[],"mode":"","durationMin":60,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.71131199624917,139.78922332649537]},{"blockId":"QmDhbE461jk_DAepz2pdO","kind":"stop","number":16,"emoji":"🍺","title":"혼토사야","memo":"[18:30] 연기 많음 주의","tags":[],"mode":"","durationMin":60,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/sQ9DY1gatRGN6ayR8","approx":false,"hasPoint":true,"flyTo":[35.71449659249834,139.79197025299075]},{"blockId":"Aw-EPucqoWeCy2vmFpJKK","kind":"stop","number":17,"emoji":"🛍️","title":"라이프 아사쿠사점","memo":"마트 탐방","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%9D%BC%EC%9D%B4%ED%94%84+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188e953ff5db9f:0xa26d5e59216f62a3","approx":false,"hasPoint":true,"flyTo":[35.7158117,139.7923847]},{"blockId":"I_b2ko_DU8FH2BS1VuRAa","kind":"stop","number":18,"emoji":"🛍️","title":"돈키호테 아사쿠사점","memo":"마트 탐방 이후 자유~","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%8F%88%ED%82%A4%ED%98%B8%ED%85%8C+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ebf8b4b31a1:0x8815d1e5c7d6eace","approx":false,"hasPoint":true,"flyTo":[35.7138638,139.7930834]}],"markers":[{"blockId":"GS_K0s3e89v5_CYEUowrC","lat":35.770178,"lng":140.3843215,"icon":"stop","number":1,"emoji":"✈️","popup":{"kind":"stop","title":"나리타 국제 공항","approx":false,"memo":"[10:30 도착] 3터미널","tags":[],"url":"https://www.google.com/maps/place/%EB%82%98%EB%A6%AC%ED%83%80+%EA%B5%AD%EC%A0%9C+%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x6022f379d1bd3757:0xd56e29a162771aa1","durationMin":null}},{"blockId":"2eijWNxCbIE7W_seMSU2s","lat":35.7415750653724,"lng":140.0802762752457,"icon":"note","number":null,"emoji":"🚆","popup":{"kind":"note","emoji":"🚆","text":"[11:49 출발] 스카이라이너","mode":"기차","durationMin":60}},{"blockId":"VuMSo4Kd1hYXfwEs-i53l","lat":35.7129721307448,"lng":139.77623105049136,"icon":"stop","number":2,"emoji":"🚆","popup":{"kind":"stop","title":"우에노역","approx":false,"memo":"[12:49 도착] 코인 락커 짐 보관","tags":[],"url":"","durationMin":30}},{"blockId":"EbC8hdbH-0rSrUHSlH4om","lat":35.6975028153724,"lng":139.77244297524567,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"[13:00 출발]전철","mode":"","durationMin":20}},{"blockId":"N8snBnSJc0IGGk3lF6iik","lat":35.6820335,"lng":139.7686549,"icon":"stop","number":3,"emoji":"🛍️","popup":{"kind":"stop","title":"도쿄 캐릭터스트리트","approx":false,"memo":"[14:00]도쿄역 지하에서 밥","tags":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EC%BF%84+%EC%BA%90%EB%A6%AD%ED%84%B0%EC%8A%A4%ED%8A%B8%EB%A6%AC%ED%8A%B8/data=!4m2!3m1!1s0x60188bf95f25e619:0x103bd7d05407fec7","durationMin":60}},{"blockId":"zSkC1aypaDvs4T_3Sydc1","lat":35.6794891,"lng":139.7652099,"icon":"stop","number":4,"emoji":"🛍️","popup":{"kind":"stop","title":"나카가와 마사시치상점 도쿄본점","approx":false,"memo":"[14:30]쇼핑","tags":["킷테"],"url":"https://www.google.com/maps/place/%EB%82%98%EC%B9%B4%EA%B0%80%EC%99%80+%EB%A7%88%EC%82%AC%EC%8B%9C%EC%B9%98%EC%83%81%EC%A0%90+%EB%8F%84%EC%BF%84%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188bfa4cd2ded1:0x59ee6a0ea6aa3675","durationMin":30}},{"blockId":"r0l09SpaHNedIxKmjuv39","lat":35.6785286,"lng":139.7633347,"icon":"optionCand","number":5,"emoji":"🍰","popup":{"kind":"stop","title":"미쓰비시1호관미술관","approx":false,"memo":"","tags":[],"optionLabel":"[15:00] 카페에서 쉬어가기","url":"https://www.google.com/maps/place/%EB%AF%B8%EC%93%B0%EB%B9%84%EC%8B%9C1%ED%98%B8%EA%B4%80%EB%AF%B8%EC%88%A0%EA%B4%80/data=!4m2!3m1!1s0x60188bfa653e26bb:0xf45c085d037d8411","durationMin":30}},{"blockId":"r0l09SpaHNedIxKmjuv39","lat":35.6785703,"lng":139.7625325,"icon":"optionCand","number":5,"emoji":"🍰","popup":{"kind":"stop","title":"에쉬레 메종 뒤 부르","approx":false,"memo":"","tags":[],"optionLabel":"[15:00] 카페에서 쉬어가기","url":"https://www.google.com/maps/place/%EC%97%90%EC%89%AC%EB%A0%88+%EB%A9%94%EC%A2%85+%EB%92%A4+%EB%B6%80%EB%A5%B4/data=!4m2!3m1!1s0x60188bfa0d273fe9:0xc0aab5e8979d0d8","durationMin":30}},{"blockId":"5iw9HIuu0_76GkurYzdxA","lat":35.676511925,"lng":139.76296865,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":10}},{"blockId":"7mjdedKDIBdoIsHDqf3ob","lat":35.6744744,"lng":139.7630037,"icon":"stop","number":6,"emoji":"🍰","popup":{"kind":"stop","title":"쿠냐네노 미세","approx":false,"memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%BF%A0%EB%83%90%EB%84%A4%EB%85%B8+%EB%AF%B8%EC%84%B8/data=!4m2!3m1!1s0x60188b4df86c0d47:0xcd81ce78148cdcf4","durationMin":null}},{"blockId":"nbD0FCPCmI_PnSMVYg5WS","lat":35.67244825,"lng":139.76188825000003,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":11}},{"blockId":"Y6xkbVt75-L_MLaFbVBJE","lat":35.6704221,"lng":139.7607728,"icon":"stop","number":7,"emoji":"🍰","popup":{"kind":"stop","title":"웨스트 긴자본점","approx":false,"memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%9B%A8%EC%8A%A4%ED%8A%B8+%EA%B8%B4%EC%9E%90%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188bef2e27b899:0x27dc0c57eaef8dba","durationMin":null}},{"blockId":"-JSammzvX9uKtjiUXI3Ta","lat":35.6704316,"lng":139.763143,"icon":"stop","number":8,"emoji":"🛍️","popup":{"kind":"stop","title":"도버 스트리트 마켓 긴자","approx":false,"memo":"[15:30 도착]","tags":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EB%B2%84+%EC%8A%A4%ED%8A%B8%EB%A6%AC%ED%8A%B8+%EB%A7%88%EC%BC%93+%EA%B8%B4%EC%9E%90/data=!4m2!3m1!1s0x60188be61af12a0b:0x1511045c266c6525","durationMin":30}},{"blockId":"hL9O8mqFYp-JaO4-1CU25","lat":35.67135177787268,"lng":139.76455807685855,"icon":"stop","number":9,"emoji":"🍰","popup":{"kind":"stop","title":"긴자 마네켄 (와플)","approx":false,"memo":"","tags":[],"url":"","durationMin":null}},{"blockId":"Wf6Ff601Z8pj2sAdXZRe_","lat":35.67256979797189,"lng":139.76577043533328,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":5}},{"blockId":"_ka5lfccK5Ri6u0BC5Gxx","lat":35.67378781807109,"lng":139.766982793808,"icon":"stop","number":10,"emoji":"🛍️","popup":{"kind":"stop","title":"이토야 긴자","approx":false,"memo":"[15:40]","tags":[],"url":"https://maps.app.goo.gl/bV2hE31T1o1MnA9q8","durationMin":20}},{"blockId":"zQKirBSJYi0FnLOZfMbI4","lat":35.67399699130665,"lng":139.76664483547214,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":5}},{"blockId":"4cPBkW80Os_W32baMF2ii","lat":35.67420616454221,"lng":139.76630687713626,"icon":"stop","number":11,"emoji":"🛍️","popup":{"kind":"stop","title":"긴자 로프트 젤리캣","approx":false,"memo":"[16:30]","tags":[],"url":"https://maps.app.goo.gl/9zT4kG9YfEt1cjS96","durationMin":30}},{"blockId":"8TMFe798Igmk7hIyuZfRG","lat":35.67484239306101,"lng":139.76503014564517,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":5}},{"blockId":"Oc-8p0Nz4g0Erjp0NvwaU","lat":35.67547862157982,"lng":139.76375341415408,"icon":"stop","number":12,"emoji":"🚇","popup":{"kind":"stop","title":"유라쿠초역","approx":false,"memo":"[17:00 출발]","tags":[],"url":"","durationMin":null}},{"blockId":"A3xZaa6RFXoH0yUfxdmJf","lat":35.7129721307448,"lng":139.77623105049136,"icon":"stop","number":13,"emoji":"🚆","popup":{"kind":"stop","title":"우에노역","approx":false,"memo":"[17:15 도착] 짐찾기","tags":[],"url":"","durationMin":null}},{"blockId":"dRHZnf5dEineeEcc1yr7z","lat":35.71217503943261,"lng":139.77957308292392,"icon":"note","number":null,"emoji":"🚆","popup":{"kind":"note","emoji":"🚆","text":"메모","mode":"지하철","durationMin":5}},{"blockId":"UezkAsOyCUoBveq7-Obsa","lat":35.711377948120415,"lng":139.78291511535647,"icon":"stop","number":14,"emoji":"🚆","popup":{"kind":"stop","title":"이나리초역","approx":false,"memo":"[17:20 도착] ","tags":[],"url":"https://maps.app.goo.gl/AHUvgLALpviFi6cg8","durationMin":null}},{"blockId":"cCRqSFRVkk2djBiQuVIIB","lat":35.70975267406021,"lng":139.78469575767824,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"걷기","mode":"도보","durationMin":10}},{"blockId":"R7-eURZF9XFW9qqRhRaoi","lat":35.7081274,"lng":139.7864764,"icon":"stop","number":15,"emoji":"🏨","popup":{"kind":"stop","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","approx":false,"memo":"[17:30 도착] ","tags":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","durationMin":null}},{"blockId":"D-iDbE4IdZMFQlkK1g8uX","lat":35.71131199624917,"lng":139.78922332649537,"icon":"note","number":null,"emoji":"♨️","popup":{"kind":"note","emoji":"♨️","text":"쉬기","mode":"","durationMin":60}},{"blockId":"QmDhbE461jk_DAepz2pdO","lat":35.71449659249834,"lng":139.79197025299075,"icon":"stop","number":16,"emoji":"🍺","popup":{"kind":"stop","title":"혼토사야","approx":false,"memo":"[18:30] 연기 많음 주의","tags":[],"url":"https://maps.app.goo.gl/sQ9DY1gatRGN6ayR8","durationMin":60}},{"blockId":"Aw-EPucqoWeCy2vmFpJKK","lat":35.7158117,"lng":139.7923847,"icon":"stop","number":17,"emoji":"🛍️","popup":{"kind":"stop","title":"라이프 아사쿠사점","approx":false,"memo":"마트 탐방","tags":[],"url":"https://www.google.com/maps/place/%EB%9D%BC%EC%9D%B4%ED%94%84+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188e953ff5db9f:0xa26d5e59216f62a3","durationMin":null}},{"blockId":"I_b2ko_DU8FH2BS1VuRAa","lat":35.7138638,"lng":139.7930834,"icon":"stop","number":18,"emoji":"🛍️","popup":{"kind":"stop","title":"돈키호테 아사쿠사점","approx":false,"memo":"마트 탐방 이후 자유~","tags":[],"url":"https://www.google.com/maps/place/%EB%8F%88%ED%82%A4%ED%98%B8%ED%85%8C+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ebf8b4b31a1:0x8815d1e5c7d6eace","durationMin":null}}],"optionConnectors":[[[35.6785286,139.7633347],[35.6785703,139.7625325]]],"segments":[{"a":[35.770178,140.3843215],"b":[35.7415750653724,140.0802762752457],"dashed":true},{"a":[35.7415750653724,140.0802762752457],"b":[35.7129721307448,139.77623105049136],"dashed":true},{"a":[35.7129721307448,139.77623105049136],"b":[35.6975028153724,139.77244297524567],"dashed":true},{"a":[35.6975028153724,139.77244297524567],"b":[35.6820335,139.7686549],"dashed":true},{"a":[35.6820335,139.7686549],"b":[35.6794891,139.7652099],"dashed":false},{"a":[35.6794891,139.7652099],"b":[35.67854945,139.7629336],"dashed":false},{"a":[35.67854945,139.7629336],"b":[35.676511925,139.76296865],"dashed":true},{"a":[35.676511925,139.76296865],"b":[35.6744744,139.7630037],"dashed":true},{"a":[35.6744744,139.7630037],"b":[35.67244825,139.76188825000003],"dashed":true},{"a":[35.67244825,139.76188825000003],"b":[35.6704221,139.7607728],"dashed":true},{"a":[35.6704221,139.7607728],"b":[35.6704316,139.763143],"dashed":false},{"a":[35.6704316,139.763143],"b":[35.67135177787268,139.76455807685855],"dashed":false},{"a":[35.67135177787268,139.76455807685855],"b":[35.67256979797189,139.76577043533328],"dashed":true},{"a":[35.67256979797189,139.76577043533328],"b":[35.67378781807109,139.766982793808],"dashed":true},{"a":[35.67378781807109,139.766982793808],"b":[35.67399699130665,139.76664483547214],"dashed":true},{"a":[35.67399699130665,139.76664483547214],"b":[35.67420616454221,139.76630687713626],"dashed":true},{"a":[35.67420616454221,139.76630687713626],"b":[35.67484239306101,139.76503014564517],"dashed":true},{"a":[35.67484239306101,139.76503014564517],"b":[35.67547862157982,139.76375341415408],"dashed":true},{"a":[35.67547862157982,139.76375341415408],"b":[35.7129721307448,139.77623105049136],"dashed":false},{"a":[35.7129721307448,139.77623105049136],"b":[35.71217503943261,139.77957308292392],"dashed":true},{"a":[35.71217503943261,139.77957308292392],"b":[35.711377948120415,139.78291511535647],"dashed":true},{"a":[35.711377948120415,139.78291511535647],"b":[35.70975267406021,139.78469575767824],"dashed":true},{"a":[35.70975267406021,139.78469575767824],"b":[35.7081274,139.7864764],"dashed":true},{"a":[35.7081274,139.7864764],"b":[35.71131199624917,139.78922332649537],"dashed":true},{"a":[35.71131199624917,139.78922332649537],"b":[35.71449659249834,139.79197025299075],"dashed":true},{"a":[35.71449659249834,139.79197025299075],"b":[35.7158117,139.7923847],"dashed":false},{"a":[35.7158117,139.7923847],"b":[35.7138638,139.7930834],"dashed":false}],"bounds":[[35.770178,140.3843215],[35.7415750653724,140.0802762752457],[35.7129721307448,139.77623105049136],[35.6975028153724,139.77244297524567],[35.6820335,139.7686549],[35.6794891,139.7652099],[35.67854945,139.7629336],[35.676511925,139.76296865],[35.6744744,139.7630037],[35.67244825,139.76188825000003],[35.6704221,139.7607728],[35.6704316,139.763143],[35.67135177787268,139.76455807685855],[35.67256979797189,139.76577043533328],[35.67378781807109,139.766982793808],[35.67399699130665,139.76664483547214],[35.67420616454221,139.76630687713626],[35.67484239306101,139.76503014564517],[35.67547862157982,139.76375341415408],[35.7129721307448,139.77623105049136],[35.71217503943261,139.77957308292392],[35.711377948120415,139.78291511535647],[35.70975267406021,139.78469575767824],[35.7081274,139.7864764],[35.71131199624917,139.78922332649537],[35.71449659249834,139.79197025299075],[35.7158117,139.7923847],[35.7138638,139.7930834]]},{"id":"mqkVrhJ9qqOcUrt4jg_sl","title":"5/30 (토)","subtitle":"도쿄타워, 아키하바라","description":"","blocks":[{"blockId":"Qq82a-YNMAthH95-br0gQ","kind":"stop","number":1,"emoji":"🍰","title":"팡 메종 스미다 아사쿠사 도리점","memo":"아침사러! (성록 혼자)","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%ED%8C%A1+%EB%A9%94%EC%A2%85+%EC%8A%A4%EB%AF%B8%EB%8B%A4+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC+%EB%8F%84%EB%A6%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ecfeb1bcce5:0x176737a5d9ca3610","approx":false,"hasPoint":true,"flyTo":[35.7087171,139.802394]},{"blockId":"aIHbG4tQYNYKVLSjISBOj","kind":"stop","number":2,"emoji":"🏨","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","memo":"[10:30] 출발","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","approx":false,"hasPoint":true,"flyTo":[35.7081274,139.7864764]},{"blockId":"544Vj2TV9XnPKtl-5GIvs","kind":"note","number":null,"emoji":"🚶","title":"메모","memo":"","tags":[],"mode":"도보","durationMin":5,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.7074160127997,139.78585939839434]},{"blockId":"XpDm77lMfo1uhXbekdfgM","kind":"stop","number":3,"emoji":"🚆","title":"신오카치마치역","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.70670462559939,139.78524239678868]},{"blockId":"yhe6ZEv7Y3xAg4bVSuN1Z","kind":"note","number":null,"emoji":"🚶","title":"메모","memo":"","tags":[],"mode":"지하철","durationMin":30,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.6855773627997,139.75841049839434]},{"blockId":"0kejp4a9QyDRqTzJOy80O","kind":"stop","number":4,"emoji":"🍖","title":"이마카츠 롯폰기 본점","memo":"[11:00 도착] 11:30 오픈","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%9D%B4%EB%A7%88%EC%B9%B4%EC%B8%A0+%EB%A1%AF%ED%8F%B0%EA%B8%B0+%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188b787169676f:0xc04ac5d9f934f29b","approx":false,"hasPoint":true,"flyTo":[35.6644501,139.7315786]},{"blockId":"kvnu5vmacDMA1wtwsqxdJ","kind":"note","number":null,"emoji":"🚶","title":"메모","memo":"","tags":[],"mode":"도보","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.66573717292217,139.73107922652895]},{"blockId":"rjLXBmj2bn8muAvSV2UXR","kind":"stop","number":5,"emoji":"📍","title":"도쿄 미드타운 (디자인 사이트)","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/ytPDoin5sAuGkQGX9","approx":false,"hasPoint":true,"flyTo":[35.66702424584434,139.7305798530579]},{"blockId":"cKgwwHuuwa82bY_kECAfk","kind":"note","number":null,"emoji":"🚶","title":"도보 or 지하철","memo":"","tags":[],"mode":"도보","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.66428447292217,139.73570502652893]},{"blockId":"5vkvF9m3EOPsK3WmrSE1g","kind":"stop","number":6,"emoji":"🛍️","title":"아자부다이 힐즈","memo":"[12:00 도착]","tags":[],"mode":"","durationMin":120,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%95%84%EC%9E%90%EB%B6%80%EB%8B%A4%EC%9D%B4+%ED%9E%90%EC%A6%88/data=!4m2!3m1!1s0x60188b2e40342225:0x3f9a1673138a69c1","approx":false,"hasPoint":true,"flyTo":[35.6615447,139.7408302]},{"blockId":"lT2peqHJeRYbV9C0GlV4I","kind":"note","number":null,"emoji":"🚶","title":"도보","memo":"","tags":[],"mode":"도보","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.6600626,139.74313155]},{"blockId":"dZCXIm8tDSzny0Amo62Ys","kind":"stop","number":7,"emoji":"📸","title":"도쿄 타워","memo":"[14:00 도착]","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EC%BF%84+%ED%83%80%EC%9B%8C/data=!4m2!3m1!1s0x60188bbd9009ec09:0x481a93f0d2a409dd","approx":false,"hasPoint":true,"flyTo":[35.6585805,139.7454329]},{"blockId":"mc8DS-o3ZktEchHU19zNS","kind":"note","number":null,"emoji":"🚇","title":"메모","memo":"","tags":[],"mode":"지하철","durationMin":40,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67914915,139.7584064]},{"blockId":"IWZ3hWJ7RgzgWIrWchgdk","kind":"stop","number":8,"emoji":"🖼️","title":"아키하바라 전자거리","memo":"[14:40]","tags":[],"mode":"","durationMin":120,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC+%EC%A0%84%EC%9E%90%EA%B1%B0%EB%A6%AC/data=!4m2!3m1!1s0x60188c1da0983467:0x6fc7ec7e7222177c","approx":false,"hasPoint":true,"flyTo":[35.6997178,139.7713799]},{"blockId":"ZTrgXpBFAdKOjWFEnPnYc","kind":"note","number":null,"emoji":"🚇","title":"가는길에 몬치치사냥","memo":"","tags":[],"mode":"지하철","durationMin":40,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.66379525,139.77160725]},{"blockId":"JI74u5QWTZoSwv2o86lGS","kind":"stop","number":9,"emoji":"🎑","title":"자유의 여신상","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%9E%90%EC%9C%A0%EC%9D%98+%EC%97%AC%EC%8B%A0%EC%83%81/data=!4m2!3m1!1s0x60188be32451f7a7:0xbc7e67300e8691a3","approx":false,"hasPoint":true,"flyTo":[35.6278727,139.7718346]},{"blockId":"D271y-lW8VJFCsMjDdnep","kind":"stop","number":10,"emoji":"🛍️","title":"串家物語 ダイバーシティ東京プラザ店","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%E4%B8%B2%E5%AE%B6%E7%89%A9%E8%AA%9E+%E3%83%80%E3%82%A4%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3%E6%9D%B1%E4%BA%AC%E3%83%97%E3%83%A9%E3%82%B6%E5%BA%97/data=!4m2!3m1!1s0x601889f86aaf2977:0xd6f23adf12b9bc4f","approx":false,"hasPoint":true,"flyTo":[35.6249816,139.7751366]}],"markers":[{"blockId":"Qq82a-YNMAthH95-br0gQ","lat":35.7087171,"lng":139.802394,"icon":"stop","number":1,"emoji":"🍰","popup":{"kind":"stop","title":"팡 메종 스미다 아사쿠사 도리점","approx":false,"memo":"아침사러! (성록 혼자)","tags":[],"url":"https://www.google.com/maps/place/%ED%8C%A1+%EB%A9%94%EC%A2%85+%EC%8A%A4%EB%AF%B8%EB%8B%A4+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC+%EB%8F%84%EB%A6%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ecfeb1bcce5:0x176737a5d9ca3610","durationMin":null}},{"blockId":"aIHbG4tQYNYKVLSjISBOj","lat":35.7081274,"lng":139.7864764,"icon":"stop","number":2,"emoji":"🏨","popup":{"kind":"stop","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","approx":false,"memo":"[10:30] 출발","tags":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","durationMin":null}},{"blockId":"544Vj2TV9XnPKtl-5GIvs","lat":35.7074160127997,"lng":139.78585939839434,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"메모","mode":"도보","durationMin":5}},{"blockId":"XpDm77lMfo1uhXbekdfgM","lat":35.70670462559939,"lng":139.78524239678868,"icon":"stop","number":3,"emoji":"🚆","popup":{"kind":"stop","title":"신오카치마치역","approx":false,"memo":"","tags":[],"url":"","durationMin":null}},{"blockId":"yhe6ZEv7Y3xAg4bVSuN1Z","lat":35.6855773627997,"lng":139.75841049839434,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"메모","mode":"지하철","durationMin":30}},{"blockId":"0kejp4a9QyDRqTzJOy80O","lat":35.6644501,"lng":139.7315786,"icon":"stop","number":4,"emoji":"🍖","popup":{"kind":"stop","title":"이마카츠 롯폰기 본점","approx":false,"memo":"[11:00 도착] 11:30 오픈","tags":[],"url":"https://www.google.com/maps/place/%EC%9D%B4%EB%A7%88%EC%B9%B4%EC%B8%A0+%EB%A1%AF%ED%8F%B0%EA%B8%B0+%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188b787169676f:0xc04ac5d9f934f29b","durationMin":null}},{"blockId":"kvnu5vmacDMA1wtwsqxdJ","lat":35.66573717292217,"lng":139.73107922652895,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"메모","mode":"도보","durationMin":null}},{"blockId":"rjLXBmj2bn8muAvSV2UXR","lat":35.66702424584434,"lng":139.7305798530579,"icon":"stop","number":5,"emoji":"","popup":{"kind":"stop","title":"도쿄 미드타운 (디자인 사이트)","approx":false,"memo":"","tags":[],"url":"https://maps.app.goo.gl/ytPDoin5sAuGkQGX9","durationMin":null}},{"blockId":"cKgwwHuuwa82bY_kECAfk","lat":35.66428447292217,"lng":139.73570502652893,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"도보 or 지하철","mode":"도보","durationMin":null}},{"blockId":"5vkvF9m3EOPsK3WmrSE1g","lat":35.6615447,"lng":139.7408302,"icon":"stop","number":6,"emoji":"🛍️","popup":{"kind":"stop","title":"아자부다이 힐즈","approx":false,"memo":"[12:00 도착]","tags":[],"url":"https://www.google.com/maps/place/%EC%95%84%EC%9E%90%EB%B6%80%EB%8B%A4%EC%9D%B4+%ED%9E%90%EC%A6%88/data=!4m2!3m1!1s0x60188b2e40342225:0x3f9a1673138a69c1","durationMin":120}},{"blockId":"lT2peqHJeRYbV9C0GlV4I","lat":35.6600626,"lng":139.74313155,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"도보","mode":"도보","durationMin":null}},{"blockId":"dZCXIm8tDSzny0Amo62Ys","lat":35.6585805,"lng":139.7454329,"icon":"stop","number":7,"emoji":"📸","popup":{"kind":"stop","title":"도쿄 타워","approx":false,"memo":"[14:00 도착]","tags":[],"url":"https://www.google.com/maps/place/%EB%8F%84%EC%BF%84+%ED%83%80%EC%9B%8C/data=!4m2!3m1!1s0x60188bbd9009ec09:0x481a93f0d2a409dd","durationMin":null}},{"blockId":"mc8DS-o3ZktEchHU19zNS","lat":35.67914915,"lng":139.7584064,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"메모","mode":"지하철","durationMin":40}},{"blockId":"IWZ3hWJ7RgzgWIrWchgdk","lat":35.6997178,"lng":139.7713799,"icon":"stop","number":8,"emoji":"🖼️","popup":{"kind":"stop","title":"아키하바라 전자거리","approx":false,"memo":"[14:40]","tags":[],"url":"https://www.google.com/maps/place/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC+%EC%A0%84%EC%9E%90%EA%B1%B0%EB%A6%AC/data=!4m2!3m1!1s0x60188c1da0983467:0x6fc7ec7e7222177c","durationMin":120}},{"blockId":"ZTrgXpBFAdKOjWFEnPnYc","lat":35.66379525,"lng":139.77160725,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"가는길에 몬치치사냥","mode":"지하철","durationMin":40}},{"blockId":"JI74u5QWTZoSwv2o86lGS","lat":35.6278727,"lng":139.7718346,"icon":"stop","number":9,"emoji":"🎑","popup":{"kind":"stop","title":"자유의 여신상","approx":false,"memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%9E%90%EC%9C%A0%EC%9D%98+%EC%97%AC%EC%8B%A0%EC%83%81/data=!4m2!3m1!1s0x60188be32451f7a7:0xbc7e67300e8691a3","durationMin":null}},{"blockId":"D271y-lW8VJFCsMjDdnep","lat":35.6249816,"lng":139.7751366,"icon":"stop","number":10,"emoji":"🛍️","popup":{"kind":"stop","title":"串家物語 ダイバーシティ東京プラザ店","approx":false,"memo":"","tags":[],"url":"https://www.google.com/maps/place/%E4%B8%B2%E5%AE%B6%E7%89%A9%E8%AA%9E+%E3%83%80%E3%82%A4%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3%E6%9D%B1%E4%BA%AC%E3%83%97%E3%83%A9%E3%82%B6%E5%BA%97/data=!4m2!3m1!1s0x601889f86aaf2977:0xd6f23adf12b9bc4f","durationMin":null}}],"optionConnectors":[],"segments":[{"a":[35.7087171,139.802394],"b":[35.7081274,139.7864764],"dashed":false},{"a":[35.7081274,139.7864764],"b":[35.7074160127997,139.78585939839434],"dashed":true},{"a":[35.7074160127997,139.78585939839434],"b":[35.70670462559939,139.78524239678868],"dashed":true},{"a":[35.70670462559939,139.78524239678868],"b":[35.6855773627997,139.75841049839434],"dashed":true},{"a":[35.6855773627997,139.75841049839434],"b":[35.6644501,139.7315786],"dashed":true},{"a":[35.6644501,139.7315786],"b":[35.66573717292217,139.73107922652895],"dashed":true},{"a":[35.66573717292217,139.73107922652895],"b":[35.66702424584434,139.7305798530579],"dashed":true},{"a":[35.66702424584434,139.7305798530579],"b":[35.66428447292217,139.73570502652893],"dashed":true},{"a":[35.66428447292217,139.73570502652893],"b":[35.6615447,139.7408302],"dashed":true},{"a":[35.6615447,139.7408302],"b":[35.6600626,139.74313155],"dashed":true},{"a":[35.6600626,139.74313155],"b":[35.6585805,139.7454329],"dashed":true},{"a":[35.6585805,139.7454329],"b":[35.67914915,139.7584064],"dashed":true},{"a":[35.67914915,139.7584064],"b":[35.6997178,139.7713799],"dashed":true},{"a":[35.6997178,139.7713799],"b":[35.66379525,139.77160725],"dashed":true},{"a":[35.66379525,139.77160725],"b":[35.6278727,139.7718346],"dashed":true},{"a":[35.6278727,139.7718346],"b":[35.6249816,139.7751366],"dashed":false}],"bounds":[[35.7087171,139.802394],[35.7081274,139.7864764],[35.7074160127997,139.78585939839434],[35.70670462559939,139.78524239678868],[35.6855773627997,139.75841049839434],[35.6644501,139.7315786],[35.66573717292217,139.73107922652895],[35.66702424584434,139.7305798530579],[35.66428447292217,139.73570502652893],[35.6615447,139.7408302],[35.6600626,139.74313155],[35.6585805,139.7454329],[35.67914915,139.7584064],[35.6997178,139.7713799],[35.66379525,139.77160725],[35.6278727,139.7718346],[35.6249816,139.7751366]]},{"id":"nC475uaVO0ZH774Vie0KF","title":"5/31 (일)","subtitle":"신주쿠, 하라주쿠, 시부야!","description":"","blocks":[{"blockId":"Vi4K5t0Dg0sJGsPdy7fB5","kind":"stop","number":1,"emoji":"🏨","title":"신오카치마치역","memo":"[09:00] 출발 전 식사","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":false,"hasPoint":true,"flyTo":[35.70670462559939,139.78524239678868]},{"blockId":"QNP0orQ8Bxc3LFWSXaQvh","kind":"note","number":null,"emoji":"🚇","title":"지하철","memo":"","tags":[],"mode":"지하철","durationMin":43,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.707976062799695,139.72544739839435]},{"blockId":"vdkd_s96GUgpeTo_PqsvV","kind":"stop","number":2,"emoji":"🛍️","title":"나카노 브로드웨이","memo":"[10:00]","tags":[],"mode":"","durationMin":120,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%82%98%EC%B9%B4%EB%85%B8+%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%9B%A8%EC%9D%B4/data=!4m2!3m1!1s0x6018f290b2ddee83:0xe1b67e4ee0eff0be","approx":false,"hasPoint":true,"flyTo":[35.7092475,139.6656524]},{"blockId":"76N5E7rA_dZ2OWhWNkqhB","kind":"note","number":null,"emoji":"🚇","title":"메모","memo":"","tags":[],"mode":"","durationMin":14,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.70089125,139.6826552]},{"blockId":"8ZQneDJ63fWRWtDxSqmhE","kind":"stop","number":3,"emoji":"🍣","title":"스시로 신주쿠 니시구치점","memo":"[12:00도착]","tags":[],"mode":"","durationMin":60,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%8A%A4%EC%8B%9C%EB%A1%9C+%EC%8B%A0%EC%A3%BC%EC%BF%A0+%EB%8B%88%EC%8B%9C%EA%B5%AC%EC%B9%98%EC%A0%90/data=!4m2!3m1!1s0x60188d46ddd2b667:0x9b561681ee158882","approx":false,"hasPoint":true,"flyTo":[35.692535,139.699658]},{"blockId":"dUDD3gsTy_I1b14LL78__","kind":"option","number":4,"emoji":"🔀","title":"신주쿠 구경","memo":"","tags":[],"mode":"","durationMin":120,"optionLabel":"신주쿠 구경","candidates":[{"title":"빔스 재팬","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EB%B9%94%EC%8A%A4+%EC%9E%AC%ED%8C%AC/data=!4m2!3m1!1s0x60188cdb02ce6651:0xea86b34ba35eb3c5"},{"title":"오이와케당고 혼포","emoji":"🍰","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%98%A4%EC%9D%B4%EC%99%80%EC%BC%80%EB%8B%B9%EA%B3%A0+%ED%98%BC%ED%8F%AC/data=!4m2!3m1!1s0x60188cdb6b3ae373:0x24b44eda29e34afd"},{"title":"투데이즈 스페셜 신주쿠","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%ED%88%AC%EB%8D%B0%EC%9D%B4%EC%A6%88+%EC%8A%A4%ED%8E%98%EC%85%9C+%EC%8B%A0%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188cd07c0b7f25:0x5e74a197bfae04ba"}],"url":"","approx":false,"hasPoint":true,"flyTo":[35.69011283333333,139.703425]},{"blockId":"wS5qrM8AQlihfaPatkfWY","kind":"note","number":null,"emoji":"🚇","title":"지하철","memo":"","tags":[],"mode":"지하철","durationMin":15,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.67931807916666,139.70513596249998]},{"blockId":"wM_kyB_yRdzDpXiqGJfx4","kind":"option","number":5,"emoji":"🔀","title":"하라주쿠 구경","memo":"","tags":[],"mode":"","durationMin":120,"optionLabel":"하라주쿠 구경","candidates":[{"title":"휴먼 메이드 하라주쿠","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%ED%9C%B4%EB%A8%BC+%EB%A9%94%EC%9D%B4%EB%93%9C+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca48e679fb3:0x244e931c7a580d19"},{"title":"키디랜드 하라주쿠점","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%ED%82%A4%EB%94%94%EB%9E%9C%EB%93%9C+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0%EC%A0%90/data=!4m2!3m1!1s0x60188ca3f58f5bbb:0x6d0eaa1443f99189"},{"title":"베이프 스토어®︎ 하라주쿠","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EB%B2%A0%EC%9D%B4%ED%94%84+%EC%8A%A4%ED%86%A0%EC%96%B4%C2%AE%EF%B8%8E+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca3d04a6873:0x9f2dc8c2723d8e14"},{"title":"슈프림 하라주쿠","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%8A%88%ED%94%84%EB%A6%BC+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca37e938279:0x3b040a4398e8539d"}],"url":"","approx":false,"hasPoint":true,"flyTo":[35.668523324999995,139.70684692499998]},{"blockId":"JREcj8673G1FZ8wk5emmq","kind":"note","number":null,"emoji":"🚶","title":"시부야로 걸어서 이동","memo":"","tags":[],"mode":"도보","durationMin":20,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.666429712500005,139.7039812625]},{"blockId":"rqXWcyk9u7WIrCJiicDwO","kind":"option","number":6,"emoji":"🔀","title":"시부야 구경","memo":"","tags":[],"mode":"","durationMin":120,"optionLabel":"시부야 구경","candidates":[{"title":"파르코 시부야","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/%ED%8C%8C%EB%A5%B4%EC%BD%94+%EC%8B%9C%EB%B6%80%EC%95%BC/data=!4m2!3m1!1s0x60188ca8e2fe2173:0x1adbb1909538391b"},{"title":"DULTON Jinnan Shop","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/DULTON+Jinnan+Shop/data=!4m2!3m1!1s0x60188caf4f03c967:0x14768daa049060d3"},{"title":"DANTON TOKYO","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/DANTON+TOKYO/data=!4m2!3m1!1s0x60188d8361749a87:0x2d9cc832dbb342e0"}],"url":"","approx":false,"hasPoint":true,"flyTo":[35.66433610000001,139.7011156]}],"markers":[{"blockId":"Vi4K5t0Dg0sJGsPdy7fB5","lat":35.70670462559939,"lng":139.78524239678868,"icon":"stop","number":1,"emoji":"🏨","popup":{"kind":"stop","title":"신오카치마치역","approx":false,"memo":"[09:00] 출발 전 식사","tags":[],"url":"","durationMin":null}},{"blockId":"QNP0orQ8Bxc3LFWSXaQvh","lat":35.707976062799695,"lng":139.72544739839435,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"지하철","mode":"지하철","durationMin":43}},{"blockId":"vdkd_s96GUgpeTo_PqsvV","lat":35.7092475,"lng":139.6656524,"icon":"stop","number":2,"emoji":"🛍️","popup":{"kind":"stop","title":"나카노 브로드웨이","approx":false,"memo":"[10:00]","tags":[],"url":"https://www.google.com/maps/place/%EB%82%98%EC%B9%B4%EB%85%B8+%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%9B%A8%EC%9D%B4/data=!4m2!3m1!1s0x6018f290b2ddee83:0xe1b67e4ee0eff0be","durationMin":120}},{"blockId":"76N5E7rA_dZ2OWhWNkqhB","lat":35.70089125,"lng":139.6826552,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"메모","mode":"","durationMin":14}},{"blockId":"8ZQneDJ63fWRWtDxSqmhE","lat":35.692535,"lng":139.699658,"icon":"stop","number":3,"emoji":"🍣","popup":{"kind":"stop","title":"스시로 신주쿠 니시구치점","approx":false,"memo":"[12:00도착]","tags":[],"url":"https://www.google.com/maps/place/%EC%8A%A4%EC%8B%9C%EB%A1%9C+%EC%8B%A0%EC%A3%BC%EC%BF%A0+%EB%8B%88%EC%8B%9C%EA%B5%AC%EC%B9%98%EC%A0%90/data=!4m2!3m1!1s0x60188d46ddd2b667:0x9b561681ee158882","durationMin":60}},{"blockId":"dUDD3gsTy_I1b14LL78__","lat":35.6903982,"lng":139.7039897,"icon":"optionCand","number":4,"emoji":"🛍️","popup":{"kind":"stop","title":"빔스 재팬","approx":false,"memo":"","tags":[],"optionLabel":"신주쿠 구경","url":"https://www.google.com/maps/place/%EB%B9%94%EC%8A%A4+%EC%9E%AC%ED%8C%AC/data=!4m2!3m1!1s0x60188cdb02ce6651:0xea86b34ba35eb3c5","durationMin":120}},{"blockId":"dUDD3gsTy_I1b14LL78__","lat":35.6904895,"lng":139.7053554,"icon":"optionCand","number":4,"emoji":"🍰","popup":{"kind":"stop","title":"오이와케당고 혼포","approx":false,"memo":"","tags":[],"optionLabel":"신주쿠 구경","url":"https://www.google.com/maps/place/%EC%98%A4%EC%9D%B4%EC%99%80%EC%BC%80%EB%8B%B9%EA%B3%A0+%ED%98%BC%ED%8F%AC/data=!4m2!3m1!1s0x60188cdb6b3ae373:0x24b44eda29e34afd","durationMin":120}},{"blockId":"dUDD3gsTy_I1b14LL78__","lat":35.6894508,"lng":139.7009299,"icon":"optionCand","number":4,"emoji":"🛍️","popup":{"kind":"stop","title":"투데이즈 스페셜 신주쿠","approx":false,"memo":"","tags":[],"optionLabel":"신주쿠 구경","url":"https://www.google.com/maps/place/%ED%88%AC%EB%8D%B0%EC%9D%B4%EC%A6%88+%EC%8A%A4%ED%8E%98%EC%85%9C+%EC%8B%A0%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188cd07c0b7f25:0x5e74a197bfae04ba","durationMin":120}},{"blockId":"wS5qrM8AQlihfaPatkfWY","lat":35.67931807916666,"lng":139.70513596249998,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"지하철","mode":"지하철","durationMin":15}},{"blockId":"wM_kyB_yRdzDpXiqGJfx4","lat":35.6691596,"lng":139.7056252,"icon":"optionCand","number":5,"emoji":"🛍️","popup":{"kind":"stop","title":"휴먼 메이드 하라주쿠","approx":false,"memo":"","tags":[],"optionLabel":"하라주쿠 구경","url":"https://www.google.com/maps/place/%ED%9C%B4%EB%A8%BC+%EB%A9%94%EC%9D%B4%EB%93%9C+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca48e679fb3:0x244e931c7a580d19","durationMin":120}},{"blockId":"wM_kyB_yRdzDpXiqGJfx4","lat":35.667733,"lng":139.7065474,"icon":"optionCand","number":5,"emoji":"🛍️","popup":{"kind":"stop","title":"키디랜드 하라주쿠점","approx":false,"memo":"","tags":[],"optionLabel":"하라주쿠 구경","url":"https://www.google.com/maps/place/%ED%82%A4%EB%94%94%EB%9E%9C%EB%93%9C+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0%EC%A0%90/data=!4m2!3m1!1s0x60188ca3f58f5bbb:0x6d0eaa1443f99189","durationMin":120}},{"blockId":"wM_kyB_yRdzDpXiqGJfx4","lat":35.6679739,"lng":139.7085167,"icon":"optionCand","number":5,"emoji":"🛍️","popup":{"kind":"stop","title":"베이프 스토어®︎ 하라주쿠","approx":false,"memo":"","tags":[],"optionLabel":"하라주쿠 구경","url":"https://www.google.com/maps/place/%EB%B2%A0%EC%9D%B4%ED%94%84+%EC%8A%A4%ED%86%A0%EC%96%B4%C2%AE%EF%B8%8E+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca3d04a6873:0x9f2dc8c2723d8e14","durationMin":120}},{"blockId":"wM_kyB_yRdzDpXiqGJfx4","lat":35.6692268,"lng":139.7066984,"icon":"optionCand","number":5,"emoji":"🛍️","popup":{"kind":"stop","title":"슈프림 하라주쿠","approx":false,"memo":"","tags":[],"optionLabel":"하라주쿠 구경","url":"https://www.google.com/maps/place/%EC%8A%88%ED%94%84%EB%A6%BC+%ED%95%98%EB%9D%BC%EC%A3%BC%EC%BF%A0/data=!4m2!3m1!1s0x60188ca37e938279:0x3b040a4398e8539d","durationMin":120}},{"blockId":"JREcj8673G1FZ8wk5emmq","lat":35.666429712500005,"lng":139.7039812625,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"시부야로 걸어서 이동","mode":"도보","durationMin":20}},{"blockId":"rqXWcyk9u7WIrCJiicDwO","lat":35.6620484,"lng":139.6987767,"icon":"optionCand","number":6,"emoji":"🛍️","popup":{"kind":"stop","title":"파르코 시부야","approx":false,"memo":"","tags":[],"optionLabel":"시부야 구경","url":"https://www.google.com/maps/place/%ED%8C%8C%EB%A5%B4%EC%BD%94+%EC%8B%9C%EB%B6%80%EC%95%BC/data=!4m2!3m1!1s0x60188ca8e2fe2173:0x1adbb1909538391b","durationMin":120}},{"blockId":"rqXWcyk9u7WIrCJiicDwO","lat":35.6647278,"lng":139.7005678,"icon":"optionCand","number":6,"emoji":"🛍️","popup":{"kind":"stop","title":"DULTON Jinnan Shop","approx":false,"memo":"","tags":[],"optionLabel":"시부야 구경","url":"https://www.google.com/maps/place/DULTON+Jinnan+Shop/data=!4m2!3m1!1s0x60188caf4f03c967:0x14768daa049060d3","durationMin":120}},{"blockId":"rqXWcyk9u7WIrCJiicDwO","lat":35.6662321,"lng":139.7040023,"icon":"optionCand","number":6,"emoji":"🛍️","popup":{"kind":"stop","title":"DANTON TOKYO","approx":false,"memo":"","tags":[],"optionLabel":"시부야 구경","url":"https://www.google.com/maps/place/DANTON+TOKYO/data=!4m2!3m1!1s0x60188d8361749a87:0x2d9cc832dbb342e0","durationMin":120}}],"optionConnectors":[[[35.6903982,139.7039897],[35.6904895,139.7053554],[35.6894508,139.7009299]],[[35.6691596,139.7056252],[35.667733,139.7065474],[35.6679739,139.7085167],[35.6692268,139.7066984]],[[35.6620484,139.6987767],[35.6647278,139.7005678],[35.6662321,139.7040023]]],"segments":[{"a":[35.70670462559939,139.78524239678868],"b":[35.707976062799695,139.72544739839435],"dashed":true},{"a":[35.707976062799695,139.72544739839435],"b":[35.7092475,139.6656524],"dashed":true},{"a":[35.7092475,139.6656524],"b":[35.70089125,139.6826552],"dashed":true},{"a":[35.70089125,139.6826552],"b":[35.692535,139.699658],"dashed":true},{"a":[35.692535,139.699658],"b":[35.69011283333333,139.703425],"dashed":false},{"a":[35.69011283333333,139.703425],"b":[35.67931807916666,139.70513596249998],"dashed":true},{"a":[35.67931807916666,139.70513596249998],"b":[35.668523324999995,139.70684692499998],"dashed":true},{"a":[35.668523324999995,139.70684692499998],"b":[35.666429712500005,139.7039812625],"dashed":true},{"a":[35.666429712500005,139.7039812625],"b":[35.66433610000001,139.7011156],"dashed":true}],"bounds":[[35.70670462559939,139.78524239678868],[35.707976062799695,139.72544739839435],[35.7092475,139.6656524],[35.70089125,139.6826552],[35.692535,139.699658],[35.69011283333333,139.703425],[35.67931807916666,139.70513596249998],[35.668523324999995,139.70684692499998],[35.666429712500005,139.7039812625],[35.66433610000001,139.7011156]]},{"id":"QwZIVl6V5HmVWQOYZ5iaC","title":"6/1 (월)","subtitle":"마지막날 그릇쇼핑","description":"","blocks":[{"blockId":"OSnZjjylFVwZGV1BhfeTA","kind":"note","number":null,"emoji":"📍","title":"체크아웃 준비 (짐만 들고 나오면 될 정도)","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.7097797,139.7871645]},{"blockId":"ULYR1qiou-y7uT_WASd5P","kind":"stop","number":1,"emoji":"🛍️","title":"캇파바시 주방도구거리","memo":"[9:30] 일찍 가서 후다닥 쇼핑","tags":[],"mode":"","durationMin":60,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%BA%87%ED%8C%8C%EB%B0%94%EC%8B%9C+%EC%A3%BC%EB%B0%A9%EB%8F%84%EA%B5%AC%EA%B1%B0%EB%A6%AC/data=!4m2!3m1!1s0x60188e95e87e855d:0x214435b365c89bf3","approx":false,"hasPoint":true,"flyTo":[35.7105797,139.7879645]},{"blockId":"jzA1m9kyuBEc6st3VQ4yy","kind":"stop","number":2,"emoji":"🏨","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","memo":"[11:00] 체크아웃","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","approx":false,"hasPoint":true,"flyTo":[35.7081274,139.7864764]},{"blockId":"pZBBEBg1vIql94TfPon7E","kind":"note","number":null,"emoji":"🚇","title":"[11:30] 아사쿠사역으로 (짐 보관)","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.7098049,139.79252615000001]},{"blockId":"Ot0_3rVdZgDrIVvMYh_hX","kind":"stop","number":3,"emoji":"🍚","title":"우시미츠 (소고기 덮밥)","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EC%9A%B0%EC%8B%9C%EB%AF%B8%EC%B8%A0+(%EC%86%8C%EA%B3%A0%EA%B8%B0+%EB%8D%AE%EB%B0%A5)/data=!4m2!3m1!1s0x60188f007a2b3891:0xb7744e2fd2f43198","approx":false,"hasPoint":true,"flyTo":[35.7114824,139.7985759]},{"blockId":"w7R9llKO-N5grTj3QNanH","kind":"option","number":4,"emoji":"🔀","title":"아사쿠사 구경","memo":"","tags":[],"mode":"","durationMin":60,"optionLabel":"아사쿠사 구경","candidates":[{"title":"이치란 아사쿠사점","emoji":"🍖","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%9D%B4%EC%B9%98%EB%9E%80+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ec6be01feef:0x9736b3e4d24be9de"},{"title":"아사쿠사 실크푸딩 본점","emoji":"🍰","memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC+%EC%8B%A4%ED%81%AC%ED%91%B8%EB%94%A9+%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188ec72c4a0e19:0x737062362897c32c"},{"title":"Monchhichi Gallery","emoji":"🛍️","memo":"","tags":[],"url":"https://www.google.com/maps/place/Monchhichi+Gallery/data=!4m2!3m1!1s0x60188ec135e8b64b:0xa0f5af924f61d4eb"}],"url":"","approx":false,"hasPoint":true,"flyTo":[35.711619166666665,139.796711]},{"blockId":"GEKLM_kxP5odc2N5crCzs","kind":"stop","number":5,"emoji":"🖼️","title":"스카이트리","memo":"","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://maps.app.goo.gl/xtztNXeUq17jh6CGA","approx":false,"hasPoint":true,"flyTo":[35.71007121727086,139.81070280075076]},{"blockId":"XFgptnwMha8Gk9kOtOtd8","kind":"note","number":null,"emoji":"🚶","title":"[14:29] 액세스 특급 열차 탑승","memo":"","tags":[],"mode":"기차","durationMin":70,"optionLabel":"","candidates":[],"url":"","approx":true,"hasPoint":true,"flyTo":[35.740124608635426,140.0975121503754]},{"blockId":"Bdv7BO5ghVPfDhnw2pTfg","kind":"stop","number":6,"emoji":"✈️","title":"나리타 국제 공항","memo":"[18:25] 출발 (16:00 도착)","tags":[],"mode":"","durationMin":null,"optionLabel":"","candidates":[],"url":"https://www.google.com/maps/place/%EB%82%98%EB%A6%AC%ED%83%80+%EA%B5%AD%EC%A0%9C+%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x6022f379d1bd3757:0xd56e29a162771aa1","approx":false,"hasPoint":true,"flyTo":[35.770178,140.3843215]}],"markers":[{"blockId":"OSnZjjylFVwZGV1BhfeTA","lat":35.7097797,"lng":139.7871645,"icon":"note","number":null,"emoji":"📍","popup":{"kind":"note","emoji":"📍","text":"체크아웃 준비 (짐만 들고 나오면 될 정도)","mode":"","durationMin":null}},{"blockId":"ULYR1qiou-y7uT_WASd5P","lat":35.7105797,"lng":139.7879645,"icon":"stop","number":1,"emoji":"🛍️","popup":{"kind":"stop","title":"캇파바시 주방도구거리","approx":false,"memo":"[9:30] 일찍 가서 후다닥 쇼핑","tags":[],"url":"https://www.google.com/maps/place/%EC%BA%87%ED%8C%8C%EB%B0%94%EC%8B%9C+%EC%A3%BC%EB%B0%A9%EB%8F%84%EA%B5%AC%EA%B1%B0%EB%A6%AC/data=!4m2!3m1!1s0x60188e95e87e855d:0x214435b365c89bf3","durationMin":60}},{"blockId":"jzA1m9kyuBEc6st3VQ4yy","lat":35.7081274,"lng":139.7864764,"icon":"stop","number":2,"emoji":"🏨","popup":{"kind":"stop","title":"〒111-0041 Tokyo, Taito City, Motoasakusa, 3-chōme−16 ネットワーク本社ビル","approx":false,"memo":"[11:00] 체크아웃","tags":[],"url":"https://www.google.com/maps/place/%E3%80%92111-0041+Tokyo,+Taito+City,+Motoasakusa,+3-ch%C5%8Dme%E2%88%9216+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%9C%AC%E7%A4%BE%E3%83%93%E3%83%AB/data=!4m2!3m1!1s0x60188ebc76e5ccd5:0x7c00517508a68b08","durationMin":null}},{"blockId":"pZBBEBg1vIql94TfPon7E","lat":35.7098049,"lng":139.79252615000001,"icon":"note","number":null,"emoji":"🚇","popup":{"kind":"note","emoji":"🚇","text":"[11:30] 아사쿠사역으로 (짐 보관)","mode":"","durationMin":null}},{"blockId":"Ot0_3rVdZgDrIVvMYh_hX","lat":35.7114824,"lng":139.7985759,"icon":"stop","number":3,"emoji":"🍚","popup":{"kind":"stop","title":"우시미츠 (소고기 덮밥)","approx":false,"memo":"","tags":[],"url":"https://www.google.com/maps/place/%EC%9A%B0%EC%8B%9C%EB%AF%B8%EC%B8%A0+(%EC%86%8C%EA%B3%A0%EA%B8%B0+%EB%8D%AE%EB%B0%A5)/data=!4m2!3m1!1s0x60188f007a2b3891:0xb7744e2fd2f43198","durationMin":null}},{"blockId":"w7R9llKO-N5grTj3QNanH","lat":35.7111828,"lng":139.7976164,"icon":"optionCand","number":4,"emoji":"🍖","popup":{"kind":"stop","title":"이치란 아사쿠사점","approx":false,"memo":"","tags":[],"optionLabel":"아사쿠사 구경","url":"https://www.google.com/maps/place/%EC%9D%B4%EC%B9%98%EB%9E%80+%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC%EC%A0%90/data=!4m2!3m1!1s0x60188ec6be01feef:0x9736b3e4d24be9de","durationMin":60}},{"blockId":"w7R9llKO-N5grTj3QNanH","lat":35.7112375,"lng":139.7954263,"icon":"optionCand","number":4,"emoji":"🍰","popup":{"kind":"stop","title":"아사쿠사 실크푸딩 본점","approx":false,"memo":"","tags":[],"optionLabel":"아사쿠사 구경","url":"https://www.google.com/maps/place/%EC%95%84%EC%82%AC%EC%BF%A0%EC%82%AC+%EC%8B%A4%ED%81%AC%ED%91%B8%EB%94%A9+%EB%B3%B8%EC%A0%90/data=!4m2!3m1!1s0x60188ec72c4a0e19:0x737062362897c32c","durationMin":60}},{"blockId":"w7R9llKO-N5grTj3QNanH","lat":35.7124372,"lng":139.7970903,"icon":"optionCand","number":4,"emoji":"🛍️","popup":{"kind":"stop","title":"Monchhichi Gallery","approx":false,"memo":"","tags":[],"optionLabel":"아사쿠사 구경","url":"https://www.google.com/maps/place/Monchhichi+Gallery/data=!4m2!3m1!1s0x60188ec135e8b64b:0xa0f5af924f61d4eb","durationMin":60}},{"blockId":"GEKLM_kxP5odc2N5crCzs","lat":35.71007121727086,"lng":139.81070280075076,"icon":"stop","number":5,"emoji":"🖼️","popup":{"kind":"stop","title":"스카이트리","approx":false,"memo":"","tags":[],"url":"https://maps.app.goo.gl/xtztNXeUq17jh6CGA","durationMin":null}},{"blockId":"XFgptnwMha8Gk9kOtOtd8","lat":35.740124608635426,"lng":140.0975121503754,"icon":"note","number":null,"emoji":"🚶","popup":{"kind":"note","emoji":"🚶","text":"[14:29] 액세스 특급 열차 탑승","mode":"기차","durationMin":70}},{"blockId":"Bdv7BO5ghVPfDhnw2pTfg","lat":35.770178,"lng":140.3843215,"icon":"stop","number":6,"emoji":"✈️","popup":{"kind":"stop","title":"나리타 국제 공항","approx":false,"memo":"[18:25] 출발 (16:00 도착)","tags":[],"url":"https://www.google.com/maps/place/%EB%82%98%EB%A6%AC%ED%83%80+%EA%B5%AD%EC%A0%9C+%EA%B3%B5%ED%95%AD/data=!4m2!3m1!1s0x6022f379d1bd3757:0xd56e29a162771aa1","durationMin":null}}],"optionConnectors":[[[35.7111828,139.7976164],[35.7112375,139.7954263],[35.7124372,139.7970903]]],"segments":[{"a":[35.7097797,139.7871645],"b":[35.7105797,139.7879645],"dashed":true},{"a":[35.7105797,139.7879645],"b":[35.7081274,139.7864764],"dashed":false},{"a":[35.7081274,139.7864764],"b":[35.7098049,139.79252615000001],"dashed":true},{"a":[35.7098049,139.79252615000001],"b":[35.7114824,139.7985759],"dashed":true},{"a":[35.7114824,139.7985759],"b":[35.711619166666665,139.796711],"dashed":false},{"a":[35.711619166666665,139.796711],"b":[35.71007121727086,139.81070280075076],"dashed":false},{"a":[35.71007121727086,139.81070280075076],"b":[35.740124608635426,140.0975121503754],"dashed":true},{"a":[35.740124608635426,140.0975121503754],"b":[35.770178,140.3843215],"dashed":true}],"bounds":[[35.7097797,139.7871645],[35.7105797,139.7879645],[35.7081274,139.7864764],[35.7098049,139.79252615000001],[35.7114824,139.7985759],[35.711619166666665,139.796711],[35.71007121727086,139.81070280075076],[35.740124608635426,140.0975121503754],[35.770178,140.3843215]]}]}</script>
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById("itin-data").textContent);
+  var LS_PREFIX = "itin-export:" + DATA.name + ":";
+
+  function esc(s){
+    s = (s==null) ? "" : String(s);
+    return s.replace(/[&<>"']/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
+    });
+  }
+  function el(tag, cls){ var e=document.createElement(tag); if(cls) e.className=cls; return e; }
+  function txt(tag, cls, s){ var e=el(tag, cls); e.textContent=(s==null?"":s); return e; }
+
+  // ── 아이콘 빌더 (MapView 미러링, 리터럴 hex) ──
+  function stopIcon(number, emoji, option){
+    var bg = option ? "#7c5cff" : "#ffffff";
+    var fg = option ? "#fff" : "#0a0908";
+    var html = '<div style="display:inline-flex;align-items:center;gap:2px;transform:translate(-50%,-50%);'
+      + 'background:'+bg+';color:'+fg+';border:2px solid #0a0908;border-radius:9999px;padding:2px 8px;'
+      + "font:600 12px/1.2 'Inter',sans-serif;box-shadow:rgba(0,0,0,.4) 0 1px 4px;white-space:nowrap\">"
+      + '<span>'+esc(number)+'</span>'+(emoji?'<span style="font-size:13px">'+esc(emoji)+'</span>':'')+'</div>';
+    return L.divIcon({ className:"marker-pin", iconSize:[0,0], iconAnchor:[0,0], html:html });
+  }
+  function approxIcon(number, emoji){
+    var html = '<div style="display:inline-flex;align-items:center;gap:2px;transform:translate(-50%,-50%);'
+      + 'background:rgba(20,18,16,.9);color:#999;border:2px dashed #999;border-radius:9999px;'
+      + "padding:2px 8px;font:600 11px/1.2 'Inter',sans-serif;white-space:nowrap\">"
+      + '<span>'+esc(number)+'</span>'+(emoji?'<span>'+esc(emoji)+'</span>':'')
+      + '<span style="font-size:9px;opacity:.7">추정</span></div>';
+    return L.divIcon({ className:"marker-pin", iconSize:[0,0], iconAnchor:[0,0], html:html });
+  }
+  function noteIcon(emoji){
+    var html = '<div style="display:inline-flex;align-items:center;transform:translate(-50%,-50%);'
+      + 'background:#181818;color:#999;border:1px solid rgba(255,255,255,.10);border-radius:9999px;'
+      + "padding:1px 6px;font:500 12px 'Inter',sans-serif;box-shadow:rgba(0,0,0,.4) 0 1px 3px\">"
+      + (esc(emoji)||"📝")+'</div>';
+    return L.divIcon({ className:"marker-pin", iconSize:[0,0], iconAnchor:[0,0], html:html });
+  }
+  function makeIcon(m){
+    if(m.icon==="note") return noteIcon(m.emoji);
+    if(m.icon==="approxStop"||m.icon==="approxOption") return approxIcon(m.number==null?"":m.number, m.emoji);
+    return stopIcon(m.number, m.emoji, m.icon==="optionCand");
+  }
+
+  // ── 카드 액센트 (DESIGN: monochrome + 단일 accent. 카테고리 멀티컬러 폐기) ──
+  // 모든 stop/note는 ink-muted 액센트, option만 gradient-violet 시그너처.
+  var CAT_PALETTE = {
+    option:  { bg:"#181818", accent:"#7c5cff" },
+    fallback:{ bg:"#181818", accent:"#999999" }
+  };
+
+  function gmapAnchorHtml(url){
+    if(!url) return "";
+    return '<a class="gmap-btn sm" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">🗺️ 구글 지도</a>';
+  }
+  function popupHtml(p){
+    if(p.kind==="note"){
+      var h='<div style="min-width:140px"><div style="font-weight:600">'+esc(p.emoji)+' '+esc(p.text)+'</div>';
+      if(p.mode||p.durationMin!=null){
+        h+='<div style="font-size:12px;color:#999;margin-top:4px">'+esc(p.mode||"")
+          +(p.durationMin!=null?(' · '+esc(p.durationMin)+'분'):'')+'</div>';
+      }
+      return h+'</div>';
+    }
+    if(p.kind==="option"){
+      return '<div style="min-width:140px"><div style="font:600 11px Inter;color:#7c5cff">택1</div>'
+        +'<div style="font-weight:600">'+esc(p.label)+'</div>'
+        +(p.durationMin!=null?'<div style="font-size:12px;color:#999;margin-top:2px">⏱ 예상 '+esc(p.durationMin)+'분</div>':'')
+        +'<div style="font-size:11px;color:#999;margin-top:2px">좌표 없음 · 근사 위치</div></div>';
+    }
+    var s='<div style="min-width:160px">';
+    if(p.optionLabel) s+='<div style="font:600 11px Inter;color:#7c5cff">'+esc(p.optionLabel)+'</div>';
+    s+='<div style="font-weight:600">'+esc(p.title)+'</div>';
+    if(p.approx) s+='<div style="font-size:11px;color:#999;margin-top:2px">좌표 없음 · 근사 위치</div>';
+    if(p.durationMin!=null) s+='<div style="font-size:12px;color:#999;margin-top:4px">⏱ 예상 '+esc(p.durationMin)+'분</div>';
+    if(p.memo) s+='<div style="font-size:13px;color:#fff;margin-top:4px">'+esc(p.memo)+'</div>';
+    if(p.tags&&p.tags.length) s+='<div style="font-size:12px;color:#999;margin-top:4px">#'+p.tags.map(esc).join(' #')+'</div>';
+    if(p.url) s+='<div>'+gmapAnchorHtml(p.url)+'</div>';
+    return s+'</div>';
+  }
+
+  // ── 일정별 지도 상태 ──
+  var mapState = {}; // itId -> { map, markerByBlock }
+
+  function initMap(container, vm){
+    if(!vm.bounds.length){ return null; }
+    var map = L.map(container, { scrollWheelZoom:true });
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { subdomains:"abcd", attribution:"&copy; OpenStreetMap &copy; CARTO" }).addTo(map);
+
+    vm.segments.forEach(function(seg){
+      L.polyline([seg.a, seg.b], { color:"#ffffff", weight:3, opacity:0.7, dashArray: seg.dashed?"4 6":null }).addTo(map);
+    });
+    vm.optionConnectors.forEach(function(pts){
+      L.polyline(pts, { color:"#7c5cff", weight:2, opacity:0.85, dashArray:"3 5" }).addTo(map);
+    });
+
+    var markerByBlock = {};
+    vm.markers.forEach(function(m){
+      var mk = L.marker([m.lat, m.lng], { icon: makeIcon(m) }).addTo(map);
+      mk.bindPopup(popupHtml(m.popup));
+      if(!markerByBlock[m.blockId]) markerByBlock[m.blockId] = mk;
+    });
+
+    if(vm.bounds.length===1){ map.setView(vm.bounds[0], 15); }
+    else { map.fitBounds(L.latLngBounds(vm.bounds), { padding:[40,40] }); }
+
+    requestAnimationFrame(function(){ map.invalidateSize(); });
+    var st = { map: map, markerByBlock: markerByBlock };
+    mapState[vm.id] = st;
+    return st;
+  }
+
+  function ensureMap(vm){
+    var st = mapState[vm.id];
+    if(st){ requestAnimationFrame(function(){ st.map.invalidateSize(); }); return st; }
+    var holder = document.getElementById("map-"+vm.id);
+    if(!holder) return null;
+    return initMap(holder, vm);
+  }
+
+  function flyToBlock(vm, row){
+    if(!row.hasPoint || !row.flyTo) return;
+    var st = ensureMap(vm);
+    if(!st) return;
+    st.map.flyTo(row.flyTo, Math.max(st.map.getZoom(), 15), { duration:0.6 });
+    var mk = st.markerByBlock[row.blockId];
+    if(mk) mk.openPopup();
+  }
+
+  // ── 아이콘(SVG) ──
+  function locateSvg(){
+    return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+      + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+  }
+
+  // ── 렌더: 체크리스트 ──
+  function renderChecklist(panel){
+    DATA.checklists.forEach(function(topic){
+      var card = el("div","card");
+      card.appendChild(txt("h3","topic-title t-card-title", topic.title || "주제"));
+      topic.items.forEach(function(item){
+        var key = LS_PREFIX + item.id;
+        var stored = null;
+        try { stored = localStorage.getItem(key); } catch(e){}
+        var checked = (stored===null) ? !!item.done : (stored==="1");
+        var row = el("label","check-row"+(checked?" done":""));
+        var box = el("input"); box.type="checkbox"; box.checked=checked;
+        var span = txt("span","t-body-md", item.text);
+        box.addEventListener("change", function(){
+          try { localStorage.setItem(key, box.checked?"1":"0"); } catch(e){}
+          row.className = "check-row"+(box.checked?" done":"");
+        });
+        row.appendChild(box); row.appendChild(span);
+        card.appendChild(row);
+      });
+      panel.appendChild(card);
+    });
+    return null;
+  }
+  function buildChecklistView(){
+    var view = el("div","view");
+    renderChecklist(view);
+    return view;
+  }
+
+  function chipText(row){
+    if(row.kind==="option") return "택1";
+    if(row.kind==="note") return row.mode || "메모";
+    return "방문";
+  }
+
+  // 타임라인 카드 한 개(좌측 레일 노드 + 우측 카드). 구글맵 버튼은 지도 팝업 전용 → 카드엔 없음.
+  function renderCard(vm, row){
+    var col = row.kind==="option" ? CAT_PALETTE.option : CAT_PALETTE.fallback;
+
+    var item = el("div","tl-item");
+    var rail = el("div","tl-rail");
+    var node = el("div","tl-node"); node.style.borderColor = col.accent;
+    rail.appendChild(node);
+    item.appendChild(rail);
+
+    var card = el(row.hasPoint ? "button" : "div", "tl-card"+(row.kind==="note"?" note":""));
+    card.style.borderLeftColor = col.accent; // 카테고리색 = 좌측 액센트만(흰 카드 유지)
+    if(row.hasPoint){
+      card.type="button"; card.title="지도에서 보기";
+      card.addEventListener("click", function(){ flyToBlock(vm, row); });
+    }
+
+    var head = el("div","tl-head");
+    if(row.number!=null){
+      var num = el("span","num"+(row.kind==="option"?" opt":""));
+      num.textContent = row.number; head.appendChild(num);
+    }
+    head.appendChild(txt("span","emoji", row.emoji));
+    head.appendChild(txt("span","tl-title", row.title));
+    head.appendChild(txt("span","chip", chipText(row)));
+    if(row.durationMin!=null) head.appendChild(txt("span","chip dur","⏱ "+row.durationMin+"분"));
+    // note는 연결선용(중점) → 추정/좌표없음 배지 미표시
+    if(row.kind!=="note"){
+      if(row.approx) head.appendChild(txt("span","badge-approx","추정"));
+      else if(!row.hasPoint) head.appendChild(txt("span","badge-approx","좌표없음"));
+    }
+    if(row.hasPoint){ var loc = el("span","locate"); loc.innerHTML = locateSvg(); head.appendChild(loc); }
+    card.appendChild(head);
+
+    var detail = el("div","tl-detail");
+    if(row.kind==="note"){
+      if(row.mode) detail.appendChild(txt("div","meta", row.mode)); // 시간은 헤드 칩에 표시
+    } else if(row.kind==="option"){
+      row.candidates.forEach(function(c){
+        var cd = el("div","cand");
+        cd.appendChild(txt("div","cand-title", c.emoji+" "+c.title));
+        if(c.memo) cd.appendChild(txt("div","memo", c.memo));
+        if(c.tags && c.tags.length) cd.appendChild(txt("div","tags","#"+c.tags.join(" #")));
+        detail.appendChild(cd);
+      });
+    } else {
+      if(row.memo) detail.appendChild(txt("div","memo", row.memo));
+      if(row.tags && row.tags.length) detail.appendChild(txt("div","tags","#"+row.tags.join(" #")));
+    }
+    if(detail.childNodes.length) card.appendChild(detail);
+
+    item.appendChild(card);
+    return item;
+  }
+
+  // ── 일정 view (sticky 지도 → 인트로 → 세로 타임라인) ──
+  function buildItineraryView(vm){
+    var view = el("div","view");
+    var cols = el("div","itin-cols");
+
+    // 좌측(데스크톱) / 상단 이후(모바일): 인트로 + 타임라인
+    var main = el("div","itin-main");
+    var intro = el("div","itin-intro");
+    intro.appendChild(txt("h2","it-title t-heading-md", vm.title || "일정"));
+    if(vm.subtitle) intro.appendChild(txt("div","it-sub t-subtitle", vm.subtitle));
+    if(vm.description) intro.appendChild(txt("p","it-desc t-body-md", vm.description));
+    main.appendChild(intro);
+    if(!vm.bounds.length) main.appendChild(txt("div","no-map t-body-sm","표시할 좌표가 없습니다"));
+    var tl = el("div","timeline");
+    vm.blocks.forEach(function(row){ tl.appendChild(renderCard(vm, row)); });
+    main.appendChild(tl);
+    cols.appendChild(main);
+
+    // 우측(데스크톱) / 상단(모바일, order:-1): sticky 지도
+    if(vm.bounds.length){
+      var sticky = el("div","map-sticky");
+      var mapDiv = el("div","itin-map"); mapDiv.id = "map-"+vm.id;
+      sticky.appendChild(mapDiv);
+      sticky.appendChild(txt("div","map-hint","카드를 탭하면 지도가 이동합니다"));
+      cols.appendChild(sticky);
+    }
+
+    view.appendChild(cols);
+    return view;
+  }
+
+  // ── 렌더: 가로 선택 네비(체크리스트 맨 앞 + 일정들) + view 전환 ──
+  function render(){
+    var app = document.getElementById("app");
+    var wrap = el("div","wrap");
+
+    var hero = el("div","hero");
+    var card = el("div","hero-card");
+    card.appendChild(txt("h1","t-hero", DATA.name || "여행 일정"));
+    var its = DATA.itineraries.length, chks = DATA.checklists.length;
+    card.appendChild(txt("div","hero-tag t-subtitle", "일정 " + its + "개 · 체크리스트 " + chks + "개"));
+    hero.appendChild(card);
+    wrap.appendChild(hero);
+
+    var nav = el("nav","trip-nav"); nav.setAttribute("role","tablist");
+    var host = el("div","view-host");
+    var entries = []; // {item, view, onShow}
+
+    function activate(e){
+      entries.forEach(function(x){
+        var on = (x===e);
+        x.item.setAttribute("aria-selected", on?"true":"false");
+        x.view.hidden = !on;
+      });
+      if(e.onShow) requestAnimationFrame(e.onShow);
+    }
+    function addEntry(kicker, label, viewEl, onShow){
+      var item = el("button","nav-item"); item.type="button";
+      item.setAttribute("role","tab"); item.setAttribute("aria-selected","false");
+      item.appendChild(txt("span","nav-kicker", kicker));
+      item.appendChild(txt("span","nav-label", label));
+      viewEl.hidden = true;
+      var e = { item:item, view:viewEl, onShow:onShow };
+      item.addEventListener("click", function(){ activate(e); });
+      nav.appendChild(item); host.appendChild(viewEl); entries.push(e);
+      return e;
+    }
+
+    if(chks) addEntry("✓", "체크리스트", buildChecklistView(), null);
+    var firstItin = null;
+    DATA.itineraries.forEach(function(vm, idx){
+      var e = addEntry(("0"+(idx+1)).slice(-2), vm.title || "일정", buildItineraryView(vm),
+        function(){ if(vm.bounds.length) ensureMap(vm); });
+      if(idx===0) firstItin = e;
+    });
+
+    wrap.appendChild(nav);
+    wrap.appendChild(host);
+
+    var f = el("footer"); f.appendChild(txt("div","t-micro","여행 일정 에디터로 생성"));
+    wrap.appendChild(f);
+
+    app.appendChild(wrap);
+
+    // 기본 선택: 첫 일정(있으면) → 지도 바로 노출, 없으면 첫 항목(체크리스트)
+    if(entries.length) activate(firstItin || entries[0]);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
