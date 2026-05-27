@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<!-- Header -->
+<head>
+    
+    
+    
+    
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Argon.Blog - 자주 사용하는 Docker 명령어들">
+    <meta property="og:description" content="📜 Docker CLI 정리">
+    <meta property="og:image" content="/feed-thumbnail/object3.jpg">
+    <meta property="og:url" content="https://argon1025.github.io/Docker/Docker 사용하기/Docker-CLI 사용법/">
+    <meta property="og:site_name" content="Argon.Blog - 자주 사용하는 Docker 명령어들">
+    <!-- Open Graph End -->
+
+    <!-- Title -->
+    <title>Argon.Blog - 자주 사용하는 Docker 명령어들</title>
+    <!-- Title End -->
+
+    <!-- MetaData -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Argon.Blog - 자주 사용하는 Docker 명령어들">
+    <link rel="canonical" href="https://argon1025.github.io/Docker/Docker 사용하기/Docker-CLI 사용법/">
+    <meta name="keywords" content="developer, NodeJS, NestJS" />
+    <meta name="author" content="argon1025" />
+    <meta name="description" content="📜 Docker CLI 정리" />
+    <!-- MetaData End -->
+
+    
+        <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous">
+    
+
+    
+        <!-- Favicon -->
+        <link rel="icon" href="/shape.svg">
+        <link rel="shortcut icon" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="114x114"  href="/shape.svg" />
+        <link rel="apple-touch-icon" sizes="144x144"  href="/shape.svg" />
+        <!-- Favicon End  -->
+    
+
+    <!-- Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <!-- Font End -->
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+            fontFamily: {
+                'sans': ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
+            }
+            }
+        }
+        }
+    </script>
+    <!-- TailwindCSS End -->
+
+    <!-- highlight.js Theme -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- highlight.js Theme End -->
+<meta name="generator" content="Hexo 6.3.0"></head>
+  <!-- Header End -->
+
+  <body class="w-full h-full font-sans">
+    <!-- Navigation -->
+    <div>
+      <div class="z-50 flex justify-center items-center w-full p-5 backdrop-blur-sm bg-white/60">
+    <div class="flex flex-col w-full max-w-5xl justify-center items-center space-y-4 md:space-y-0 md:flex-row">
+        <!-- Logo -->
+        
+            
+                <a href="/">
+                    <img src="/images/wind.png" alt="Argon.Blog" class="h-8">
+                </a>
+            
+        
+        <!-- Logo End -->
+        
+        <!-- Space -->
+        <div class="flex grow"></div>
+        <!-- Space End -->
+
+        <!-- Menu -->
+        <ul class="flex flex-row space-x-10">
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="/">
+                <a href="/">Index</a>
+            </li>
+        
+            <li class="font-semibold hover:text-gray-400 transition duration-300 ease-in-out" data-path="https://github.com/argon1025">
+                <a target="_blank" rel="noopener" href="https://github.com/argon1025">GitHub</a>
+            </li>
+        
+        </ul>
+        <!-- Menu End -->
+    </div>
+</div>
+    </div>
+    <!-- Navigation End -->
+    <!-- PostDetail -->
+    <div class="flex flex-col w-full justify-center items-center space-y-5 p-5">
+    <!-- Post Detail Header -->
+    <div class="w-full max-w-5xl space-y-3">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!-- Header Category -->
+      <div class="flex text-xs">
+        <div class="flex flex-row rounded-md justify-center items-center space-x-1">
+          <div class="w-3 h-3 fill-gray-400"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-full h-full"><title>Docker</title><path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"/></svg></div>
+              <span class="text-gray-400">Docker 사용하기</span>
+        </div>
+      </div>
+      <!-- Header Category End -->
+      <div class="w-full flex flex-col justify-start">
+        <h1 class="text-2xl md:text-4xl font-semibold mb-2">자주 사용하는 Docker 명령어들</h1>
+        <h2 class="text-sm md:text-xl text-gray-800">📜 Docker CLI 정리</h2>
+      </div>
+      <!-- Header Tags And CreatedAt -->
+      <div class="flex flex-row text-xs items-center">
+        <div class="flex flex-row space-x-1">
+          
+            <p class="text-[#53C1F8]">#Docker</p>
+            
+        </div>
+        <div class="text-gray-400 ml-auto">2021년 02월 02일</div>
+      </div>
+      <!-- Header Tags And CreatedAt End -->
+    </div>
+    <!-- Post Detail Header End -->
+    <!-- Thumbnail -->
+    <!-- 썸네일 기능 비활성화
+    <div class="w-full max-w-5xl">
+      <div class="flex flex-col justify-center items-center rounded-3xl overflow-hidden h-80 w-full hover:drop-shadow-xl transition duration-300 ease-in-out">
+        <img src=/feed-thumbnail/object24.jpg alt="Thumbnail" class="w-full h-full object-cover" loading="lazy"></img>
+      </div>
+    </div>
+    -->
+    <!-- Thumbnail End -->
+    <!-- Content -->
+    <div class="flex flex-row w-full max-w-5xl justify-center space-x-2 pt-5">
+      <!-- Post Content -->
+        <article class="w-full max-w-3xl prose prose-sm md:prose-base overflow-hidden text-gray-700 prose-hr:my-3 prose-pre:bg-gray-900 prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-medium prose-h1:mt-8 prose-h1:mb-1 prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-medium prose-h2:mt-8 prose-h2:mb-1 prose-h3:text-base md:prose-h2:text-xl prose-h3:font-medium prose-h3:mt-8 prose-h3:mb-1">
+          <p>Docker(도커)는 컨테이너 기반의 오픈소스 가상화 플랫폼입니다<br>다양한 프로그램과 실행환경을 YAML 파일로 관리할 수 있으며<br>서버 관리 및 배포를 단순하게 해주고 있습니다</p>
+<h1 id="Docker-설치"><a href="#Docker-설치" class="headerlink" title="Docker 설치"></a>Docker 설치</h1><hr>
+<p>도커는 <a target="_blank" rel="noopener" href="https://www.docker.com/get-started">링크</a>를 통해 설치할 수 있습니다</p>
+<h1 id="Docker-버전-확인하기"><a href="#Docker-버전-확인하기" class="headerlink" title="Docker 버전 확인하기"></a>Docker 버전 확인하기</h1><hr>
+<pre><code class="hljs bash">docker version</code></pre>
+
+<p>설치된 docker 서버와 클라이언트 정보를 조회합니다</p>
+<h1 id="Docker-pull-명령어로-ubuntu-이미지-설치하기"><a href="#Docker-pull-명령어로-ubuntu-이미지-설치하기" class="headerlink" title="Docker pull 명령어로 ubuntu 이미지 설치하기"></a>Docker pull 명령어로 ubuntu 이미지 설치하기</h1><hr>
+<pre><code class="hljs bash">docker pull ubuntu:latest</code></pre>
+
+<p>컨테이너를 실행하기 위한 이미지파일을 다운받을 수 있습니다</p>
+<p><code>ubuntu:latest</code> 는 최신 LTS Ubuntu 이미지를 말합니다</p>
+<h1 id="Docker-images-명령어로-설치된-이미지-확인하기"><a href="#Docker-images-명령어로-설치된-이미지-확인하기" class="headerlink" title="Docker images 명령어로 설치된 이미지 확인하기"></a>Docker images 명령어로 설치된 이미지 확인하기</h1><hr>
+<pre><code class="hljs bash">docker images</code></pre>
+
+<pre><code class="hljs bash">REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
+ubuntu                   latest    f63181f19b2f   3 weeks ago      72.9MB</code></pre>
+
+<p><code>docker images</code> 명령어로 설치했거나 빌드한 이미지를 확인할 수 있습니다</p>
+<h1 id="Docker-run-명령어로-ubuntu-설치해보기"><a href="#Docker-run-명령어로-ubuntu-설치해보기" class="headerlink" title="Docker run 명령어로 ubuntu 설치해보기"></a>Docker run 명령어로 ubuntu 설치해보기</h1><hr>
+<pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -it ubuntu:latest /bin/bash</code></pre>
+
+<p>ubuntu 컨테이너를 실행합니다 <code>ubuntu:latest</code> 는 최신 LTS Ubuntu 이미지를 말합니다 이미지에 대한 자세한 사항은 <a target="_blank" rel="noopener" href="https://hub.docker.com/_/ubuntu">Dock Hub</a>에서 보실 수 있습니다</p>
+<h2 id="자주-사용하는-Docker-run-옵션"><a href="#자주-사용하는-Docker-run-옵션" class="headerlink" title="자주 사용하는 Docker run 옵션"></a>자주 사용하는 Docker run 옵션</h2><p><code>-it</code> (interactive),(tty) 컨테이너 안에서 터미널을 실행해서 명령어를 입력할때 사용하는 옵션<br><code>-p 8080:80</code> 도커호스트 포트:컨테이너 내부 포트, 옵션을 여러개 줘서 여러 포트를 동시에 열 수 있습니다<br><code>--name</code> 컨테이너의 이름을 설정합니다<br><code>-v</code> 호스트 컨테이너와 디렉토리를 마운트 합니다<br><code>-rm</code> 컨테이너 프로세스가 종료되면 자동으로 컨테이너를 제거합니다<br><code>-d</code> 백그라운드 모드로 실행합니다</p>
+<h1 id="Docker-ps-명령어로-실행된-컨테이너-확인하기"><a href="#Docker-ps-명령어로-실행된-컨테이너-확인하기" class="headerlink" title="Docker ps 명령어로 실행된 컨테이너 확인하기"></a>Docker ps 명령어로 실행된 컨테이너 확인하기</h1><hr>
+<pre><code class="hljs bash">docker ps</code></pre>
+
+<pre><code class="hljs bash">CONTAINER ID   IMAGE           COMMAND       CREATED         STATUS         PORTS     NAMES
+1ed35f870d27   ubuntu:latest   <span class="hljs-string">&quot;/bin/bash&quot;</span>   7 seconds ago   Up 6 seconds             vigilant_mestorf</code></pre>
+
+<p><code>docker ps</code> 명령어로 현재 실행되고 있는 컨테이너 리스트를 볼 수 있습니다</p>
+<pre><code class="hljs bash">docker ps -a</code></pre>
+
+<pre><code class="hljs bash">CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS                     PORTS     NAMES
+0795d80d1abd   ubuntu:latest   <span class="hljs-string">&quot;/bin/bash&quot;</span>   11 seconds ago   Exited (0) 7 seconds ago             zen_dubinsky
+1ed35f870d27   ubuntu:latest   <span class="hljs-string">&quot;/bin/bash&quot;</span>   2 minutes ago    Up 2 minutes                         vigilant_mestorf</code></pre>
+
+<p><code>docker ps -a</code> 명령어로 실행,종료된 모든 컨테이너의 리스트를 볼 수 있습니다</p>
+<h1 id="Docker-stop-명령어로-컨테이너-중지하기"><a href="#Docker-stop-명령어로-컨테이너-중지하기" class="headerlink" title="Docker stop 명령어로 컨테이너 중지하기"></a>Docker stop 명령어로 컨테이너 중지하기</h1><hr>
+<pre><code class="hljs bash">docker stop <span class="hljs-variable">$&#123;CONTAINER ID&#125;</span></code></pre>
+
+<p><code>docker ps -a</code> 명령어로 <code>CONTAINER ID</code> 를 확인한뒤 <code>docker stop</code> 를 통해 컨테이너를 중지할 수 있습니다<br>띄어쓰기로 여러개의 컨테이너를 동시에 종료할수도 있습니다</p>
+<h1 id="Docker-rmi-명령어로-이미지-제거하기"><a href="#Docker-rmi-명령어로-이미지-제거하기" class="headerlink" title="Docker rmi 명령어로 이미지 제거하기"></a>Docker rmi 명령어로 이미지 제거하기</h1><hr>
+<pre><code class="hljs bash">docker rmi <span class="hljs-variable">$&#123;IMAGE ID&#125;</span></code></pre>
+
+<pre><code class="hljs bash">docker rmi f63181f19b2f
+Untagged: ubuntu:latest
+Untagged: ubuntu@sha256:703218c0465075f4425e58fac086e09e1de5c340b12976ab9eb8ad26615c3715
+Deleted: sha256:f63181f19b2fe819156dcb068b3b5bc036820bec7014c5f77277cfa341d4cb5e
+Deleted: sha256:0770b7f116f8627ec336a62e65a1f79e344df7ae721eb3e06e11edca85d3d1e7
+Deleted: sha256:476e931831a5b24b95ff7587cca09bde9d1d7c0329fbc44ac64793b28fb809d0
+Deleted: sha256:9f32931c9d28f10104a8eb1330954ba90e76d92b02c5256521ba864feec14009</code></pre>
+
+<p><code>docker images</code> 명령어로 이미지 목록을 조회해서 <code>IMAGE ID</code> 를 알아내면<br><code>docker rmi</code> 명령어를 사용하여 사용하지 않는 이미지를 제거할 수 있습니다<br>이미지를 제거하려면 반드시 관련 컨테이너가 모두 삭제되어야 합니다</p>
+<h1 id="Docker-logs-명령어로-컨테이너-로그-보기"><a href="#Docker-logs-명령어로-컨테이너-로그-보기" class="headerlink" title="Docker logs 명령어로 컨테이너 로그 보기"></a>Docker logs 명령어로 컨테이너 로그 보기</h1><hr>
+<pre><code class="hljs bash">docker logs <span class="hljs-variable">$&#123;CONTAINER ID&#125;</span></code></pre>
+
+<pre><code class="hljs bash">docker ps
+CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS          PORTS                  NAMES
+d9811a26e5de   argon1025/node-web-app:1   <span class="hljs-string">&quot;docker-entrypoint.s…&quot;</span>   59 seconds ago   Up 59 seconds   0.0.0.0:80-&gt;8080/tcp   cranky_pascal
+
+docker logs d9811
+Running on &lt;http://0.0.0.0:8080&gt;</code></pre>
+
+<p><code>docker ps</code> 명령어로 컨테이너 ID를 얻은 다음 해당 컨테이너에 기록된 Log를 <code>docker logs</code> 명령어로 열람할 수 있습니다<br>위는 nodejs 컨테이너를 실행하고 로그를 조회한 결과입니다</p>
+<h2 id="자주-사용하는-Docker-logs-옵션"><a href="#자주-사용하는-Docker-logs-옵션" class="headerlink" title="자주 사용하는 Docker logs 옵션"></a>자주 사용하는 Docker logs 옵션</h2><p><code>-f</code> 옵션으로 로그를 실시간으로 볼 수 있습니다<br><code>--tail</code> 옵션으로 마지막 10줄만 출력할 수 있습니다</p>
+<h1 id="Docker-exec-명령어로-컨테이너에-명령어-실행하기"><a href="#Docker-exec-명령어로-컨테이너에-명령어-실행하기" class="headerlink" title="Docker exec 명령어로 컨테이너에 명령어 실행하기"></a>Docker exec 명령어로 컨테이너에 명령어 실행하기</h1><hr>
+<pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it <span class="hljs-variable">$&#123;CONTAINER ID&#125;</span> /bin/bash</code></pre>
+
+<p><code>docker ps</code> 명령어로 컨테이너 ID를 얻은 다음 <code>docker exec</code> 명령어로 해당 컨테이너에 접속할 수 있습니다<br><code>SSH</code> 는 권장하지 않고 반드시 이방법으로만 컨테이너에 접속해야합니다</p>
+
+        </article>
+        <!-- Post Content End -->
+    </div>
+    <!-- Content End -->
+</div>
+    <!-- PostDetail End -->
+    
+<footer class="flex flex-col w-full justify-center items-center mt-28 py-16 px-5 bg-gray-50">
+    <div class="flex flex-col w-full max-w-5xl space-y-1">
+        <div class="flex flex-row text-sm font-semibold text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
+              </svg>              
+              <span class="">Created By Argon1025 (argon1025@gmail.com)</span>
+        </div>
+        <div class="flex flex-row text-sm text-gray-400 items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              <span class="">Special thanks | Feed Thumbnail By Milad Fakurian</span>
+        </div>
+    </div>
+</footer>
+  </body>
+</html>
