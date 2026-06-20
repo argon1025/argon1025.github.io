@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>이성록 — 백엔드 개발자</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+  />
+  <style>
+    /* ===== Design tokens (flex / DESIGN.md) ===== */
+    :root {
+      /* ink — single hue, alpha-stepped */
+      --ink: #1d1d1f;
+      --ink-96: rgba(29, 29, 31, 0.96);
+      --ink-72: rgba(29, 29, 31, 0.72);
+      --ink-24: rgba(29, 29, 31, 0.24);
+      --ink-10: rgba(29, 29, 31, 0.10);
+      --ink-04: rgba(29, 29, 31, 0.04);
+      /* surfaces */
+      --canvas: #ffffff;
+      --page-dark: #000000;
+      --graphite: #2d3338;
+      --soft-white: #fdfdfd;
+      /* on-dark */
+      --on-dark: #ffffff;
+      --on-dark-72: rgba(255, 255, 255, 0.72);
+      --on-dark-48: rgba(255, 255, 255, 0.48);
+      /* type */
+      --font: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui,
+        "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
+      /* spacing 6/8/12/16/30/60/96 */
+      --sp-xs: 6px;
+      --sp-sm: 8px;
+      --sp-md: 12px;
+      --sp-base: 16px;
+      --sp-lg: 30px;
+      --sp-xl: 60px;
+      --sp-section: 96px;
+      /* radius */
+      --r-sm: 8px;
+      --r-md: 10px;
+      --r-lg: 16px;
+      /* ring (inset, never border) */
+      --ring: rgba(29, 29, 31, 0.10) 0 0 0 1px inset;
+      --ring-strong: rgba(29, 29, 31, 0.24) 0 0 0 1px inset;
+      /* shadow */
+      --halo: rgba(0, 0, 0, 0.06) 0 8px 20px -4px;
+      /* layout */
+      --maxw: 820px;
+      --gutter: clamp(20px, 5vw, 48px);
+    }
+
+    /* ===== Reset ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      font-family: var(--font);
+      background: var(--canvas);
+      color: var(--ink);
+      line-height: 1.6;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a {
+      color: inherit;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* ===== Layout ===== */
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+    }
+
+    /* ===== Hero (dark, full-bleed) ===== */
+    .hero {
+      width: 100%;
+      background: var(--page-dark);
+      color: var(--on-dark);
+      padding-block: clamp(48px, 8vw, 80px);
+    }
+    .hero h1 {
+      font-size: clamp(30px, 4.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--on-dark);
+    }
+    .hero .role {
+      margin-top: var(--sp-md);
+      font-size: clamp(15px, 2vw, 17px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      color: var(--on-dark-72);
+    }
+    .contact {
+      margin-top: var(--sp-lg);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-sm) var(--sp-lg);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .contact li {
+      display: flex;
+      gap: 6px;
+    }
+    .contact .label {
+      color: var(--on-dark-48);
+      font-weight: 500;
+    }
+    .contact a {
+      color: var(--on-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ===== Sections ===== */
+    section {
+      padding-block: clamp(40px, 6vw, 64px);
+    }
+    section + section {
+      border-top: 1px solid var(--ink-10);
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-72);
+    }
+    h2 {
+      margin-top: var(--sp-sm);
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      line-height: 1.2;
+      color: var(--ink-96);
+    }
+    .section-body {
+      margin-top: var(--sp-lg);
+    }
+
+    /* ===== About ===== */
+    #about p {
+      color: var(--ink-72);
+      font-size: clamp(14.5px, 1.6vw, 15.5px);
+    }
+    #about p + p {
+      margin-top: var(--sp-md);
+    }
+    #about .lead {
+      color: var(--ink-96);
+      font-weight: 600;
+    }
+    /* ===== Skills ===== */
+    .skills {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--sp-base) var(--sp-lg);
+      align-items: start;
+    }
+    .skills dt {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      padding-top: 5px;
+    }
+    .skills dd {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-xs);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--canvas);
+      color: var(--ink);
+      border-radius: var(--r-sm);
+      padding: 5px 10px;
+      box-shadow: var(--ring);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    /* ===== Career / Projects (articles) ===== */
+    .entries {
+      display: flex;
+      flex-direction: column;
+    }
+    .entry {
+      padding-block: var(--sp-lg);
+    }
+    .entry:first-child {
+      padding-top: 0;
+    }
+    .entry + .entry {
+      border-top: 1px solid var(--ink-10);
+    }
+    .entry-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--sp-sm);
+    }
+    .entry h3 {
+      font-size: clamp(17px, 2.2vw, 20px);
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .meta {
+      margin-top: var(--sp-xs);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--ink-72);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 10px;
+    }
+    .meta .sep {
+      color: var(--ink-24);
+    }
+    .meta .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-xs);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      border-radius: var(--r-sm);
+      padding: 4px 9px;
+      box-shadow: var(--ring);
+      font-size: 13px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .badge .badge-label {
+      color: var(--ink-72);
+      font-weight: 500;
+    }
+    .badge .badge-value {
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .desc {
+      margin-top: var(--sp-md);
+      font-size: clamp(14.5px, 1.6vw, 15.5px);
+      color: var(--ink-72);
+    }
+
+    /* labeled blocks (배경 / 진행 / 성과 / 담당업무) */
+    .block {
+      margin-top: var(--sp-base);
+    }
+    .block-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-72);
+      margin-bottom: var(--sp-sm);
+    }
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: var(--sp-sm);
+    }
+    h4 + h4,
+    .block + h4,
+    .grouped + .grouped {
+      margin-top: var(--sp-base);
+    }
+
+    /* bullets */
+    .bullets li {
+      position: relative;
+      padding-left: 16px;
+      font-size: clamp(14.5px, 1.6vw, 15.5px);
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .bullets li + li {
+      margin-top: var(--sp-sm);
+    }
+    .bullets li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--ink-24);
+    }
+    .bullets li ul {
+      margin-top: var(--sp-sm);
+    }
+    .bullets li li {
+      padding-left: 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink-72);
+    }
+    .bullets li li::before {
+      content: "·";
+    }
+    .bullets li li + li {
+      margin-top: var(--sp-xs);
+    }
+
+    .metric {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: inherit;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .skills {
+        grid-template-columns: 1fr;
+        gap: var(--sp-sm);
+      }
+      .skills dt {
+        padding-top: 0;
+      }
+      .skills dd {
+        margin-bottom: var(--sp-md);
+      }
+      .entry-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ===== Accessibility ===== */
+    a:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .hero a:focus-visible {
+      outline-color: var(--on-dark);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ===== Print (A4 / PDF) ===== */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+    @media print {
+      :root {
+        --gutter: 0;
+      }
+      body {
+        font-size: 10.5pt;
+      }
+      .hero {
+        /* PDF 배포 기준: 검정 배너 유지. 잉크 절약용 라이트 반전 원하면 아래 3줄 주석 해제.
+        background: var(--canvas) !important;
+        color: var(--ink) !important;
+        */
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding-block: 24px;
+      }
+      section {
+        padding-block: 16px;
+      }
+      .entry,
+      .block,
+      .bullets li,
+      .badge {
+        break-inside: avoid;
+      }
+      h2,
+      h3,
+      h4 {
+        break-after: avoid;
+      }
+      .pill,
+      .badge {
+        box-shadow: none;
+        border: 1px solid var(--ink-24);
+      }
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+        color: var(--ink-72);
+        font-weight: 500;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="wrap">
+      <h1>이성록</h1>
+      <p class="role">백엔드 개발자</p>
+      <ul class="contact">
+        <li>
+          <span class="label">Mail.</span>
+          <a href="mailto:argon1025@gmail.com">argon1025@gmail.com</a>
+        </li>
+        <li>
+          <span class="label">Phone.</span>
+          <a href="tel:01058013438">010-5801-3438</a>
+        </li>
+        <li>
+          <span class="label">GitHub.</span>
+          <a href="https://github.com/argon1025">github.com/argon1025</a>
+        </li>
+        <li>
+          <span class="label">Blog.</span>
+          <a href="https://argon1025.github.io">argon1025.github.io</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ===== ABOUT ===== -->
+    <section id="about" aria-labelledby="about-h">
+      <p class="eyebrow">ABOUT</p>
+      <h2 id="about-h">소개</h2>
+      <div class="section-body">
+        <p class="lead">
+          안녕하세요. Spring Boot와 NestJS 기반의 대규모 시스템 안정성 향상과 자동화에 특화된 경험을 보유한
+          4년 차 백엔드 개발자 이성록입니다.
+        </p>
+        <p>
+          누적 가입자 <strong class="metric">80만</strong> 규모의 알뜰폰·해외 로밍 서비스 개발을 거쳐,
+          현재는 <strong class="metric">126만 개</strong> 디지털 콘텐츠를 다루는 개발자센터 서비스를 담당하고 있습니다.
+        </p>
+        <p>
+          저는 ‘구성원이 마주하는 병목을 해결해, 더 가치 있는 일에 집중할 수 있는 환경을 만드는 것’을 가장
+          중요하게 생각합니다.
+        </p>
+        <p class="lead">
+          이를 위해 일부 작업 실패가 전체 중단으로 이어지던 후처리 로직을 SQS 기반 비동기 이벤트로 분리해 운영팀의
+          수동 재처리 업무를 줄이고, 프롬프트 숙련도에 따라 코드 품질이 달라지던 문제는 사내 표준
+          하네스(Harness)를 구축해 ‘컨텍스트 주입’의 병목을 해결한 경험이 있습니다.
+        </p>
+        <p>앞으로도 반복되는 비효율을 앞서 탐색하며, 시스템 안정성과 팀의 생산성을 함께 높이겠습니다.</p>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" aria-labelledby="skills-h">
+      <p class="eyebrow">SKILLS</p>
+      <h2 id="skills-h">기술</h2>
+      <dl class="skills section-body">
+        <dt>Backend</dt>
+        <dd>
+          <span class="pill">Java</span>
+          <span class="pill">Spring Boot</span>
+          <span class="pill">Spring Data JPA</span>
+          <span class="pill">Querydsl</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">NestJS</span>
+          <span class="pill">TypeORM</span>
+        </dd>
+        <dt>DevOps</dt>
+        <dd>
+          <span class="pill">AWS EC2</span>
+          <span class="pill">S3</span>
+          <span class="pill">RDS</span>
+          <span class="pill">ECS</span>
+          <span class="pill">ECR</span>
+          <span class="pill">SNS</span>
+          <span class="pill">SQS</span>
+          <span class="pill">Route 53</span>
+          <span class="pill">CircleCI</span>
+          <span class="pill">GitHub Action</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">Git</span>
+        </dd>
+        <dt>Communication</dt>
+        <dd>
+          <span class="pill">Jira</span>
+          <span class="pill">Figma</span>
+          <span class="pill">Notion</span>
+          <span class="pill">Slack</span>
+        </dd>
+      </dl>
+    </section>
+
+    <!-- ===== CAREER ===== -->
+    <section id="career" aria-labelledby="career-h">
+      <p class="eyebrow">CAREER</p>
+      <h2 id="career-h">경력</h2>
+      <div class="entries section-body">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>원스토어</h3>
+          </div>
+          <p class="meta">
+            <span>스토어개발팀 개발자센터</span>
+            <span class="sep">·</span>
+            <span><time datetime="2025-10">2025.10</time> – 재직 중</span>
+          </p>
+          <p class="desc">
+            Spring Boot와 Next.js 환경에서 국내 유일 제3자 앱마켓의 디지털 콘텐츠 약
+            <strong class="metric">126만 개</strong> 상품을 등록·심사·정산·관리하는 개발자센터 서비스를 개발합니다
+          </p>
+          <div class="block grouped">
+            <h4>서비스 개발</h4>
+            <ul class="bullets">
+              <li>
+                개발자센터 서비스 개발 및 운영
+                <ul>
+                  <li>노후된 기존 개발자센터 서비스를 신규 스택으로 서비스 중단 없이 마이그레이션</li>
+                  <li>개발자센터 서비스 공통 라이브러리 구조 설계</li>
+                </ul>
+              </li>
+              <li>개발자센터 백오피스 개발 및 운영</li>
+            </ul>
+          </div>
+          <div class="block grouped">
+            <h4>AI 도입 TF</h4>
+            <ul class="bullets">
+              <li>팀 대표로 AI 구성 TF에 참여하여 공통 Rule 및 Skill 가이드라인 제정에 기여</li>
+              <li>개발실 대상 세미나 발표를 통해 사내 AI 개발 프로세스 표준화에 기여</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-head">
+            <h3>스테이지파이브</h3>
+          </div>
+          <p class="meta">
+            <span>R&amp;D 개발실 백엔드 개발자</span>
+            <span class="sep">·</span>
+            <span>
+              <time datetime="2022-06">2022.06</time> – <time datetime="2024-02">2024.02</time>,
+              <time datetime="2024-05">2024.05</time> – <time datetime="2025-10">2025.10</time>
+            </span>
+          </p>
+          <p class="desc">
+            AWS 클라우드 환경에서 NestJS, Spring Boot로 통신·로밍 커머스 서비스를 개발합니다.
+          </p>
+          <div class="block grouped">
+            <h4>서비스 개발</h4>
+            <ul class="bullets">
+              <li>
+                알뜰폰 셀프 개통 서비스 개발 및 운영
+                <ul>
+                  <li>KT 기반 개통 시스템에 SKT, LG U+ 망 추가 연동개발</li>
+                  <li>통신사별 상이한 API를 공통 인터페이스로 통합해 서비스 중단 없이 확장 개발</li>
+                  <li>외국인 고객을 위한 오프라인 셀프 개통 신청 페이지 퍼블리싱</li>
+                </ul>
+              </li>
+              <li>
+                해외 로밍 커머스 서비스 개발 및 운영
+                <ul>
+                  <li>10여 개의 로밍 공급사 API의 주문 처리 흐름을 통합 관리할 수 있도록 공통 인터페이스 구조 설계</li>
+                  <li>외부 커머스 플랫폼(쿠팡, 네이버) 주문 수집 및 자동 처리 시스템 구현</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" aria-labelledby="projects-h">
+      <p class="eyebrow">PROJECTS</p>
+      <h2 id="projects-h">프로젝트</h2>
+      <div class="entries section-body">
+        <!-- ① -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>개발자센터 서비스 신규 구축</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">90%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>원스토어</span>
+            <span class="sep">·</span>
+            <span><time datetime="2025-12">2025.12</time> – 진행 중</span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">Spring Boot</span>
+              <span class="pill">Next.js</span>
+              <span class="pill">MySQL</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>개발자센터의 노후 레거시(JSP, Oracle) 스택을 Next.js와 Spring Boot 3 기반으로 재구축, 운영 중단 없이 신규 서비스로 전환</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>Spring Boot Custom Starter로 로깅·예외 처리·공통 ENUM 등 공통 기능을 AutoConfiguration으로 모듈화</li>
+              <li>이전 개발자센터 기능(문의·공지·파일 업로드 처리) 데이터 이관 및 신규 API 구축</li>
+              <li>인증·권한·외부 서비스 API를 통합하여 프론트엔드에 제공하는 BFF 구축</li>
+              <li>Next.js 기반 8개 업무 도메인(상품·정산 등) 페이지 신규 개발 및 이관</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li><strong class="metric">100여 개</strong> 화면, 8개 업무 도메인을 기존 레거시에서 신규 스택으로 서비스 중단 없이 전환</li>
+              <li>횡단 관심사를 AutoConfiguration에 내장하여 보일러플레이트 코드 제거, 신규 서비스 환경 구성에 소요되는 시간 제거</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>백엔드·BFF 아키텍처 설계·구현 주도, 프론트엔드 공통 구조 설계 주도</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ② -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>AI 개발 표준화 및 자체 하네스 구축 TF</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">90%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>원스토어</span>
+            <span class="sep">·</span>
+            <span><time datetime="2026-04">2026.04</time> – 진행 중</span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">Claude Code</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>AI 코딩 도구 도입 후 개발자의 역할이 '코드 작성'에서 '컨텍스트 전달'로 바뀜에 따라 프롬프트 작성 숙련도 차이로 산출물 품질 편차 발생</li>
+              <li>프롬프트·규칙·지식 베이스를 표준화해 작업자 역량 편차 없이 일관된 산출물을 내는 사내 표준 AI 작업 환경(하네스) 구축</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>AI 도입 TF 팀 대표로 참여하여 전사 공통 AI 작업 규칙과 재사용 작업 템플릿(Rule·Skill) 제정</li>
+              <li>프로젝트별 작업 기록·아키텍처 결정 근거(ADR)·피드백을 마크다운 기반 지식 베이스(위키)에 자동 축적하는 파이프라인 구축</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li>개발자센터 신규 구축 프로젝트에 도입하여 레거시 분석 및 스택 전환 소요 시간 대폭 단축</li>
+              <li>구축된 WIKI를 통해 팀원 누구나 설계 의도와 컨벤션을 즉시 파악하고 일관된 코드를 빠르게 작성하는 환경 구축</li>
+              <li>자체 하네스 구축 및 적용 사례를 사내 세미나에서 발표하여 프로세스 표준화에 기여</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>하네스 아키텍처 설계·구현, 공통 규칙 제정 및 세미나 발표</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ③ -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>개발자센터 관리자 백오피스 신규 구축</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">100%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>원스토어</span>
+            <span class="sep">·</span>
+            <span><time datetime="2025-11">2025.11</time> – <time datetime="2026-03">2026.03</time></span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">Spring Boot</span>
+              <span class="pill">React</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>노후화된 레거시(JSP) 스택으로 인해 유지보수가 어려운 기존 개발자센터 백오피스를 Spring Boot 3와 React 기반으로 재구축</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>백엔드(Spring Boot 3) 초기 구성 및 문의 관리 API 신규 개발</li>
+              <li>프론트엔드(React Router 기반 클라이언트 사이드 렌더링) 초기 구성 및 운영자용 관리 도구(백오피스) 화면 신규 구축</li>
+              <li>지원 만료 레거시 에디터 교체 및 파일 첨부 처리 구조 개선</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li>운영팀의 CS 답변, 공지사항 등록 프로세스 개선을 통한 처리 소요 시간 대폭 단축</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>백엔드 및 프론트엔드 초기 환경 구성부터 문의 관리 기능 전반의 아키텍처 설계 및 개발 단독 수행</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ④ -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>휴대폰 개통 후처리 개선</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">90%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>스테이지파이브</span>
+            <span class="sep">·</span>
+            <span><time datetime="2025-02">2025.02</time> – <time datetime="2025-04">2025.04</time></span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">Spring Boot</span>
+              <span class="pill">NestJS</span>
+              <span class="pill">AWS SQS</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>알림톡 발송, 부가서비스 가입, 약정 할인 처리 등 개통 후 작업이 단일 배치에 묶여 있어 일부 작업 실패 시 전체 작업이 중단되고 재처리가 어려운 구조를 개선</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>SNS-SQS 기반의 이벤트 아키텍처를 도입하여 후처리 로직을 작업 단위로 분리하여 장애 복구 용이한 시스템 구축</li>
+              <li>통신사별 상이한 할인 정책 로직을 공통 인터페이스로 통합하여 일관된 처리 구조 구현</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li>작업별 재처리 및 장애 복구가 가능한 구조로 실패율 <strong class="metric">90% 감소</strong></li>
+              <li>운영팀 할인 정책 등록 실수로 인한 개통 지연 <strong class="metric">100% 해소</strong></li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>전체 구조 설계 및 구현, 신규 구조로 이전까지 주도적으로 수행</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ⑤ -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>로밍 주문처리 개선</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">100%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>스테이지파이브</span>
+            <span class="sep">·</span>
+            <span><time datetime="2024-09">2024.09</time> – <time datetime="2024-10">2024.10</time></span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">NestJS</span>
+              <span class="pill">TypeORM</span>
+              <span class="pill">AWS SQS</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>해외 로밍 공급사의 주문 API 지연 및 장애로 인해 주문 실패가 빈번하게 발생했고 지원해야 하는 공급사가 늘어남에 따라 연동 로직 중복과 유지 보수 비용이 지속 증가하는 구조를 개선</li>
+              <li>단일 자사몰 주문 로직을 외부 커머스(네이버 쇼핑) 지원 필요</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>NestJS Cron, SQS 기반 비동기 주문 처리 및 재시도 구조 설계 및 적용</li>
+              <li>공급사별 상이한 주문 처리 로직을 팩토리 + 전략 패턴 기반 구조로 리팩토링</li>
+              <li>운영 대응을 위한 주문 처리 현황 로그 구조 개선</li>
+              <li>외부 API 및 Excel 파일 기반 주문 데이터 수집 및 포맷 정규화</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li>고객 주문 실패 화면 진입률 <strong class="metric">98% 이상 감소</strong></li>
+              <li>공급사별 주문 처리 코드 중복 <strong class="metric">60% 이상 제거</strong></li>
+              <li>신규 공급사 연동 기간 <strong class="metric">2주 → 3일</strong>로 단축</li>
+              <li>일 500건 이상 수기 처리되는 외부 커머스 주문건 전체 자동화</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>전체 구조 설계 및 구현 전반 주도</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ⑥ -->
+        <article class="entry">
+          <div class="entry-head">
+            <h3>SKT, U+ 셀프 개통 지원</h3>
+            <span class="badge">
+              <span class="badge-label">기여도</span><span class="badge-value">BFF 90% · 연동 50%</span>
+            </span>
+          </div>
+          <p class="meta">
+            <span>스테이지파이브</span>
+            <span class="sep">·</span>
+            <span><time datetime="2023-04">2023.04</time> – <time datetime="2023-12">2023.12</time></span>
+            <span class="sep">·</span>
+            <span class="stack">
+              <span class="pill">Spring Boot</span>
+              <span class="pill">NestJS</span>
+              <span class="pill">AWS ECS</span>
+              <span class="pill">Docker</span>
+            </span>
+          </p>
+          <div class="block">
+            <span class="block-label">배경·목적</span>
+            <ul class="bullets">
+              <li>기존 KT 망 중심의 유심 구매, 셀프 개통, 마이페이지 시스템을 SKT, LG U+까지 확장하여 모든 통신사를 지원하는 통합 셀프 개통 서비스를 구축</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">진행 업무</span>
+            <ul class="bullets">
+              <li>통신 3사(KT, SKT, U+)의 REST, SOAP(WSDL) 기반 API 분석 및 연동 개발</li>
+              <li>NestJS 기반 BFF 서비스에서 유심 구매, 개통 신청, 결과 조회, 마이페이지 등 API 설계 및 구현</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">성과</span>
+            <ul class="bullets">
+              <li>셀프 개통 서비스 커버리지를 3개 통신사(KT, SKT, U+)로 확장</li>
+              <li>통신사별 응답 포맷을 공통 형식으로 통합해 프론트엔드 구조 변경 없이 확장</li>
+            </ul>
+          </div>
+          <div class="block">
+            <span class="block-label">기여 내용</span>
+            <ul class="bullets">
+              <li>NestJS 기반 BFF API 구조 설계·구현 주도(<strong class="metric">90%</strong>), 통신 3사 API 연동(<strong class="metric">50%</strong>)</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION ===== -->
+    <section id="education" aria-labelledby="education-h">
+      <p class="eyebrow">EDUCATION</p>
+      <h2 id="education-h">자격</h2>
+      <div class="entries section-body">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>AWS Certified Solutions Architect – Associate</h3>
+          </div>
+          <p class="meta">
+            <span><time datetime="2025-05-16">2025.05.16</time> 취득</span>
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
